@@ -1,11 +1,13 @@
 import { DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext } from "excalibur";
 import * as ex from "excalibur"
 import {Street} from "./zones/Street";
+import {Preview} from "./zones/Preview";
 
 export class MyLevel extends Scene {
     override onInitialize(engine: Engine): void {
         // Scene.onInitialize is where we recommend you perform the composition for your game
         this.add(new Street(new ex.Vector(0,0)))
+        this.add(new Preview(new ex.Vector(0,175)))
     }
 
     override onPreLoad(loader: DefaultLoader): void {
