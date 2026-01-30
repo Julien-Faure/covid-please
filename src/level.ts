@@ -1,11 +1,11 @@
 import { DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext } from "excalibur";
-import { Player } from "./player";
+import * as ex from "excalibur"
+import {Street} from "./zones/Street";
 
 export class MyLevel extends Scene {
     override onInitialize(engine: Engine): void {
         // Scene.onInitialize is where we recommend you perform the composition for your game
-        const player = new Player();
-        this.add(player); // Actors need to be added to a scene to be drawn
+        this.add(new Street(new ex.Vector(0,0)))
     }
 
     override onPreLoad(loader: DefaultLoader): void {
