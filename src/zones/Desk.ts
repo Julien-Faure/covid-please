@@ -1,4 +1,5 @@
 import * as ex from "excalibur";
+import {Resources} from "../resources";
 
 
 export class Desk extends ex.Actor {
@@ -8,8 +9,12 @@ export class Desk extends ex.Actor {
             anchor: ex.vec(0, 0),
             width: 760,
             height: 365,
-            color: ex.Color.fromHex('#ff0008'),
             z: 1
         });
+    }
+
+    override onInitialize(): void {
+        const background = Resources.Desk.toSprite();
+        this.graphics.use(background);
     }
 }
