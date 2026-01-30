@@ -1,0 +1,22 @@
+{
+  "name": "covid-please",
+  "version": "1.0.0",
+  "description": "Global code game jam 2026",
+  "main": "src/main.ts",
+  "scripts": {
+    "dev": "vite",
+    "start": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "author": "Denis & Julien",
+  "dependencies": {
+    "excalibur": "0.32.0"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.2",
+    "typescript": "5.9.3",
+    "vite": "6.4.1"
+  }
+}
