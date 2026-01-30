@@ -4,6 +4,8 @@ import { ImageSource, Loader } from "excalibur";
 export const Resources = {
   Sword: new ImageSource("./images/sword.png"),
   Street: new ImageSource("./images/Street_v0.jpg"),
+  Preview: new ImageSource("./images/Preview_v0.jpg"),
+  Desk: new ImageSource("./images/Desk_v0.jpg"),
 } as const;
 
 export const loader = new Loader();
