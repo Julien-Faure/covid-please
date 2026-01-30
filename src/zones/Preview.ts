@@ -1,4 +1,5 @@
 import * as ex from "excalibur";
+import {Resources} from "../resources";
 
 
 export class Preview extends ex.Actor {
@@ -11,5 +12,10 @@ export class Preview extends ex.Actor {
             color: ex.Color.fromHex('#4500f3'),
             z: 1
         });
+    }
+
+    override onInitialize(): void {
+        const background = Resources.Preview.toSprite();
+        this.graphics.use(background);
     }
 }
