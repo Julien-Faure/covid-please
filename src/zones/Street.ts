@@ -1,5 +1,6 @@
 import * as ex from "excalibur";
 import {SCREEN_SIZE} from "../config/Settings";
+import {Resources} from "../resources";
 
 
 export class Street extends ex.Actor {
@@ -13,5 +14,10 @@ export class Street extends ex.Actor {
             z: 1
         });
     }
+    override onInitialize(): void {
+        const background = Resources.Street.toSprite();
+        this.graphics.use(background);
+    }
+
 
 }
