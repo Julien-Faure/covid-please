@@ -8,7 +8,7 @@ import {SCREEN_SIZE} from "./config/Settings";
 const game = new Engine({
   width: SCREEN_SIZE.width, // Logical width and height in game pixels
   height: SCREEN_SIZE.height,
-  displayMode: DisplayMode.FitScreenAndFill, // Display mode tells excalibur how to fill the window
+  displayMode: DisplayMode.FitScreen, // Display mode tells excalibur how to fill the window
   pixelArt: true, // pixelArt will turn on the correct settings to render pixel art without jaggies or shimmering artifacts
   scenes: {
     start: Level

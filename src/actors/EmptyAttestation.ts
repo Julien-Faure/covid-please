@@ -9,8 +9,8 @@ export class EmptyAttestation extends ex.Actor {
         super({
             pos,
             anchor: ex.vec(0, 0),
-            width: 248,
-            height: 351,
+            width: 330,
+            height: 467,
             z: 2
         });
     }
