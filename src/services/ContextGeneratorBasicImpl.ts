@@ -34,8 +34,9 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
 
         const isFemale = randomBoolean();
 
-        const name = faker.person.lastName(isFemale ? "female" : "male");
-        const surname = faker.person.firstName(isFemale ? "female" : "male");
+        const name = this.replaceAccents(faker.person.lastName(isFemale ? "female" : "male"));
+        const surname = this.replaceAccents(faker.person.firstName(isFemale ? "female" : "male"));
+        let birthPlace = this.replaceAccents(faker.location.city());
 
         let signatureFontId = randomInt(0, FontMapper.getFontCount() - 1);
         const ctx : Context = {
@@ -48,7 +49,7 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 name: name,
                 surname: surname,
                 sex: isFemale ? "F" : "M",
-                birthPlace: faker.location.city(),
+                birthPlace: birthPlace,
                 signatureFontId: signatureFontId
             },
             attestation : {
@@ -63,6 +64,10 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
 
 
         return ctx;
+    }
+
+    private replaceAccents(str: string) : string {
+        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
     }
 
 }
