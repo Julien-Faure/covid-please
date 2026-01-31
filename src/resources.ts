@@ -3,7 +3,6 @@ import {FontSource, ImageSource, Loader} from "excalibur";
 // ******************************* Images ***************************************************
 
 export const Resources = {
-  Sword: new ImageSource("./images/sword.png"),
   Street: new ImageSource("./images/Street.jpg"),
   Preview: new ImageSource("./images/Preview.jpg"),
   Desk: new ImageSource("./images/Desk.jpg"),
