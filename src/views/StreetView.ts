@@ -1,11 +1,11 @@
-import * as ex from "excalibur";
 import {View} from "./View";
 import {Level} from "../Level";
 import {StreetBackground} from "../background/StreetBackground";
 import {MiniNPCFactory} from "../actors/MiniNPCFactory";
 import {SCREEN_SIZE} from "../config/Settings";
 import {randomInt} from "../utils/Random";
-import {Actor, Vector} from "excalibur";
+import {MiniNPC} from "../actors/MiniNPC";
+import {Timer, Vector} from "excalibur";
 
 const SPAWN_INTERVAL_MS = 5000;
 const VIEW_WIDTH = SCREEN_SIZE.width;
@@ -13,14 +13,14 @@ const VIEW_HEIGHT = 233;
 
 
 export class StreetView implements View {
-    private readonly timer: ex.Timer;
+    private readonly timer: Timer;
     private readonly miniNPCFactory: MiniNPCFactory;
     private readonly level: Level;
 
-    private onNPCClickedCallback : (npc : Actor) => void = () => {};
+    private onNPCClickedCallback : (npc : MiniNPC) => void = () => {};
 
     constructor(level : Level) {
-        this.timer = new ex.Timer({
+        this.timer = new Timer({
             interval: SPAWN_INTERVAL_MS,
             repeats: true,
             action: () => this.spawnOne()
@@ -40,7 +40,7 @@ export class StreetView implements View {
 
     public init(): void {
         const level = this.level;
-        level.add(new StreetBackground(new ex.Vector(0,0)));
+        level.add(new StreetBackground(new Vector(0,0)));
         level.add(this.timer);
 
         this.timer.start();
@@ -71,11 +71,11 @@ export class StreetView implements View {
         }
     }
 
-    private callOnNPCClicked(npc : Actor) {
+    private callOnNPCClicked(npc : MiniNPC) {
         this.onNPCClickedCallback(npc);
     }
 
-    public onNPCClicked(func : (npc : Actor) => void) {
+    public onNPCClicked(func : (npc : MiniNPC) => void) {
         this.onNPCClickedCallback = func;
     }
 

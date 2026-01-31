@@ -1,29 +1,40 @@
-import * as ex from "excalibur";
-import {Engine} from "excalibur";
+import {Actor, Color, Engine, vec, Vector} from "excalibur";
 
-export class MiniNPC extends ex.Actor {
+export class MiniNPC extends Actor {
 
-    constructor(pos: ex.Vector, direction: boolean, speed: number) {
+    private readonly initialVel: Vector;
 
+    constructor(pos: Vector, direction: boolean, speed: number) {
         const directionFactor = direction ? -1 : 1;
         super({
             pos,
-            anchor: ex.vec(0, 0),
+            anchor: vec(0, 0),
             width: 15,
             height: 50,
-            color: ex.Color.fromHex('#4500f3'),
-            vel: ex.vec(directionFactor * speed, 0),
+            color: Color.fromHex('#4500f3'),
             z: 2
         });
+
+        this.initialVel = vec(directionFactor * speed, 0);
     }
 
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine);
+        this.walk();
 
         this.on('exitviewport', () => this.kill());
         this.on('pointerdown', () => {
-            this.color = ex.Color.fromHex('#f30000');
+            this.color = Color.fromHex('#f30000');
         });
     }
+
+    public walk() {
+        this.vel = this.initialVel;
+    }
+
+    public stop() {
+        this.vel.x = 0;
+    }
+
 }
