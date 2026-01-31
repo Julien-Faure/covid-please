@@ -1,0 +1,12 @@
+{
+  "name": "app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "express": "^4.18.2",
+    "http": "^0.0.1-security",
+    "node-static": "^0.7.11",
+    "path": "^0.12.7"
+  }
+}
