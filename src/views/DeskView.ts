@@ -5,9 +5,18 @@ import {DeskBackground} from "../background/DeskBackground";
 
 
 export class DeskView implements View {
-    constructor() {}
+    private readonly level: MyLevel;
 
-    init(level: MyLevel): void {
-        level.add(new DeskBackground(new ex.Vector(200,175)))
+    constructor(level : MyLevel) {
+        this.level = level;
     }
+
+    init(): void {
+        this.level.add(new DeskBackground(new ex.Vector(200,175)))
+    }
+
+    dispose(): void {
+    }
+
+
 }

@@ -5,9 +5,9 @@ import {DeskView} from "./views/DeskView";
 
 export class MyLevel extends Scene {
     override onInitialize(engine: Engine): void {
-        new StreetView().init(this);
-        new PreviewView().init(this);
-        new DeskView().init(this);
+        new StreetView(this).init();
+        new PreviewView(this).init();
+        new DeskView(this).init();
     }
 
     override onPreLoad(loader: DefaultLoader): void {
@@ -39,4 +39,6 @@ export class MyLevel extends Scene {
     override onPostDraw(ctx: ExcaliburGraphicsContext, elapsedMs: number): void {
         // Called after Excalibur draws to the screen
     }
+
+
 }

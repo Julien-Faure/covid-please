@@ -5,8 +5,19 @@ import {PreviewBackground} from "../background/PreviewBackground";
 
 
 export class PreviewView implements View {
-    init(level: MyLevel): void {
-        level.add(new PreviewBackground(new ex.Vector(0,175)))
+    private readonly level: MyLevel;
+
+    constructor(level : MyLevel) {
+        this.level = level;
     }
+
+
+    init(): void {
+        this.level.add(new PreviewBackground(new ex.Vector(0,175)))
+    }
+
+    dispose(): void {
+    }
+
 
 }
