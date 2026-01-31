@@ -1,5 +1,5 @@
 import * as ex from "excalibur";
-import {Actor, Vector} from "excalibur";
+import {Actor, vec, Vector} from "excalibur";
 import {View} from "./View";
 import {Level} from "../Level";
 import {DeskBackground} from "../background/DeskBackground";
@@ -7,6 +7,7 @@ import {IDCard} from "../actors/IDCard";
 import {Draggable} from "../utils/Draggable";
 import {Attestation} from "../actors/Attestation";
 import {Context} from "../data/Context";
+import {WorkCert} from "../actors/WorkCert";
 
 const VIEW_WIDTH = 1014;
 const VIEW_HEIGHT = 487;
@@ -28,6 +29,14 @@ export class DeskView implements View {
 
 
         this.level.add(background)
+
+        const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), {
+            name: "Denis BECLE",
+            company: "Collectif Cameleon",
+            position: "PDG"
+        });
+        this.level.add(workCert);
+        this.enableDraggable(workCert);
 
         background.on("pointerleave", () => {
             this.draggables.forEach(value => value.stopDragging());

@@ -9,6 +9,7 @@ export const Resources = {
   Desk: new ImageSource("./images/Desk.jpg"),
   IDCard: new ImageSource("./images/IDCard.png"),
   Attestation: new ImageSource("./images/Attestation.png"),
+  WorkCert: new ImageSource("./images/Work.png"),
 } as const;
 
 export const loader = new Loader();
