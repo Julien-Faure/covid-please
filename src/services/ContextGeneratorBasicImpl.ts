@@ -59,6 +59,12 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 date: attestationFormatter.format(new Date()),
                 reasons: [randomInt(0, 6)],
                 fontId: signatureFontId
+            },
+            workCert: {
+                name: name,
+                company: faker.company.name(),
+                position: faker.person.jobTitle(),
+                signatureFontId: signatureFontId
             }
         };
 

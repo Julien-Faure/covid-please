@@ -27,17 +27,7 @@ export class DeskView implements View {
     init(): void {
         let background = new DeskBackground(new ex.Vector(POSITION_X, POSITION_Y));
 
-
         this.level.add(background)
-
-        const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), {
-            name: "Denis BECLE",
-            company: "Collectif Cameleon",
-            position: "PDG",
-            signatureFontId: 2
-        });
-        this.level.add(workCert);
-        this.enableDraggable(workCert);
 
         background.on("pointerleave", () => {
             this.draggables.forEach(value => value.stopDragging());
@@ -71,7 +61,8 @@ export class DeskView implements View {
     public setContext(ctx: Context): void {
         this.clearDesk();
         let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
-        const attestation = new Attestation(new ex.Vector(POSITION_X + (300 ), POSITION_Y + (50 )),ctx.attestation);
+        const attestation = new Attestation(new ex.Vector(POSITION_X + (300), POSITION_Y + (50)), ctx.attestation);
+        const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), ctx.workCert);
 
         this.level.add(attestation)
         this.enableDraggable(attestation);
@@ -79,8 +70,12 @@ export class DeskView implements View {
         this.level.add(emptyIDCard)
         this.enableDraggable(emptyIDCard);
 
+        this.level.add(workCert);
+        this.enableDraggable(workCert);
+
         this.clearableActors.push(emptyIDCard);
         this.clearableActors.push(attestation);
+        this.clearableActors.push(workCert);
     }
 
     private clearDesk() {
@@ -89,7 +84,6 @@ export class DeskView implements View {
         this.clearableActors.forEach(a => this.level.remove(a));
         this.clearableActors = [];
     }
-
 
 
 }
