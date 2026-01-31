@@ -1,26 +1,14 @@
-import * as ex from "excalibur";
 import {Resources} from "../resources";
-import {Engine} from "excalibur";
+import {Sprite} from "excalibur";
 
 
 
-export class EmptyAttestation extends ex.Actor {
-    constructor(pos : ex.Vector) {
+export class EmptyAttestation extends Sprite {
+    constructor(width : number, height : number) {
         super({
-            pos,
-            anchor: ex.vec(0, 0),
-            width: 330,
-            height: 467,
-            z: 2
+            image: Resources.Attestation,
+            width, height
         });
-    }
-
-    onInitialize(engine: Engine) {
-        super.onInitialize(engine);
-        let attestationSprite = Resources.Attestation.toSprite();
-        attestationSprite.width = this.width;
-        attestationSprite.height = this.height
-        this.graphics.use(attestationSprite);
     }
 }
 
