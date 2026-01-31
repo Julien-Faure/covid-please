@@ -11,9 +11,10 @@
   },
   "author": "Denis & Julien",
   "dependencies": {
-    "excalibur": "0.32.0"
+    "excalibur": "^0.32.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^10.2.0",
     "@playwright/test": "^1.49.1",
     "@types/node": "^22.10.2",
     "typescript": "5.9.3",
