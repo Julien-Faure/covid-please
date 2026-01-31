@@ -6,7 +6,7 @@ import {DeskBackground} from "../background/DeskBackground";
 import {IDCard} from "../actors/IDCard";
 import {Draggable} from "../utils/Draggable";
 import {Attestation} from "../actors/Attestation";
-import {ContextGeneratorBasicImpl} from "../services/ContextGeneratorBasicImpl";
+import {Context} from "../data/Context";
 
 const VIEW_WIDTH = 1014;
 const VIEW_HEIGHT = 487;
@@ -17,6 +17,7 @@ const POSITION_Y = 233;
 export class DeskView implements View {
     private readonly level: Level;
     private draggables: Draggable[] = [];
+    private clearableActors: Actor[] = [];
 
     constructor(level: Level) {
         this.level = level;
@@ -25,20 +26,8 @@ export class DeskView implements View {
     init(): void {
         let background = new DeskBackground(new ex.Vector(POSITION_X, POSITION_Y));
 
-        const contextGenerator = new ContextGeneratorBasicImpl();
-        const ctx = contextGenerator.generate();
-
-        let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
-        const attestation = new Attestation(new ex.Vector(POSITION_X + (300 ), POSITION_Y + (50 )),ctx.attestation);
-
-        this.level.add(attestation)
-        this.enableDraggable(attestation);
 
         this.level.add(background)
-        this.level.add(emptyIDCard)
-
-        this.enableDraggable(emptyIDCard);
-
 
         background.on("pointerleave", () => {
             this.draggables.forEach(value => value.stopDragging());
@@ -68,6 +57,29 @@ export class DeskView implements View {
     getPosition(): Vector {
         return new Vector(POSITION_X, POSITION_Y);
     }
+
+    public setContext(ctx: Context): void {
+        this.clearDesk();
+        let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
+        const attestation = new Attestation(new ex.Vector(POSITION_X + (300 ), POSITION_Y + (50 )),ctx.attestation);
+
+        this.level.add(attestation)
+        this.enableDraggable(attestation);
+
+        this.level.add(emptyIDCard)
+        this.enableDraggable(emptyIDCard);
+
+        this.clearableActors.push(emptyIDCard);
+        this.clearableActors.push(attestation);
+    }
+
+    private clearDesk() {
+        this.draggables.forEach(d => d.stopDragging());
+        this.draggables = [];
+        this.clearableActors.forEach(a => this.level.remove(a));
+        this.clearableActors = [];
+    }
+
 
 
 }

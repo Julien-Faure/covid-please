@@ -1,13 +1,24 @@
-import { DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext } from "excalibur";
+import {DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext} from "excalibur";
 import {StreetView} from "./views/StreetView";
 import {PreviewView} from "./views/PreviewView";
 import {DeskView} from "./views/DeskView";
+import {ContextGeneratorBasicImpl} from "./services/ContextGeneratorBasicImpl";
 
 export class Level extends Scene {
     override onInitialize(engine: Engine): void {
-        new StreetView(this).init();
+        const ctxGenerator = new ContextGeneratorBasicImpl();
+
+        const streetView = new StreetView(this);
+        streetView.init();
+        streetView.onNPCClicked(npc => {
+            deskView.setContext(ctxGenerator.generate());
+        });
+
+
         new PreviewView(this).init();
-        new DeskView(this).init();
+        const deskView = new DeskView(this);
+        deskView.init();
+
     }
 
     override onPreLoad(loader: DefaultLoader): void {
