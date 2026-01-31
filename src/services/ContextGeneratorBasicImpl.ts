@@ -3,6 +3,7 @@ import {Context} from "../data/Context";
 import {faker} from "@faker-js/faker/locale/fr";
 import {randomBoolean, randomInt} from "../utils/Random";
 import {FontMapper} from "../mappers/FontMapper";
+import {removeAccents} from "../utils/String";
 
 
 export class ContextGeneratorBasicImpl implements ContextGenerator {
@@ -34,9 +35,9 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
 
         const isFemale = randomBoolean();
 
-        const name = this.replaceAccents(faker.person.lastName(isFemale ? "female" : "male"));
-        const surname = this.replaceAccents(faker.person.firstName(isFemale ? "female" : "male"));
-        let birthPlace = this.replaceAccents(faker.location.city());
+        const name = removeAccents(faker.person.lastName(isFemale ? "female" : "male"));
+        const surname = removeAccents(faker.person.firstName(isFemale ? "female" : "male"));
+        let birthPlace = removeAccents(faker.location.city());
 
         let signatureFontId = randomInt(0, FontMapper.getFontCount() - 1);
         const ctx : Context = {
@@ -63,18 +64,14 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
             },
             workCert: {
                 name: name,
-                company: faker.company.name(),
-                position: faker.person.jobTitle(),
+                company: removeAccents(faker.company.name()),
+                position: removeAccents(faker.person.jobTitle()),
                 signatureFontId: signatureFontId
             }
         };
 
 
         return ctx;
-    }
-
-    private replaceAccents(str: string) : string {
-        return str.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
     }
 
 }
