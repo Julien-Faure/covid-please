@@ -29,8 +29,8 @@ export class StreetView implements View {
         this.miniNPCFactory = new MiniNPCFactory({
             xMax: VIEW_WIDTH,
             xMin: 0,
-            yMax: VIEW_HEIGHT,
-            yMin: 0
+            yMax: VIEW_HEIGHT - 55,
+            yMin: 2 * (VIEW_HEIGHT / 3)
         });
 
         this.level = level;
