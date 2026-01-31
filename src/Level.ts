@@ -1,24 +1,40 @@
-import {DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext} from "excalibur";
+import {Color, Engine, Scene, vec} from "excalibur";
 import {StreetView} from "./views/StreetView";
-import {PreviewView} from "./views/PreviewView";
 import {DeskView} from "./views/DeskView";
 import {ContextGeneratorBasicImpl} from "./services/ContextGeneratorBasicImpl";
 import {MiniNPC} from "./actors/MiniNPC";
 import {ContextMasterDisruptor} from "./services/ContextMasterDisruptor";
+import {Life} from "./actors/Life";
+import {FinalContext} from "./data/FinalContext";
+import {GameOver} from "./actors/GameOver";
+
+
 
 export class Level extends Scene {
     private lastMiniNPC: MiniNPC | null = null;
     private npcControlled : MiniNPC[] = [];
+    private lastFinalContext : FinalContext | null = null;
+    private gameOver: GameOver = new GameOver(vec(0, 0));
+
 
     override onInitialize(engine: Engine): void {
         const ctxGenerator = new ContextGeneratorBasicImpl();
+
+        const life = new Life(vec(60, 25));
+        life.onGameOver(() => this.showGameOver());
+        this.add(life);
 
         const streetView = new StreetView(this);
         streetView.init();
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc)) {
                 if (this.lastMiniNPC !== null) {
-                    this.lastMiniNPC.kill();
+                    // RELEASE
+                    if(this.lastFinalContext?.punishable){
+                        life.lostOneLife();
+                    }
+                    this.lastMiniNPC.color = Color.fromHex('#42ff78');
+                    this.lastMiniNPC.walk();
                 }
 
                 this.lastMiniNPC = npc;
@@ -28,10 +44,7 @@ export class Level extends Scene {
                 const finalContext = disruptor.disturb(context);
 
                 deskView.setContext(finalContext.context);
-
-                if (context.punishable) {
-                    console.log("zfnjoqhjfzil!qzjm")
-                }
+                this.lastFinalContext = finalContext;
 
                 npc.stop();
                 this.npcControlled.push(npc);
@@ -39,9 +52,38 @@ export class Level extends Scene {
         });
 
 
-        new PreviewView(this).init();
+
+
         const deskView = new DeskView(this);
         deskView.init();
+
+        deskView.onPunishClicked(() => {
+            if (this.lastMiniNPC !== null) {
+                console.log("aaaa")
+                // PUNISHING
+
+                this.lastMiniNPC.color = Color.fromHex('#ff0000');
+                this.lastMiniNPC.walk();
+                deskView.clearDesk();
+                if(!this.lastFinalContext?.punishable){
+                    life.lostOneLife();
+                }
+                this.lastMiniNPC = null;
+            }
+        });
+
+        this.gameOver = new GameOver(vec(0, 0));
+        this.gameOver.onInitialize(engine);
+        this.add(this.gameOver);
+        this.gameOver.onRestart(() => {
+            this.gameOver.hide();
+            life.reset();
+            this.npcControlled = [];
+            this.lastMiniNPC = null;
+            this.lastFinalContext = null;
+            deskView.clearDesk();
+            streetView.clearStreet();
+        });
     }
 
 
@@ -49,35 +91,8 @@ export class Level extends Scene {
         return this.npcControlled.includes(npc);
     }
 
-    override onPreLoad(loader: DefaultLoader): void {
-        // Add any scene specific resources to load
+    private showGameOver() {
+        console.log("GAME OVER")
+        this.gameOver.show();
     }
-
-    override onActivate(context: SceneActivationContext<unknown>): void {
-        // Called when Excalibur transitions to this scene
-        // Only 1 scene is active at a time
-    }
-
-    override onDeactivate(context: SceneActivationContext): void {
-        // Called when Excalibur transitions away from this scene
-        // Only 1 scene is active at a time
-    }
-
-    override onPreUpdate(engine: Engine, elapsedMs: number): void {
-        // Called before anything updates in the scene
-    }
-
-    override onPostUpdate(engine: Engine, elapsedMs: number): void {
-        // Called after everything updates in the scene
-    }
-
-    override onPreDraw(ctx: ExcaliburGraphicsContext, elapsedMs: number): void {
-        // Called before Excalibur draws to the screen
-    }
-
-    override onPostDraw(ctx: ExcaliburGraphicsContext, elapsedMs: number): void {
-        // Called after Excalibur draws to the screen
-    }
-
-
 }

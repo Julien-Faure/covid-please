@@ -10,9 +10,8 @@ export default interface AttestationDto {
 
 export enum AttestationReason {
     WORK,
-    FAMILY,
     SPORT,
-    WALK,
+    STUDY,
     HEALTH,
     JUSTICE,
     MARKET

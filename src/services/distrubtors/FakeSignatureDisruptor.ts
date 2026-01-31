@@ -1,6 +1,7 @@
-import {ContextDisruptor} from "../ContextDisruptor";
+import ContextDisruptor from "../ContextDisruptor";
 import {DisruptionDescription} from "../../data/DisruptionDescription";
 import {faker} from "@faker-js/faker/locale/fr";
+import {Context} from "../../data/Context";
 
 
 export class FakeSignatureDisruptor implements ContextDisruptor {

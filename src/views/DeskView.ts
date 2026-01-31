@@ -9,17 +9,21 @@ import {Attestation} from "../actors/Attestation";
 import {Context} from "../data/Context";
 import {WorkCert} from "../actors/WorkCert";
 import {AttestationReason} from "../dto/AttestationDto";
+import {PunishButton} from "../actors/PunishButton";
+import {SCREEN_SIZE} from "../config/Settings";
 
-const VIEW_WIDTH = 1014;
+const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
 
-const POSITION_X = 266;
+const POSITION_X = 0;
 const POSITION_Y = 233;
 
 export class DeskView implements View {
     private readonly level: Level;
     private draggables: Draggable[] = [];
     private clearableActors: Actor[] = [];
+
+    private punishCallback : () => void = () => {};
 
     constructor(level: Level) {
         this.level = level;
@@ -34,6 +38,10 @@ export class DeskView implements View {
             this.draggables.forEach(value => value.stopDragging());
             document.body.style.cursor = "default";
         });
+
+        const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
+        this.level.add(punishButton)
+        punishButton.on('pointerdown', this.punishCallback)
     }
 
     private enableDraggable(actor: Actor) {
@@ -81,11 +89,15 @@ export class DeskView implements View {
         this.clearableActors.push(workCert);
     }
 
-    private clearDesk() {
+    public clearDesk() {
         this.draggables.forEach(d => d.stopDragging());
         this.draggables = [];
         this.clearableActors.forEach(a => this.level.remove(a));
         this.clearableActors = [];
+    }
+
+    public onPunishClicked(callback : () => void) {
+        this.punishCallback = callback;
     }
 
 

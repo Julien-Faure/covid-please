@@ -1,5 +1,6 @@
 import {Context} from "../data/Context";
+import {DisruptionDescription} from "../data/DisruptionDescription";
 
-export interface ContextDisruptor {
-    disturb(context: Context) : boolean;
+export default interface ContextDisruptor {
+    disturb(context: Context) : DisruptionDescription | undefined;
 }
