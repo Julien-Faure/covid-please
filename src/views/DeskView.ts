@@ -23,26 +23,27 @@ export class DeskView implements View {
 
     init(): void {
         let background = new DeskBackground(new ex.Vector(POSITION_X, POSITION_Y));
-        this.level.add(background)
-
         let emptyIDCard = new EmptyIDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12));
-        this.level.add(emptyIDCard)
-        this.draggables.push(new Draggable(emptyIDCard, this, {
-            bringToFront: true,
-            clampToScreen: true
-        }));
-
         let emptyAttestation = new EmptyAttestation(new ex.Vector(POSITION_X + 250, POSITION_Y + 100));
+
+        this.level.add(background)
+        this.level.add(emptyIDCard)
         this.level.add(emptyAttestation)
-        this.draggables.push(new Draggable(emptyAttestation, this, {
-            bringToFront: true,
-            clampToScreen: true
-        }));
+
+        this.enableDraggable(emptyIDCard);
+        this.enableDraggable(emptyAttestation);
 
         background.on("pointerleave", () => {
             this.draggables.forEach(value => value.stopDragging());
             document.body.style.cursor = "default";
         });
+    }
+
+    private enableDraggable(emptyIDCard: EmptyIDCard) {
+        this.draggables.push(new Draggable(emptyIDCard, this, {
+            bringToFront: true,
+            clampToScreen: true
+        }));
     }
 
     dispose(): void {
