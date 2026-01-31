@@ -5,6 +5,8 @@ import {DeskBackground} from "../background/DeskBackground";
 import {EmptyIDCard} from "../actors/EmptyIDCard";
 import {EmptyAttestation} from "../actors/EmptyAttestation";
 
+const VIEW_WIDTH = 760;
+const VIEW_HEIGHT = 175;
 
 export class DeskView implements View {
     private readonly level: Level;
