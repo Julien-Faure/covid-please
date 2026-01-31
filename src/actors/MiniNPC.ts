@@ -9,8 +9,8 @@ export class MiniNPC extends ex.Actor {
         super({
             pos,
             anchor: ex.vec(0, 0),
-            width: 10,
-            height: 10,
+            width: 15,
+            height: 50,
             color: ex.Color.fromHex('#4500f3'),
             vel: ex.vec(directionFactor * speed, 0),
             z: 2
