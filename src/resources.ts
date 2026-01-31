@@ -1,6 +1,5 @@
 import { ImageSource, Loader } from "excalibur";
 
-// It is convenient to put your resources in one place
 export const Resources = {
   Sword: new ImageSource("./images/sword.png"),
   Street: new ImageSource("./images/Street.jpg"),
