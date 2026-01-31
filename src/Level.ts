@@ -55,11 +55,9 @@ export class Level extends Scene {
 
 
         const deskView = new DeskView(this);
-        deskView.init();
 
         deskView.onPunishClicked(() => {
             if (this.lastMiniNPC !== null) {
-                console.log("aaaa")
                 // PUNISHING
 
                 this.lastMiniNPC.color = Color.fromHex('#ff0000');
@@ -71,6 +69,8 @@ export class Level extends Scene {
                 this.lastMiniNPC = null;
             }
         });
+
+        deskView.init();
 
         this.gameOver = new GameOver(vec(0, 0));
         this.gameOver.onInitialize(engine);
