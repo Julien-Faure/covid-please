@@ -4,8 +4,9 @@ import {Level} from "../Level";
 import {StreetBackground} from "../background/StreetBackground";
 import {MiniNPCFactory} from "../actors/MiniNPCFactory";
 import {SCREEN_SIZE} from "../config/Settings";
+import {randomInt} from "../utils/Random";
 
-const SPAWN_INTERVAL_MS = 1000;
+const SPAWN_INTERVAL_MS = 5000;
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 233;
 
@@ -50,8 +51,10 @@ export class StreetView implements View {
     // -----------------------------------------------------------------------------------------------------------------
 
     private spawnOne(): void {
-        this.level.add(this.miniNPCFactory.create());
-        console.log("Spawned one npc");
+        const nb = randomInt(1,5);
+        for (let i = 0; i <nb; i++) {
+            this.level.add(this.miniNPCFactory.create());
+        }
     }
 
 }
