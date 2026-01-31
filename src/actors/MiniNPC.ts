@@ -24,7 +24,6 @@ export class MiniNPC extends ex.Actor {
         this.on('exitviewport', () => this.kill());
         this.on('pointerdown', () => {
             this.color = ex.Color.fromHex('#f30000');
-
-        })
+        });
     }
 }

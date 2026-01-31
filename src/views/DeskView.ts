@@ -1,13 +1,13 @@
 import * as ex from "excalibur";
 import {View} from "./View";
-import {MyLevel} from "../level";
+import {Level} from "../Level";
 import {DeskBackground} from "../background/DeskBackground";
 
 
 export class DeskView implements View {
-    private readonly level: MyLevel;
+    private readonly level: Level;
 
-    constructor(level : MyLevel) {
+    constructor(level : Level) {
         this.level = level;
     }
 

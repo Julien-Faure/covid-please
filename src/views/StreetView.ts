@@ -1,6 +1,6 @@
 import * as ex from "excalibur";
 import {View} from "./View";
-import {MyLevel} from "../level";
+import {Level} from "../Level";
 import {StreetBackground} from "../background/StreetBackground";
 import {MiniNPCFactory} from "../actors/MiniNPCFactory";
 import {SCREEN_SIZE} from "../config/Settings";
@@ -13,10 +13,10 @@ const VIEW_HEIGHT = 175;
 export class StreetView implements View {
     private readonly timer: ex.Timer;
     private readonly miniNPCFactory: MiniNPCFactory;
-    private readonly level: MyLevel;
+    private readonly level: Level;
 
 
-    constructor(level : MyLevel) {
+    constructor(level : Level) {
         this.timer = new ex.Timer({
             interval: SPAWN_INTERVAL_MS,
             repeats: true,

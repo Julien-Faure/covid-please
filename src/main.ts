@@ -1,6 +1,6 @@
 import { Color, DisplayMode, Engine, FadeInOut } from "excalibur";
 import { loader } from "./resources";
-import { MyLevel } from "./level";
+import { Level } from "./Level";
 import {SCREEN_SIZE} from "./config/Settings";
 
 // Goal is to keep main.ts small and just enough to configure the engine
@@ -11,8 +11,9 @@ const game = new Engine({
   displayMode: DisplayMode.FitScreenAndZoom, // Display mode tells excalibur how to fill the window
   pixelArt: true, // pixelArt will turn on the correct settings to render pixel art without jaggies or shimmering artifacts
   scenes: {
-    start: MyLevel
+    start: Level
   },
+  suppressPlayButton: true,
   // physics: {
   //   solver: SolverStrategy.Realistic,
   //   substep: 5 // Sub step the physics simulation for more robust simulations

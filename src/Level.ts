@@ -3,7 +3,7 @@ import {StreetView} from "./views/StreetView";
 import {PreviewView} from "./views/PreviewView";
 import {DeskView} from "./views/DeskView";
 
-export class MyLevel extends Scene {
+export class Level extends Scene {
     override onInitialize(engine: Engine): void {
         new StreetView(this).init();
         new PreviewView(this).init();
