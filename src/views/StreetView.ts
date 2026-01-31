@@ -6,12 +6,14 @@ import {MiniNPCFactory} from "../actors/MiniNPCFactory";
 import {SCREEN_SIZE} from "../config/Settings";
 
 const SPAWN_INTERVAL_MS = 1000;
+const VIEW_WIDTH = SCREEN_SIZE.width;
+const VIEW_HEIGHT = 175;
 
 
 export class StreetView implements View {
     private readonly timer: ex.Timer;
     private readonly miniNPCFactory: MiniNPCFactory;
-    private level: MyLevel;
+    private readonly level: MyLevel;
 
 
     constructor(level : MyLevel) {
@@ -22,9 +24,9 @@ export class StreetView implements View {
         });
 
         this.miniNPCFactory = new MiniNPCFactory({
-            xMax: SCREEN_SIZE.width,
+            xMax: VIEW_WIDTH,
             xMin: 0,
-            yMax: 175,
+            yMax: VIEW_HEIGHT,
             yMin: 0
         });
 
@@ -35,7 +37,7 @@ export class StreetView implements View {
 
     public init(): void {
         const level = this.level;
-        level.add(new StreetBackground(new ex.Vector(0,0)));
+        level.add(new StreetBackground(new ex.Vector(0,0), VIEW_WIDTH, VIEW_HEIGHT));
         level.add(this.timer);
 
         this.timer.start();
