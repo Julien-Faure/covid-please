@@ -1,10 +1,11 @@
-import {Color, Engine, Scene} from "excalibur";
+import {Color, Engine, Scene, vec} from "excalibur";
 import {StreetView} from "./views/StreetView";
 import {PreviewView} from "./views/PreviewView";
 import {DeskView} from "./views/DeskView";
 import {ContextGeneratorBasicImpl} from "./services/ContextGeneratorBasicImpl";
 import {MiniNPC} from "./actors/MiniNPC";
 import {ContextMasterDisruptor} from "./services/ContextMasterDisruptor";
+import {Life} from "./actors/Life";
 
 
 
@@ -15,6 +16,9 @@ export class Level extends Scene {
 
     override onInitialize(engine: Engine): void {
         const ctxGenerator = new ContextGeneratorBasicImpl();
+
+        const life = new Life(vec(60, 25));
+        this.add(life);
 
         const streetView = new StreetView(this);
         streetView.init();
