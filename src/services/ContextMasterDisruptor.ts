@@ -1,6 +1,8 @@
-import {ContextDisruptor} from "./ContextDisruptor";
 import {FakeSignatureDisruptor} from "./distrubtors/FakeSignatureDisruptor";
 import {DisruptionDescription} from "../data/DisruptionDescription";
+import {Context} from "../data/Context";
+import {FinalContext} from "../data/FinalContext";
+import ContextDisruptor from "./ContextDisruptor";
 
 
 export class ContextMasterDisruptor {
@@ -18,12 +20,12 @@ export class ContextMasterDisruptor {
 
         this.disruptors.forEach(disruptor => {
             const result = disruptor.disturb(context);
-            if (result) disruptions.push(disruptions)
+            if (result) disruptions.push(result)
         });
 
         return {
             context: context,
-            disruptions : disruptions,
+            disruptionsDone : disruptions,
             punishable: disruptions.length > 0
         };
     }
