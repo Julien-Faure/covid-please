@@ -2,7 +2,7 @@ import * as ex from "excalibur";
 import {Resources} from "../resources";
 
 
-export class Preview extends ex.Actor {
+export class PreviewBackground extends ex.Actor {
     constructor(pos : ex.Vector) {
         super({
             pos,

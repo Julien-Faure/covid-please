@@ -1,14 +1,13 @@
 import { DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext } from "excalibur";
-import * as ex from "excalibur"
-import {Street} from "./zones/Street";
-import {Preview} from "./zones/Preview";
-import {Desk} from "./zones/Desk";
+import {StreetView} from "./views/StreetView";
+import {PreviewView} from "./views/PreviewView";
+import {DeskView} from "./views/DeskView";
 
 export class MyLevel extends Scene {
     override onInitialize(engine: Engine): void {
-        this.add(new Street(new ex.Vector(0,0)))
-        this.add(new Preview(new ex.Vector(0,175)))
-        this.add(new Desk(new ex.Vector(200,175)))
+        new StreetView().init(this);
+        new PreviewView().init(this);
+        new DeskView().init(this);
     }
 
     override onPreLoad(loader: DefaultLoader): void {

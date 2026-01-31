@@ -3,8 +3,8 @@ import {SCREEN_SIZE} from "../config/Settings";
 import {Resources} from "../resources";
 
 
-export class Street extends ex.Actor {
-    constructor(pos : ex.Vector) {
+export class StreetBackground extends ex.Actor {
+    constructor( pos : ex.Vector) {
         super({
             pos,
             anchor: ex.vec(0, 0),
@@ -13,11 +13,11 @@ export class Street extends ex.Actor {
             color: ex.Color.fromHex('#bd9853'),
             z: 1
         });
+
     }
     override onInitialize(): void {
         const background = Resources.Street.toSprite();
         this.graphics.use(background);
     }
-
 
 }
