@@ -57,12 +57,12 @@ export class Attestation extends Actor {
 
     private getReasonOffset(reason : AttestationReason) : Vector {
         switch (reason) {
-            case AttestationReason.FAMILY: return vec(32, 190);
-            case AttestationReason.HEALTH: return vec(32, 215);
-            case AttestationReason.WORK: return vec(32, 240);
+            case AttestationReason.WORK : return vec(32, 190);
+            case AttestationReason.MARKET: return vec(32, 215);
+            case AttestationReason.HEALTH: return vec(32, 240);
             case AttestationReason.SPORT: return vec(32, 270);
             case AttestationReason.JUSTICE: return vec(32, 295);
-            case AttestationReason.WALK: return vec(32, 325);
+            case AttestationReason.STUDY: return vec(32, 325);
             default: return vec(0,0);
         }
     }
