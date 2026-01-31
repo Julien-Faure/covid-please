@@ -9,7 +9,7 @@ export class ContextMasterDisruptor {
     constructor() {
         this.disruptors = [];
 
-        this.disruptors.push(new FakeSignatureDisruptor(1));
+        this.disruptors.push(new FakeSignatureDisruptor(0.1));
     }
 
 

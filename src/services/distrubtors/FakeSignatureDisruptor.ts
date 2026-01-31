@@ -14,7 +14,7 @@ export class FakeSignatureDisruptor implements ContextDisruptor {
         const willBeDisrupted = Math.random() < this.rate;
 
         if (willBeDisrupted) {
-            context.idCard.signature = faker.person.lastName(context.idCard.sex === "M" ? "male" : "female");
+            context.idCard.signature = this.getFakeSignature(context);
             return {
                 name: "Fausse signature",
                 description: "La signature de la carte d'identité est remplacée par une signature fausse."
@@ -24,4 +24,11 @@ export class FakeSignatureDisruptor implements ContextDisruptor {
         }
     }
 
+    private getFakeSignature(context: Context) {
+        let fakeName = context.idCard.name;
+        while (fakeName == context.idCard.name){
+            fakeName = faker.person.lastName(context.idCard.sex === "M" ? "male" : "female");
+        }
+        return fakeName.toUpperCase();
+    }
 }
