@@ -1,4 +1,4 @@
-import {DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext} from "excalibur";
+import {Color, DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext} from "excalibur";
 import {StreetView} from "./views/StreetView";
 import {PreviewView} from "./views/PreviewView";
 import {DeskView} from "./views/DeskView";
@@ -6,9 +6,12 @@ import {ContextGeneratorBasicImpl} from "./services/ContextGeneratorBasicImpl";
 import {MiniNPC} from "./actors/MiniNPC";
 import {ContextMasterDisruptor} from "./services/ContextMasterDisruptor";
 
+
+
 export class Level extends Scene {
     private lastMiniNPC: MiniNPC | null = null;
     private npcControlled : MiniNPC[] = [];
+
 
     override onInitialize(engine: Engine): void {
         const ctxGenerator = new ContextGeneratorBasicImpl();
@@ -18,7 +21,9 @@ export class Level extends Scene {
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc)) {
                 if (this.lastMiniNPC !== null) {
-                    this.lastMiniNPC.kill();
+                    // TODO : Release logic
+                    this.lastMiniNPC.color = Color.fromHex('#42ff78');
+                    this.lastMiniNPC.walk();
                 }
 
                 this.lastMiniNPC = npc;
@@ -29,8 +34,6 @@ export class Level extends Scene {
 
                 deskView.setContext(finalContext.context);
 
-
-
                 npc.stop();
                 this.npcControlled.push(npc);
             }
@@ -39,7 +42,16 @@ export class Level extends Scene {
 
         const previewView = new PreviewView(this);
         previewView.onPunishClicked(() => {
-            console.log("PUNISHED !!");
+            if (this.lastMiniNPC !== null) {
+
+                this.lastMiniNPC.color = Color.fromHex('#ff0000');
+                this.lastMiniNPC.walk();
+                deskView.clearDesk();
+                // TODO : Punishing logic
+
+                this.lastMiniNPC = null;
+                console.log("PUNISHED !!");
+            }
         });
         previewView.init();
 

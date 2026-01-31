@@ -81,7 +81,7 @@ export class DeskView implements View {
         this.clearableActors.push(workCert);
     }
 
-    private clearDesk() {
+    public clearDesk() {
         this.draggables.forEach(d => d.stopDragging());
         this.draggables = [];
         this.clearableActors.forEach(a => this.level.remove(a));
