@@ -3,6 +3,7 @@ import {ZIndex} from "../views/ZIndex";
 import {Resources} from "../resources";
 import {WorkCertDto} from "../dto/WorkCertDto";
 import {getText} from "../utils/Graphics";
+import {FontMapper} from "../mappers/FontMapper";
 
 
 export class WorkCert extends Actor {
@@ -34,6 +35,7 @@ export class WorkCert extends Actor {
                 {graphic: this.aText(this.dto.name), offset: vec(220, 26)},
                 {graphic: this.aText(this.dto.company), offset: vec(115, 43)},
                 {graphic: this.aText(this.dto.position), offset: vec(60, 62)},
+                {graphic: this.aSignature(this.dto.company, this.dto.signatureFontId), offset: vec(180, 80)},
             ]
         });
 
@@ -43,6 +45,10 @@ export class WorkCert extends Actor {
 
     private aText(text: string) : Text {
         return getText(text, "ARCADEPI", 11);
+    }
+
+    private aSignature(text: string, fontId: number) : Text {
+        return getText(text, FontMapper.getFont(fontId), 20);
     }
 
 }

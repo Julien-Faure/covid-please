@@ -1,5 +1,6 @@
 export interface WorkCertDto {
     name: string,
     company: string,
-    position: string
+    position: string,
+    signatureFontId: number
 }

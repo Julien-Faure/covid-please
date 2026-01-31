@@ -33,7 +33,8 @@ export class DeskView implements View {
         const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), {
             name: "Denis BECLE",
             company: "Collectif Cameleon",
-            position: "PDG"
+            position: "PDG",
+            signatureFontId: 2
         });
         this.level.add(workCert);
         this.enableDraggable(workCert);
