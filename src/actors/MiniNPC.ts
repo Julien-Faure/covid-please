@@ -24,9 +24,6 @@ export class MiniNPC extends Actor {
         this.walk();
 
         this.on('exitviewport', () => this.kill());
-        this.on('pointerdown', () => {
-            this.color = Color.fromHex('#f30000');
-        });
     }
 
     public walk() {

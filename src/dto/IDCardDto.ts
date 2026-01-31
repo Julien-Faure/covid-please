@@ -9,5 +9,6 @@ export default interface IDCardDto {
     birthPlace: string,
     sex: string,
     height: string,
-    signatureFontId: number
+    signatureFontId: number,
+    signature: string
 }

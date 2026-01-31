@@ -4,6 +4,7 @@ import {PreviewView} from "./views/PreviewView";
 import {DeskView} from "./views/DeskView";
 import {ContextGeneratorBasicImpl} from "./services/ContextGeneratorBasicImpl";
 import {MiniNPC} from "./actors/MiniNPC";
+import {ContextMasterDisruptor} from "./services/ContextMasterDisruptor";
 
 export class Level extends Scene {
     private lastMiniNPC: MiniNPC | null = null;
@@ -17,10 +18,21 @@ export class Level extends Scene {
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc)) {
                 if (this.lastMiniNPC !== null) {
-                    this.lastMiniNPC.walk();
+                    this.lastMiniNPC.kill();
                 }
+
                 this.lastMiniNPC = npc;
-                deskView.setContext(ctxGenerator.generate());
+                const context = ctxGenerator.generate();
+
+                const disruptor = new ContextMasterDisruptor();
+                const finalContext = disruptor.disturb(context);
+
+                deskView.setContext(finalContext.context);
+
+                if (context.punishable) {
+                    console.log("zfnjoqhjfzil!qzjm")
+                }
+
                 npc.stop();
                 this.npcControlled.push(npc);
             }

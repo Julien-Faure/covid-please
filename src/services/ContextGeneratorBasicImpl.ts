@@ -50,7 +50,8 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 surname: surname,
                 sex: isFemale ? "F" : "M",
                 birthPlace: birthPlace,
-                signatureFontId: signatureFontId
+                signatureFontId: signatureFontId,
+                signature: name.toUpperCase()
             },
             attestation : {
                 name: name,
