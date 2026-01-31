@@ -19,6 +19,7 @@ export class StreetView implements View {
     private readonly timer: Timer;
     private readonly miniNPCFactory: MiniNPCFactory;
     private readonly level: Level;
+    private actors: MiniNPC[] = [];
 
     private onNPCClickedCallback : (npc : MiniNPC) => void = () => {};
 
@@ -49,6 +50,7 @@ export class StreetView implements View {
         level.add(this.timer);
 
         this.timer.start();
+        this.spawnOne();
     }
 
     public dispose(): void {
@@ -78,6 +80,10 @@ export class StreetView implements View {
             }
             this.level.add(actor);
             actor.on("pointerdown", () => this.callOnNPCClicked(actor));
+            this.actors.push(actor);
+            actor.onPostKill = (_) => {
+                this.actors = this.actors.filter(a => a !== actor);
+            };
         }
     }
 
@@ -89,4 +95,8 @@ export class StreetView implements View {
         this.onNPCClickedCallback = func;
     }
 
+    public clearStreet() {
+        this.actors.forEach(a => this.level.remove(a));
+        this.actors = [];
+    }
 }
