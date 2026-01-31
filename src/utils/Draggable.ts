@@ -49,7 +49,13 @@ export class Draggable {
     }
 
     public stopDragging() {
-        this.dragging = false;
+        if (this.dragging) {
+            this.dragging = false;
+
+            if (this.bringToFront) {
+                this.actor.z = (this.actor.z ?? 0) - 10;
+            }
+        }
     }
 
     private onPointerDown = (evt: ex.PointerEvent) => {
@@ -85,7 +91,7 @@ export class Draggable {
     };
 
     private onPointerUp = () => {
-        this.dragging = false;
+       this.stopDragging();
     };
 
     private onPointerEnter = () => {

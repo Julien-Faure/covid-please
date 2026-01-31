@@ -9,7 +9,7 @@ export class EmptyIDCard extends ex.Actor {
             anchor: ex.vec(0, 0),
             width: 225,
             height: 150,
-            z: 3
+            z: 2
         });
     }
 
