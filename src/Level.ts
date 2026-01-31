@@ -1,4 +1,4 @@
-import {DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext, vec} from "excalibur";
+import {DefaultLoader, Engine, ExcaliburGraphicsContext, Scene, SceneActivationContext} from "excalibur";
 import {StreetView} from "./views/StreetView";
 import {PreviewView} from "./views/PreviewView";
 import {DeskView} from "./views/DeskView";
@@ -7,6 +7,7 @@ import {MiniNPC} from "./actors/MiniNPC";
 
 export class Level extends Scene {
     private lastMiniNPC: MiniNPC | null = null;
+    private npcControlled : MiniNPC[] = [];
 
     override onInitialize(engine: Engine): void {
         const ctxGenerator = new ContextGeneratorBasicImpl();
@@ -14,18 +15,26 @@ export class Level extends Scene {
         const streetView = new StreetView(this);
         streetView.init();
         streetView.onNPCClicked(npc => {
-            if(this.lastMiniNPC !== null){
-                this.lastMiniNPC.walk();
+            if (!this.wasControlled(npc)) {
+                if (this.lastMiniNPC !== null) {
+                    this.lastMiniNPC.walk();
+                }
+                this.lastMiniNPC = npc;
+                deskView.setContext(ctxGenerator.generate());
+                npc.stop();
+                this.npcControlled.push(npc);
             }
-            this.lastMiniNPC = npc;
-            deskView.setContext(ctxGenerator.generate());
-            npc.stop();
         });
 
 
         new PreviewView(this).init();
         const deskView = new DeskView(this);
         deskView.init();
+    }
+
+
+    private wasControlled(npc : MiniNPC) : boolean {
+        return this.npcControlled.includes(npc);
     }
 
     override onPreLoad(loader: DefaultLoader): void {
