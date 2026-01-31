@@ -12,6 +12,7 @@ import {StreetFountain} from "../background/StreetFountain";
 const SPAWN_INTERVAL_MS = 5000;
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 233;
+const LIMITE_TO_BE_FOREGROUND = 220;
 
 
 export class StreetView implements View {
@@ -70,7 +71,11 @@ export class StreetView implements View {
         const nb = randomInt(1,5);
         for (let i = 0; i <nb; i++) {
             const actor = this.miniNPCFactory.create();
-            actor.z = 3;
+            if (actor.pos.y > LIMITE_TO_BE_FOREGROUND - 55) {
+                actor.z = 5;
+            } else {
+                actor.z = 3;
+            }
             this.level.add(actor);
             actor.on("pointerdown", () => this.callOnNPCClicked(actor));
         }
