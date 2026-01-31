@@ -29,9 +29,7 @@ export class Level extends Scene {
 
                 deskView.setContext(finalContext.context);
 
-                if (context.punishable) {
-                    console.log("zfnjoqhjfzil!qzjm")
-                }
+
 
                 npc.stop();
                 this.npcControlled.push(npc);
@@ -39,7 +37,12 @@ export class Level extends Scene {
         });
 
 
-        new PreviewView(this).init();
+        const previewView = new PreviewView(this);
+        previewView.onPunishClicked(() => {
+            console.log("PUNISHED !!");
+        });
+        previewView.init();
+
         const deskView = new DeskView(this);
         deskView.init();
     }
