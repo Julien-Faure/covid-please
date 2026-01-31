@@ -25,6 +25,7 @@ const fonts = [
     new FontSource("./fonts/DoubleHomicide.ttf","DoubleHomicide"),
     new FontSource("./fonts/GrapeSoda.ttf","GrapeSoda"),
     new FontSource("./fonts/VNPxCopperplate.ttf","VNPxCopperplate"),
+    new FontSource("./fonts/ARCADEPI.ttf","ARCADEPI"),
 ]
 
 fonts.forEach(font => font.load());

@@ -1,13 +1,12 @@
 import * as ex from "excalibur";
-import {Vector} from "excalibur";
+import {Actor, Vector} from "excalibur";
 import {View} from "./View";
 import {Level} from "../Level";
 import {DeskBackground} from "../background/DeskBackground";
-import {EmptyIDCard} from "../actors/EmptyIDCard";
+import {IDCard} from "../actors/IDCard";
 import {Draggable} from "../utils/Draggable";
 import {Attestation} from "../actors/Attestation";
 import {AttestationReason} from "../dto/AttestationDto";
-import {FontMapper} from "../mappers/FontMapper";
 
 const VIEW_WIDTH = 1014;
 const VIEW_HEIGHT = 487;
@@ -25,25 +24,32 @@ export class DeskView implements View {
 
     init(): void {
         let background = new DeskBackground(new ex.Vector(POSITION_X, POSITION_Y));
-        let emptyIDCard = new EmptyIDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12));
-
-        for (let i = 0; i < FontMapper.getFontCount(); i++) {
-            const attestation = new Attestation(new ex.Vector(POSITION_X + (50 * i), POSITION_Y + (50 * i)), {
-                name: "Becle",
-                surname: "Denis",
-                date: "31/01/2026",
-                fontId: i,
-                reasons: [
-                    AttestationReason.FAMILY
-                ],
-                dateOfBirth: "14/02/1998"
-            });
-
-            this.level.add(attestation)
-            this.enableDraggable(attestation);
-        }
+        let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), {
+            name: "Becle",
+            surname: "Denis",
+            dateOfBirth: "14.02.1998",
+            height: "1m75",
+            signatureFontId: 0,
+            birthPlace: "JSP",
+            number1: "123456789",
+            number2: "1151D1",
+            sex: "M"
+        });
 
 
+        const attestation = new Attestation(new ex.Vector(POSITION_X + (300 ), POSITION_Y + (50 )), {
+            name: "Becle",
+            surname: "Denis",
+            date: "31/01/2026",
+            fontId: 0,
+            reasons: [
+                AttestationReason.FAMILY
+            ],
+            dateOfBirth: "14/02/1998"
+        });
+
+        this.level.add(attestation)
+        this.enableDraggable(attestation);
 
         this.level.add(background)
         this.level.add(emptyIDCard)
@@ -58,8 +64,8 @@ export class DeskView implements View {
         });
     }
 
-    private enableDraggable(emptyIDCard: EmptyIDCard) {
-        this.draggables.push(new Draggable(emptyIDCard, this, {
+    private enableDraggable(actor: Actor) {
+        this.draggables.push(new Draggable(actor, this, {
             bringToFront: true,
             clampToScreen: true
         }));

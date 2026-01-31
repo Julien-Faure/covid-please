@@ -13,7 +13,7 @@ export enum AttestationReason {
     FAMILY,
     SPORT,
     WALK,
-    MARKET,
     HEALTH,
-    JUSTICE
+    JUSTICE,
+    MARKET
 }
