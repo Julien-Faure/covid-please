@@ -1,4 +1,6 @@
-import { ImageSource, Loader } from "excalibur";
+import {FontSource, ImageSource, Loader} from "excalibur";
+
+// ******************************* Images ***************************************************
 
 export const Resources = {
   Sword: new ImageSource("./images/sword.png"),
@@ -13,3 +15,16 @@ export const loader = new Loader();
 for (const res of Object.values(Resources)) {
   loader.addResource(res);
 }
+
+
+// ******************************* FONTS ***************************************************
+
+const fonts = [
+    new FontSource("./fonts/Cavalhatriz.ttf","Cavalhatriz"),
+    new FontSource("./fonts/KiwiSoda.ttf","KiwiSoda"),
+    new FontSource("./fonts/DoubleHomicide.ttf","DoubleHomicide"),
+    new FontSource("./fonts/GrapeSoda.ttf","GrapeSoda"),
+    new FontSource("./fonts/VNPxCopperplate.ttf","VNPxCopperplate"),
+]
+
+fonts.forEach(font => font.load());
