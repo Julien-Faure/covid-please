@@ -5,7 +5,7 @@ export default interface AttestationDto {
     dateOfBirth: string,
     reasons: AttestationReason[],
     date: string,
-    signature: number
+    fontId: number
 }
 
 export enum AttestationReason {

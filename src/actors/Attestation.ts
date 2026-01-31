@@ -1,7 +1,8 @@
-import {Actor, Engine, GraphicsGroup, vec, Vector} from "excalibur";
+import {Actor, Engine, GraphicsGroup, Text, vec, Vector} from "excalibur";
 import {EmptyAttestation} from "./EmptyAttestation";
 import AttestationDto, {AttestationReason} from "../dto/AttestationDto";
 import {getText} from "../utils/Graphics";
+import {FontMapper} from "../mappers/FontMapper";
 
 export class Attestation extends Actor {
     private readonly attestationDto : AttestationDto;
@@ -27,26 +28,26 @@ export class Attestation extends Actor {
             members: [
                 {graphic: emptyAttestation, offset: vec(0, 0)},
                 {
-                    graphic: getText(this.attestationDto.name), offset: vec(72, 109)
+                    graphic: this.aText(this.attestationDto.name), offset: vec(72, 109)
                 },
                 {
-                    graphic: getText(this.attestationDto.surname), offset: vec(98, 124)
+                    graphic: this.aText(this.attestationDto.surname), offset: vec(98, 124)
                 },
                 {
-                    graphic: getText(this.attestationDto.dateOfBirth), offset: vec(190, 140)
+                    graphic: this.aText(this.attestationDto.dateOfBirth), offset: vec(190, 140)
                 },
                 {
-                    graphic: getText(this.attestationDto.date), offset: vec(75, 372)
+                    graphic: this.aText(this.attestationDto.date), offset: vec(75, 372)
                 },
                 {
-                    graphic: getText(this.attestationDto.signature.toString()), offset: vec(190, 400)
+                    graphic: this.aText(this.attestationDto.name.toUpperCase()), offset: vec(190, 400)
                 }
             ]
         });
 
         this.attestationDto.reasons.forEach(reason => {
             group.members.push({
-                graphic : getText("X"), offset: this.getReasonOffset(reason)
+                graphic : this.aText("X"), offset: this.getReasonOffset(reason)
             })
         });
 
@@ -63,5 +64,9 @@ export class Attestation extends Actor {
             case AttestationReason.WALK: return vec(32, 325);
             default: return vec(0,0);
         }
+    }
+
+    private aText(text : string) : Text {
+        return getText(text, FontMapper.getFont(this.attestationDto.fontId), 16);
     }
 }
