@@ -6,7 +6,7 @@ export const Resources = {
   Preview: new ImageSource("./images/Preview.jpg"),
   Desk: new ImageSource("./images/Desk.jpg"),
   IDCard: new ImageSource("./images/IDCard.png"),
-  Attestation: new ImageSource("./images/Attestation.jpg"),
+  Attestation: new ImageSource("./images/Attestation.png"),
 } as const;
 
 export const loader = new Loader();

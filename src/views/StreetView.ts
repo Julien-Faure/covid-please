@@ -5,6 +5,7 @@ import {StreetBackground} from "../background/StreetBackground";
 import {MiniNPCFactory} from "../actors/MiniNPCFactory";
 import {SCREEN_SIZE} from "../config/Settings";
 import {randomInt} from "../utils/Random";
+import {Vector} from "excalibur";
 
 const SPAWN_INTERVAL_MS = 5000;
 const VIEW_WIDTH = SCREEN_SIZE.width;
@@ -44,9 +45,19 @@ export class StreetView implements View {
         this.timer.start();
     }
 
-    dispose(): void {
+    public dispose(): void {
         this.timer.stop();
     }
+
+    getDimensions(): { width: number; height: number } {
+        return {height: VIEW_HEIGHT, width: VIEW_WIDTH};
+    }
+
+    getPosition(): Vector {
+        return new Vector(0,0);
+    }
+
+
 
     // -----------------------------------------------------------------------------------------------------------------
 
