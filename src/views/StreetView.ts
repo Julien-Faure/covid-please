@@ -7,7 +7,7 @@ import {SCREEN_SIZE} from "../config/Settings";
 
 const SPAWN_INTERVAL_MS = 1000;
 const VIEW_WIDTH = SCREEN_SIZE.width;
-const VIEW_HEIGHT = 175;
+const VIEW_HEIGHT = 233;
 
 
 export class StreetView implements View {
@@ -37,7 +37,7 @@ export class StreetView implements View {
 
     public init(): void {
         const level = this.level;
-        level.add(new StreetBackground(new ex.Vector(0,0), VIEW_WIDTH, VIEW_HEIGHT));
+        level.add(new StreetBackground(new ex.Vector(0,0)));
         level.add(this.timer);
 
         this.timer.start();

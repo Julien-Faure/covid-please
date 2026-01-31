@@ -3,12 +3,10 @@ import {Resources} from "../resources";
 
 
 export class StreetBackground extends ex.Actor {
-    constructor( pos : ex.Vector, width : number, height : number) {
+    constructor( pos : ex.Vector) {
         super({
             pos,
             anchor: ex.vec(0, 0),
-            width: width,
-            height: height,
             color: ex.Color.fromHex('#bd9853'),
             z: 1
         });

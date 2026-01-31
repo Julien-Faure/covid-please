@@ -7,8 +7,6 @@ export class PreviewBackground extends ex.Actor {
         super({
             pos,
             anchor: ex.vec(0, 0),
-            height: 365,
-            width: 200,
             color: ex.Color.fromHex('#4500f3'),
             z: 1
         });
