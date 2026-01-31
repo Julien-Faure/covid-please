@@ -1,14 +1,33 @@
-import { ImageSource, Loader } from "excalibur";
+import {FontSource, ImageSource, Loader} from "excalibur";
 
-// It is convenient to put your resources in one place
+// ******************************* Images ***************************************************
+
 export const Resources = {
-  Sword: new ImageSource("./images/sword.png"),
-  Street: new ImageSource("./images/Street_v0.jpg"),
-  Preview: new ImageSource("./images/Preview_v0.jpg"),
-  Desk: new ImageSource("./images/Desk_v0.jpg"),
+  StreetBG: new ImageSource("./images/Street_Background.png"),
+  StreetFG: new ImageSource("./images/Street_Foreground.png"),
+  StreetFountain: new ImageSource("./images/Street_fountain.png"),
+  Preview: new ImageSource("./images/Preview.jpg"),
+  Desk: new ImageSource("./images/Desk.jpg"),
+  IDCard: new ImageSource("./images/IDCard.png"),
+  Attestation: new ImageSource("./images/Attestation.png"),
+  WorkCert: new ImageSource("./images/Work.png"),
 } as const;
 
 export const loader = new Loader();
 for (const res of Object.values(Resources)) {
   loader.addResource(res);
 }
+
+
+// ******************************* FONTS ***************************************************
+
+const fonts = [
+    new FontSource("./fonts/Cavalhatriz.ttf","Cavalhatriz"),
+    new FontSource("./fonts/KiwiSoda.ttf","KiwiSoda"),
+    new FontSource("./fonts/DoubleHomicide.ttf","DoubleHomicide"),
+    new FontSource("./fonts/GrapeSoda.ttf","GrapeSoda"),
+    new FontSource("./fonts/VNPxCopperplate.ttf","VNPxCopperplate"),
+    new FontSource("./fonts/ARCADEPI.ttf","ARCADEPI"),
+]
+
+fonts.forEach(font => font.load());
