@@ -8,6 +8,7 @@ import {Draggable} from "../utils/Draggable";
 import {Attestation} from "../actors/Attestation";
 import {Context} from "../data/Context";
 import {WorkCert} from "../actors/WorkCert";
+import {AttestationReason} from "../dto/AttestationDto";
 
 const VIEW_WIDTH = 1014;
 const VIEW_HEIGHT = 487;
@@ -70,8 +71,10 @@ export class DeskView implements View {
         this.level.add(emptyIDCard)
         this.enableDraggable(emptyIDCard);
 
-        this.level.add(workCert);
-        this.enableDraggable(workCert);
+        if(ctx.attestation.reasons.includes(AttestationReason.WORK)){
+            this.level.add(workCert);
+            this.enableDraggable(workCert);
+        }
 
         this.clearableActors.push(emptyIDCard);
         this.clearableActors.push(attestation);
