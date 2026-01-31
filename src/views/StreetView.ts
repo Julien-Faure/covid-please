@@ -6,6 +6,8 @@ import {SCREEN_SIZE} from "../config/Settings";
 import {randomInt} from "../utils/Random";
 import {MiniNPC} from "../actors/MiniNPC";
 import {Timer, Vector} from "excalibur";
+import {StreetForeground} from "../background/StreetForeground";
+import {StreetFountain} from "../background/StreetFountain";
 
 const SPAWN_INTERVAL_MS = 5000;
 const VIEW_WIDTH = SCREEN_SIZE.width;
@@ -41,6 +43,8 @@ export class StreetView implements View {
     public init(): void {
         const level = this.level;
         level.add(new StreetBackground(new Vector(0,0)));
+        level.add(new StreetForeground(new Vector(0,0)));
+        level.add(new StreetFountain(new Vector(0,0)));
         level.add(this.timer);
 
         this.timer.start();
@@ -66,6 +70,7 @@ export class StreetView implements View {
         const nb = randomInt(1,5);
         for (let i = 0; i <nb; i++) {
             const actor = this.miniNPCFactory.create();
+            actor.z = 3;
             this.level.add(actor);
             actor.on("pointerdown", () => this.callOnNPCClicked(actor));
         }
