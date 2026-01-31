@@ -1,6 +1,5 @@
 import {Color, Engine, Scene, vec} from "excalibur";
 import {StreetView} from "./views/StreetView";
-import {PreviewView} from "./views/PreviewView";
 import {DeskView} from "./views/DeskView";
 import {ContextGeneratorBasicImpl} from "./services/ContextGeneratorBasicImpl";
 import {MiniNPC} from "./actors/MiniNPC";
@@ -53,10 +52,14 @@ export class Level extends Scene {
         });
 
 
-        const previewView = new PreviewView(this);
-        previewView.onPunishClicked(() => {
-            if (this.lastMiniNPC !== null) {
 
+
+        const deskView = new DeskView(this);
+        deskView.init();
+
+        deskView.onPunishClicked(() => {
+            if (this.lastMiniNPC !== null) {
+                console.log("aaaa")
                 // PUNISHING
 
                 this.lastMiniNPC.color = Color.fromHex('#ff0000');
@@ -68,10 +71,7 @@ export class Level extends Scene {
                 this.lastMiniNPC = null;
             }
         });
-        previewView.init();
 
-        const deskView = new DeskView(this);
-        deskView.init();
         this.gameOver = new GameOver(vec(0, 0));
         this.gameOver.onInitialize(engine);
         this.add(this.gameOver);
