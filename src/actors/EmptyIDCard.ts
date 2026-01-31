@@ -1,6 +1,7 @@
 import * as ex from "excalibur";
 import {Engine} from "excalibur";
 import {Resources} from "../resources";
+import {ZIndex} from "../views/ZIndex";
 
 export class EmptyIDCard extends ex.Actor {
     constructor(pos : ex.Vector) {
@@ -9,7 +10,7 @@ export class EmptyIDCard extends ex.Actor {
             anchor: ex.vec(0, 0),
             width: 225,
             height: 150,
-            z: 2
+            z: ZIndex.next()
         });
     }
 

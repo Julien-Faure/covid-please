@@ -12,6 +12,8 @@ type DragOptions = {
  * Attaches drag-and-drop behavior to an Actor.
  */
 export class Draggable {
+    private static drawables: Draggable[] = [];
+
     private dragging = false;
     private pointerOffset = ex.vec(0, 0);
     private readonly bringToFront: boolean;
@@ -26,6 +28,7 @@ export class Draggable {
         this.clampToScreen = options.clampToScreen ?? false;
 
         this.init();
+        Draggable.drawables.push(this);
     }
 
     private screenToRelativeToView(screenPos: ex.Vector): ex.Vector {
@@ -55,18 +58,21 @@ export class Draggable {
             if (this.bringToFront) {
                 this.actor.z = (this.actor.z ?? 0) - 10;
             }
+            this.toTheTop();
         }
     }
 
     private onPointerDown = (evt: ex.PointerEvent) => {
-        this.dragging = true;
+        if (this.isOnTheTop(evt.screenPos)){
+            this.dragging = true;
 
-        if (this.bringToFront) {
-            this.actor.z = (this.actor.z ?? 0) + 10;
+            if (this.bringToFront) {
+                this.actor.z = (this.actor.z ?? 0) + 10;
+            }
+
+            const pointerWorld = this.screenToRelativeToView(evt.screenPos);
+            this.pointerOffset = this.actor.pos.sub(pointerWorld);
         }
-
-        const pointerWorld = this.screenToRelativeToView(evt.screenPos);
-        this.pointerOffset = this.actor.pos.sub(pointerWorld);
     };
 
     private onPointerMove = (evt: ex.PointerEvent) => {
@@ -101,4 +107,33 @@ export class Draggable {
     private onPointerLeave = () => {
         document.body.style.cursor = 'default';
     };
+
+    private isOnTheTop(pos: Vector): boolean {
+        const myZ = this.actor.z ?? 0;
+
+        const drawablesAbove = Draggable.drawables.filter(d => {
+            if (d === this) return false;
+
+            const z = d.actor.z ?? 0;
+            if (z <= myZ) return false;
+
+            const left = d.actor.pos.x;
+            const right = d.actor.pos.x + d.actor.width;
+            const top = d.actor.pos.y;
+            const bottom = d.actor.pos.y + d.actor.height;
+
+            const inside =
+                pos.x >= left && pos.x <= right &&
+                pos.y >= top && pos.y <= bottom;
+
+            return inside;
+        });
+
+        return drawablesAbove.length === 0;
+    }
+
+    private toTheTop() {
+        const orderedByZ = Draggable.drawables.sort((a, b) => a.actor.z - b.actor.z);
+        this.actor.z = orderedByZ[orderedByZ.length - 1].actor.z;
+    }
 }

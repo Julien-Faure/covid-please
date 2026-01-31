@@ -3,6 +3,7 @@ import {EmptyAttestation} from "./EmptyAttestation";
 import AttestationDto, {AttestationReason} from "../dto/AttestationDto";
 import {getText} from "../utils/Graphics";
 import {FontMapper} from "../mappers/FontMapper";
+import {ZIndex} from "../views/ZIndex";
 
 export class Attestation extends Actor {
     private readonly attestationDto : AttestationDto;
@@ -13,7 +14,7 @@ export class Attestation extends Actor {
             anchor: vec(0, 0),
             width: 330,
             height: 467,
-            z: 2
+            z: ZIndex.next()
         });
 
         this.attestationDto = attestationDto;
