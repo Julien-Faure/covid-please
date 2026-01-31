@@ -59,7 +59,7 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 surname: surname,
                 dateOfBirth: attestationFormatter.format(dateOfBirth),
                 date: attestationFormatter.format(new Date()),
-                reasons: [randomInt(0, 6)],
+                reasons: [randomInt(0, 5)],
                 fontId: signatureFontId
             },
             workCert: {

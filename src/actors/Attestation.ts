@@ -1,4 +1,4 @@
-import {Actor, Engine, GraphicsGroup, Text, vec, Vector} from "excalibur";
+import {Actor, Color, Engine, GraphicsGroup, Rectangle, Text, vec, Vector} from "excalibur";
 import {EmptyAttestation} from "./EmptyAttestation";
 import AttestationDto, {AttestationReason} from "../dto/AttestationDto";
 import {getText} from "../utils/Graphics";
@@ -48,7 +48,7 @@ export class Attestation extends Actor {
 
         this.attestationDto.reasons.forEach(reason => {
             group.members.push({
-                graphic : this.aText("X"), offset: this.getReasonOffset(reason)
+                graphic : new Rectangle({width: 10, height: 10, color: Color.fromHex('#000000')}), offset: this.getReasonOffset(reason)
             })
         });
 
@@ -58,11 +58,11 @@ export class Attestation extends Actor {
     private getReasonOffset(reason : AttestationReason) : Vector {
         switch (reason) {
             case AttestationReason.WORK : return vec(32, 190);
-            case AttestationReason.MARKET: return vec(32, 215);
-            case AttestationReason.HEALTH: return vec(32, 240);
-            case AttestationReason.SPORT: return vec(32, 270);
-            case AttestationReason.JUSTICE: return vec(32, 295);
-            case AttestationReason.STUDY: return vec(32, 325);
+            case AttestationReason.MARKET: return vec(35, 217);
+            case AttestationReason.HEALTH: return vec(32, 243);
+            case AttestationReason.SPORT: return vec(35, 273);
+            case AttestationReason.JUSTICE: return vec(35, 298);
+            case AttestationReason.STUDY: return vec(35, 327);
             default: return vec(0,0);
         }
     }
