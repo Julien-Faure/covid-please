@@ -57,9 +57,7 @@ export class Level extends Scene {
         const deskView = new DeskView(this);
 
         deskView.onPunishClicked(() => {
-            console.log("sddd")
             if (this.lastMiniNPC !== null) {
-                console.log("aaaa")
                 // PUNISHING
 
                 this.lastMiniNPC.color = Color.fromHex('#ff0000');
