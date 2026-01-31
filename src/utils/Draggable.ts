@@ -11,60 +11,88 @@ type DragOptions = {
 /**
  * Attaches drag-and-drop behavior to an Actor.
  */
-export function makeDraggable(
-    actor: ex.Actor,
-    scene: View,
-    options: DragOptions = {}
-) {
-    const { bringToFront = true, clampToScreen = false } = options;
+export class Draggable {
+    private dragging = false;
+    private pointerOffset = ex.vec(0, 0);
+    private readonly bringToFront: boolean;
+    private readonly clampToScreen: boolean;
 
-    let dragging = false;
-    let pointerOffset = ex.vec(0, 0);
+    constructor(
+        private actor: ex.Actor,
+        private scene: View,
+        options: DragOptions = {}
+    ) {
+        this.bringToFront = options.bringToFront ?? true;
+        this.clampToScreen = options.clampToScreen ?? false;
 
-    function screenToRelativeToView(screenPos: ex.Vector): ex.Vector {
-        return new Vector(scene.getPosition().x + screenPos.x, scene.getPosition().y + screenPos.y);
+        this.init();
     }
 
-    actor.on("pointerdown", (evt: ex.PointerEvent) => {
-        dragging = true;
+    private screenToRelativeToView(screenPos: ex.Vector): ex.Vector {
+        return new Vector(this.scene.getPosition().x + screenPos.x, this.scene.getPosition().y + screenPos.y);
+    }
 
-        if (bringToFront) {
-            actor.z = (actor.z ?? 0) + 10;
+    private init() {
+        this.actor.on("pointerdown", this.onPointerDown);
+        this.actor.on("pointermove", this.onPointerMove);
+        this.actor.on("pointerup", this.onPointerUp);
+        this.actor.on("pointerenter", this.onPointerEnter);
+        this.actor.on("pointerleave", this.onPointerLeave);
+    }
+
+    public detach() {
+        this.actor.off("pointerdown", this.onPointerDown);
+        this.actor.off("pointermove", this.onPointerMove);
+        this.actor.off("pointerup", this.onPointerUp);
+        this.actor.off("pointerenter", this.onPointerEnter);
+        this.actor.off("pointerleave", this.onPointerLeave);
+    }
+
+    public stopDragging() {
+        this.dragging = false;
+    }
+
+    private onPointerDown = (evt: ex.PointerEvent) => {
+        this.dragging = true;
+
+        if (this.bringToFront) {
+            this.actor.z = (this.actor.z ?? 0) + 10;
         }
 
-        const pointerWorld = screenToRelativeToView(evt.screenPos);
-        pointerOffset = actor.pos.sub(pointerWorld);
-    });
+        const pointerWorld = this.screenToRelativeToView(evt.screenPos);
+        this.pointerOffset = this.actor.pos.sub(pointerWorld);
+    };
 
-    actor.on("pointermove", (evt: ex.PointerEvent) => {
-        if (!dragging) return;
+    private onPointerMove = (evt: ex.PointerEvent) => {
+        if (!this.dragging) return;
 
-        const pointerWorld = screenToRelativeToView(evt.screenPos);
-        const newPos = pointerWorld.add(pointerOffset);
+        const pointerWorld = this.screenToRelativeToView(evt.screenPos);
+        const newPos = pointerWorld.add(this.pointerOffset);
 
-        actor.pos = newPos;
+        this.actor.pos = newPos;
 
-        if (clampToScreen) {
-            const topLeft = screenToRelativeToView(ex.vec(0, 0));
-            const bottomRight = screenToRelativeToView(
-                ex.vec(scene.getDimensions().width, scene.getDimensions().height)
+        if (this.clampToScreen) {
+            const topLeft = this.screenToRelativeToView(ex.vec(0, 0));
+            const bottomRight = this.screenToRelativeToView(
+                ex.vec(this.scene.getDimensions().width, this.scene.getDimensions().height)
             );
 
-            actor.pos = ex.vec(
-                ex.clamp(actor.pos.x, topLeft.x, bottomRight.x),
-                ex.clamp(actor.pos.y, topLeft.y , bottomRight.y )
+            this.actor.pos = ex.vec(
+                ex.clamp(this.actor.pos.x, topLeft.x, bottomRight.x),
+                ex.clamp(this.actor.pos.y, topLeft.y, bottomRight.y)
             );
         }
-    });
+    };
 
-    actor.on("pointerup", () => {
-        dragging = false;
-    });
+    private onPointerUp = () => {
+        this.dragging = false;
+    };
 
-    actor.on("pointerenter", ()=>{
+    private onPointerEnter = () => {
         document.body.style.cursor = 'pointer';
-    });
-    actor.on("pointerleave", ()=>{
+    };
+
+    private onPointerLeave = () => {
         document.body.style.cursor = 'default';
-    });
+    };
 }

@@ -4,7 +4,7 @@ import {Level} from "../Level";
 import {DeskBackground} from "../background/DeskBackground";
 import {EmptyIDCard} from "../actors/EmptyIDCard";
 import {EmptyAttestation} from "../actors/EmptyAttestation";
-import {makeDraggable} from "../utils/Draggable";
+import {Draggable} from "../utils/Draggable";
 import {Vector} from "excalibur";
 
 const VIEW_WIDTH = 1014;
@@ -15,30 +15,39 @@ const POSITION_Y = 233;
 
 export class DeskView implements View {
     private readonly level: Level;
+    private draggables: Draggable[] = [];
 
-    constructor(level : Level) {
+    constructor(level: Level) {
         this.level = level;
     }
 
     init(): void {
-        this.level.add(new DeskBackground(new ex.Vector(POSITION_X,POSITION_Y)))
+        let background = new DeskBackground(new ex.Vector(POSITION_X, POSITION_Y));
+        this.level.add(background)
 
-        let emptyIDCard = new EmptyIDCard(new ex.Vector(POSITION_X + 12,POSITION_Y + 12));
+        let emptyIDCard = new EmptyIDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12));
         this.level.add(emptyIDCard)
-        makeDraggable(emptyIDCard, this, {
+        this.draggables.push(new Draggable(emptyIDCard, this, {
             bringToFront: true,
             clampToScreen: true
-        });
+        }));
 
-        let emptyAttestation = new EmptyAttestation(new ex.Vector(POSITION_X+250,POSITION_Y + 100));
+        let emptyAttestation = new EmptyAttestation(new ex.Vector(POSITION_X + 250, POSITION_Y + 100));
         this.level.add(emptyAttestation)
-        makeDraggable(emptyAttestation, this, {
+        this.draggables.push(new Draggable(emptyAttestation, this, {
             bringToFront: true,
             clampToScreen: true
+        }));
+
+        background.on("pointerleave", () => {
+            this.draggables.forEach(value => value.stopDragging());
+            document.body.style.cursor = "default";
         });
     }
 
     dispose(): void {
+        this.draggables.forEach(d => d.detach());
+        this.draggables = [];
     }
 
     getDimensions(): { width: number; height: number } {
@@ -51,7 +60,6 @@ export class DeskView implements View {
     getPosition(): Vector {
         return new Vector(POSITION_X, POSITION_Y);
     }
-
 
 
 }
