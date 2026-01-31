@@ -6,7 +6,7 @@ import {DeskBackground} from "../background/DeskBackground";
 import {IDCard} from "../actors/IDCard";
 import {Draggable} from "../utils/Draggable";
 import {Attestation} from "../actors/Attestation";
-import {AttestationReason} from "../dto/AttestationDto";
+import {ContextGeneratorBasicImpl} from "../services/ContextGeneratorBasicImpl";
 
 const VIEW_WIDTH = 1014;
 const VIEW_HEIGHT = 487;
@@ -24,36 +24,18 @@ export class DeskView implements View {
 
     init(): void {
         let background = new DeskBackground(new ex.Vector(POSITION_X, POSITION_Y));
-        let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), {
-            name: "Becle",
-            surname: "Denis",
-            dateOfBirth: "14.02.1998",
-            height: "1m75",
-            signatureFontId: 0,
-            birthPlace: "JSP",
-            number1: "123456789",
-            number2: "1151D1",
-            sex: "M"
-        });
 
+        const contextGenerator = new ContextGeneratorBasicImpl();
+        const ctx = contextGenerator.generate();
 
-        const attestation = new Attestation(new ex.Vector(POSITION_X + (300 ), POSITION_Y + (50 )), {
-            name: "Becle",
-            surname: "Denis",
-            date: "31/01/2026",
-            fontId: 0,
-            reasons: [
-                AttestationReason.FAMILY
-            ],
-            dateOfBirth: "14/02/1998"
-        });
+        let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
+        const attestation = new Attestation(new ex.Vector(POSITION_X + (300 ), POSITION_Y + (50 )),ctx.attestation);
 
         this.level.add(attestation)
         this.enableDraggable(attestation);
 
         this.level.add(background)
         this.level.add(emptyIDCard)
-
 
         this.enableDraggable(emptyIDCard);
 
