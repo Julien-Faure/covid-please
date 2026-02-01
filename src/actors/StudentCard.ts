@@ -30,6 +30,9 @@ export class StudentCard extends Actor{
 
                 {graphic: this.aTitle("Carte etudiante"), offset: vec(72, 10)},
 
+                {graphic: Resources.MiniNPCID.toSprite({
+                        opacity: 0.8
+                    }), offset: vec(8, 30)},
 
                 {graphic: this.aLabel("Nom:"), offset: vec(72, 35)},
                 {graphic: this.aText(this.studentDto.name), offset: vec(100, 33)},

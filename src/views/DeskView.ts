@@ -14,6 +14,10 @@ import {SCREEN_SIZE} from "../config/Settings";
 import {Convocation} from "../actors/Convocation";
 import {Ticket} from "../actors/Ticket";
 import {StudentCard} from "../actors/StudentCard";
+import {Sport} from "../actors/Sport";
+import {Doc} from "../actors/Doc";
+import {Warning} from "../actors/Warning";
+import {DisruptionDescription} from "../data/DisruptionDescription";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -25,8 +29,10 @@ export class DeskView implements View {
     private readonly level: Level;
     private draggables: Draggable[] = [];
     private clearableActors: Actor[] = [];
+    private clearableWarnings: Warning[] = [];
 
-    private punishCallback : () => void = () => {};
+    private punishCallback: () => void = () => {
+    };
 
     constructor(level: Level) {
         this.level = level;
@@ -42,7 +48,7 @@ export class DeskView implements View {
             document.body.style.cursor = "default";
         });
 
-        const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
+        const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 60, POSITION_Y + VIEW_HEIGHT - 60));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
     }
@@ -54,9 +60,20 @@ export class DeskView implements View {
         }));
     }
 
+    public popWarning(error: DisruptionDescription){
+        const warning = new Warning(vec(POSITION_X + 500, POSITION_Y + 20), {
+            error
+        });
+
+        this.level.add(warning);
+        this.enableDraggable(warning);
+        this.clearableWarnings.push(warning);
+    }
+
     dispose(): void {
         this.draggables.forEach(d => d.detach());
         this.draggables = [];
+        this.clearableWarnings.forEach(w => this.level.remove(w));
     }
 
     getDimensions(): { width: number; height: number } {
@@ -78,6 +95,8 @@ export class DeskView implements View {
         const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), ctx.convocation);
         const ticket = new Ticket(vec(POSITION_X + 300, POSITION_Y + 52), ctx.ticket);
         const studentCard = new StudentCard(vec(POSITION_X + 200, POSITION_Y + 50), ctx.student);
+        const sport = new Sport(vec(POSITION_X + 10, POSITION_Y + 10), ctx.sport);
+        const doc = new Doc(vec(POSITION_X + 450, POSITION_Y + 25), ctx.doc);
 
         this.level.add(attestation)
         this.enableDraggable(attestation);
@@ -85,28 +104,42 @@ export class DeskView implements View {
         this.level.add(emptyIDCard)
         this.enableDraggable(emptyIDCard);
 
-        if(ctx.attestation.reasons.includes(AttestationReason.WORK)){
+        const reason = [ctx.realReason];
+
+        if (reason.includes(AttestationReason.WORK)) {
             this.level.add(workCert);
             this.enableDraggable(workCert);
             this.clearableActors.push(workCert);
         }
 
-        if(ctx.attestation.reasons.includes(AttestationReason.JUSTICE)) {
+        if (reason.includes(AttestationReason.JUSTICE)) {
             this.level.add(convocation);
             this.enableDraggable(convocation);
             this.clearableActors.push(convocation);
         }
 
-        if(ctx.attestation.reasons.includes(AttestationReason.MARKET)){
+        if (reason.includes(AttestationReason.MARKET)) {
             this.level.add(ticket);
             this.enableDraggable(ticket);
             this.clearableActors.push(ticket);
         }
 
-        if (ctx.attestation.reasons.includes(AttestationReason.STUDY)) {
+        if (reason.includes(AttestationReason.STUDY)) {
             this.level.add(studentCard);
             this.enableDraggable(studentCard);
             this.clearableActors.push(studentCard);
+        }
+
+        if (reason.includes(AttestationReason.SPORT)) {
+            this.level.add(sport);
+            this.enableDraggable(sport);
+            this.clearableActors.push(sport);
+        }
+
+        if (reason.includes(AttestationReason.HEALTH)) {
+            this.level.add(doc);
+            this.enableDraggable(doc);
+            this.clearableActors.push(doc);
         }
 
         this.clearableActors.push(emptyIDCard);
@@ -120,7 +153,12 @@ export class DeskView implements View {
         this.clearableActors = [];
     }
 
-    public onPunishClicked(callback : () => void) {
+    public clearWarnings() {
+        this.clearableWarnings.forEach(w => this.level.remove(w));
+        this.clearableWarnings = [];
+    }
+
+    public onPunishClicked(callback: () => void) {
         this.punishCallback = callback;
     }
 

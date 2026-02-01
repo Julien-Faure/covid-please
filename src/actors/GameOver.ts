@@ -6,13 +6,14 @@ import {getColoredText} from "../utils/Graphics";
 export class GameOver extends Actor {
     private restartCallback: () => void;
     private isShowing = false;
+    private score = 0;
 
     constructor(pos: Vector) {
         super({
             pos,
             width: SCREEN_SIZE.width,
             height: SCREEN_SIZE.height,
-            z: 999,
+            z: 99999,
             anchor: vec(0, 0)
         });
 
@@ -24,8 +25,8 @@ export class GameOver extends Actor {
         super.onInitialize(engine);
 
         document.addEventListener('keydown', (event) => {
-            if(event.key === ' '){
-                if(this.isShowing){
+            if (event.key === ' ') {
+                if (this.isShowing) {
                     this.restartCallback();
                 }
             }
@@ -51,8 +52,12 @@ export class GameOver extends Actor {
                     offset: vec(SCREEN_SIZE.width / 2 - 90, SCREEN_SIZE.height / 2 - 100)
                 },
                 {
+                    graphic: getColoredText("Score : " + this.score, "ARCADEPI", 15, Color.White),
+                    offset: vec(SCREEN_SIZE.width / 2 - 50, SCREEN_SIZE.height / 2)
+                },
+                {
                     graphic: getColoredText("Press space to restart", "ARCADEPI", 15, Color.White),
-                    offset: vec(SCREEN_SIZE.width / 2 - 100, SCREEN_SIZE.height / 2 + 50)
+                    offset: vec(SCREEN_SIZE.width / 2 - 100, SCREEN_SIZE.height / 2 + 100)
                 }
             ]
         });
@@ -67,5 +72,9 @@ export class GameOver extends Actor {
     public hide() {
         this.isShowing = false;
         this.graphics.hide();
+    }
+
+    public setScore(score: number) {
+        this.score = score;
     }
 }

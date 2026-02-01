@@ -33,6 +33,8 @@ export class IDCard extends Actor {
 
                 {graphic: this.aTitle("  REPUBLIQUE  FRANCAISE"), offset: vec(5, 2)},
 
+                {graphic: Resources.MiniNPCID.toSprite(), offset: vec(3, 30)},
+
                 {graphic: this.aLabel("CARTE NATIONALE D'IDENTITE N°: "), offset: vec(10, 15)},
                 {graphic: this.aTinnyText(this.dto.number1), offset: vec(150, 15)},
 

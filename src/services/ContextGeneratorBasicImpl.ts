@@ -4,6 +4,7 @@ import {faker} from "@faker-js/faker/locale/fr";
 import {randomBoolean, randomInt} from "../utils/Random";
 import {FontMapper} from "../mappers/FontMapper";
 import {removeAccents} from "../utils/String";
+import {formatToDeDate, formatToFrDate} from "../utils/Date";
 
 
 export class ContextGeneratorBasicImpl implements ContextGenerator {
@@ -18,19 +19,6 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
     }
 
     generate(): Context {
-
-        const idCardFormatter = new Intl.DateTimeFormat("de-DE", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-        });
-
-        const classicFormatter = new Intl.DateTimeFormat("fr-FR", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric",
-        });
-
         const dateOfBirth = faker.date.birthdate({min: 18, max: 65, mode: 'age'});
         const actualDate = new Date();
 
@@ -38,15 +26,18 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
 
         const name = removeAccents(faker.person.lastName(isFemale ? "female" : "male"));
         const surname = removeAccents(faker.person.firstName(isFemale ? "female" : "male"));
-        let birthPlace = removeAccents(faker.location.city());
+        const birthPlace = removeAccents(faker.location.city());
 
-        let signatureFontId = randomInt(0, FontMapper.getFontCount() - 1);
+        const signatureFontId = randomInt(0, FontMapper.getFontCount() - 1);
+        const reasonId = randomInt(0, 5);
+        const companyName = removeAccents(faker.company.name());
         const ctx: Context = {
             punishable: Math.random() < this.config.punishableRatio,
+            realReason: reasonId,
             idCard: {
                 number1: faker.string.alphanumeric(8).toUpperCase(),
                 number2: faker.string.alphanumeric(4).toUpperCase(),
-                dateOfBirth: idCardFormatter.format(dateOfBirth),
+                dateOfBirth: formatToDeDate(dateOfBirth),
                 height: `1m${faker.number.int({min: 40, max: 99})}`,
                 name: name,
                 surname: surname,
@@ -58,32 +49,41 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
             attestation: {
                 name: name,
                 surname: surname,
-                dateOfBirth: classicFormatter.format(dateOfBirth),
-                date: classicFormatter.format(new Date()),
-                reasons: [randomInt(0, 5)],
+                dateOfBirth: formatToFrDate(dateOfBirth),
+                date: formatToFrDate(new Date()),
+                reasons: [reasonId],
                 fontId: signatureFontId
             },
             workCert: {
                 name: name,
-                company: removeAccents(faker.company.name()),
+                company: companyName,
                 position: removeAccents(faker.person.jobTitle()),
-                signatureFontId: signatureFontId
+                signatureFontId: signatureFontId,
+                signature: companyName
             },
             convocation: {
                 name: name,
                 surname: surname,
-                date: classicFormatter.format(actualDate),
+                date: formatToFrDate(actualDate),
                 location: "Montpellier, France"
             },
             ticket: {
-                date: classicFormatter.format(actualDate),
+                date: formatToFrDate(actualDate),
                 location: "Montpellier"
             },
             student: {
-                deliveryDate: classicFormatter.format(new Date(actualDate.getTime() - (randomInt(365, 365*4) * 24 * 60 * 60 * 1000))),
-                validityDate: classicFormatter.format(new Date(actualDate.getTime() + (randomInt(365, 365*4) * 24 * 60 * 60 * 1000))),
+                deliveryDate: formatToFrDate(new Date(actualDate.getTime() - (randomInt(365, 365*4) * 24 * 60 * 60 * 1000))),
+                validityDate: formatToFrDate(new Date(actualDate.getTime() + (randomInt(365, 365*4) * 24 * 60 * 60 * 1000))),
                 name: name,
                 surname: surname
+            },
+            sport: {
+                duration: randomInt(5, 30) + " min",
+                distance: randomInt(100, 1000) + " m"
+            },
+            doc: {
+                date: formatToFrDate(actualDate),
+                name: name
             }
         };
 

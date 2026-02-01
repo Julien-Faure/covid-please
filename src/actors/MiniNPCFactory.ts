@@ -18,7 +18,7 @@ export class MiniNPCFactory {
 
     create() : MiniNPC {
         const direction = randomBoolean();
-        const speed = randomInt(50,70);
+        const speed = randomInt(30,50);
         const y = randomInt(this.yMin, this.yMax);
         let pos;
 
