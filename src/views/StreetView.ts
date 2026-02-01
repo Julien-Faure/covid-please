@@ -10,6 +10,9 @@ import {StreetFountain} from "../background/StreetFountain";
 import {TramFactory} from "../actors/TramFactory";
 import {StreetOverlay} from "../background/StreetOverlay";
 import {Counter} from "../actors/Counter";
+import {TramLine} from "../actors/Tram";
+import {Resources} from "../resources";
+import {randomInt} from "../utils/Random";
 
 const NPC_SPAWN_INTERVAL_MS = 5000;
 const TRAM_SPAWN_INTERVAL_MS = 20000;
@@ -113,6 +116,18 @@ export class StreetView implements View {
 
     private spawnOneTram(): void {
         const tram = this.tramFactory.create();
+        if (tram.getLine() === TramLine.Black)
+        {
+            new Promise(async (resolve) => {
+                setTimeout(resolve, randomInt(5000,10000));
+            }).then(() => Resources.TramSound2.play());
+        }
+        else
+        {
+            new Promise(async (resolve) => {
+                setTimeout(resolve, randomInt(5000,10000));
+            }).then(() => Resources.TramSound1.play());
+        }
         this.level.add(tram);
     }
 

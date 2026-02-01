@@ -35,13 +35,10 @@ export class TramFactory {
         const random = randomInt(0, total );
 
         if (random < this.chance[0]) {
-
             return new Tram(pos, direction, TramLine.Line1);
         } else if (random < this.chance[0] + this.chance[1]) {
-
             return new Tram(pos, direction, TramLine.Line2);
         } else {
-
             return new Tram(pos, direction, TramLine.Black);
         }
     }
