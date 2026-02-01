@@ -32,6 +32,7 @@ export const Resources = {
     PunishButton: new ImageSource("./images/Button.png"),
     Strava: new ImageSource("./images/Strava.png"),
     Doc: new ImageSource("./images/Doc.png"),
+    MiniNPCID: new ImageSource("./images/People/People_ID.png"),
 } as const;
 
 export const loader = new Loader();
