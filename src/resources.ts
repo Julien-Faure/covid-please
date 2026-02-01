@@ -30,6 +30,7 @@ export const Resources = {
     MiniNPCWalk6: new ImageSource("./images/People/People_Walk_6.png"),
     MiniNPCWalk7: new ImageSource("./images/People/People_Walk_7.png"),
     PunishButton: new ImageSource("./images/Button.png"),
+    Strava: new ImageSource("./images/Strava.png"),
 } as const;
 
 export const loader = new Loader();

@@ -14,6 +14,7 @@ import {SCREEN_SIZE} from "../config/Settings";
 import {Convocation} from "../actors/Convocation";
 import {Ticket} from "../actors/Ticket";
 import {StudentCard} from "../actors/StudentCard";
+import {Sport} from "../actors/Sport";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -45,6 +46,14 @@ export class DeskView implements View {
         const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 60, POSITION_Y + VIEW_HEIGHT - 60));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
+
+        const sport = new Sport(vec(POSITION_X + 10, POSITION_Y + 10), {
+            duration: "30 min",
+            distance: "200 m"
+        });
+
+        this.level.add(sport);
+        this.enableDraggable(sport);
     }
 
     private enableDraggable(actor: Actor) {
