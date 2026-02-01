@@ -33,12 +33,12 @@ export const Resources = {
     Doc: new ImageSource("./images/Doc.png"),
     MiniNPCID: new ImageSource("./images/People/People_ID.png"),
     EmptyWarning: new ImageSource("./images/Warning.png"),
-    AmbianceLoop: new Sound("./sounds/VPSVP_Ambiance_Loop.wav"),
-    PeopleStop: new Sound("./sounds/VPSVP_PeopleStop.wav"),
-    Ammende: new Sound("./sounds/VPSVP_Ammende.wav"),
-    Wrong1: new Sound("./sounds/VPSVP_Wrong_1.wav"),
-    Wrong2: new Sound("./sounds/VPSVP_Wrong_2.wav"),
-    Wrong3: new Sound("./sounds/VPSVP_Wrong_3.wav")
+    AmbianceLoop: new Sound("./sounds/VPSVP_Ambiance_Loop.ogg"),
+    PeopleStop: new Sound("./sounds/VPSVP_PeopleStop.ogg"),
+    Ammende: new Sound("./sounds/VPSVP_Ammende.ogg"),
+    Wrong1: new Sound("./sounds/VPSVP_Wrong_1.ogg"),
+    Wrong2: new Sound("./sounds/VPSVP_Wrong_2.ogg"),
+    Wrong3: new Sound("./sounds/VPSVP_Wrong_3.ogg")
 } as const;
 
 export const loader = new Loader();
