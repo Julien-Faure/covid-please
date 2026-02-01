@@ -10,6 +10,7 @@ import {ConvocationDisruptor} from "./distrubtors/ConvocationDisruptor";
 import {TicketDisruptor} from "./distrubtors/TicketDisruptor";
 import {HealthDocDisruptor} from "./distrubtors/HealthDocDisruptor";
 import {StudentDisruptor} from "./distrubtors/StudentDisruptor";
+import {SportDisruptor} from "./distrubtors/SportDisruptor";
 
 
 export class ContextMasterDisruptor {
@@ -29,6 +30,7 @@ export class ContextMasterDisruptor {
         this.disruptors.push(new TicketDisruptor(0.05, 0.05));
         this.disruptors.push(new HealthDocDisruptor(0.05, 0.05));
         this.disruptors.push(new StudentDisruptor(0.05, 0.02, 0.05));
+        this.disruptors.push(new SportDisruptor(0.05, 0.1));
     }
 
     disturb(context: Context): FinalContext {
