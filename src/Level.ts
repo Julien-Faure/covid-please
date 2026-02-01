@@ -7,7 +7,7 @@ import {ContextMasterDisruptor} from "./services/ContextMasterDisruptor";
 import {Life} from "./actors/Life";
 import {FinalContext} from "./data/FinalContext";
 import {GameOver} from "./actors/GameOver";
-
+import {Resources} from "./resources";
 
 
 export class Level extends Scene {
@@ -25,6 +25,9 @@ export class Level extends Scene {
 
 
     override onInitialize(engine: Engine): void {
+        Resources.AmbianceLoop.loop = true;
+        Resources.AmbianceLoop.play();
+
         const ctxGenerator = new ContextGeneratorBasicImpl();
 
         const life = new Life(vec(60, 25));
