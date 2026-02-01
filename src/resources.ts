@@ -1,4 +1,4 @@
-import {FontSource, ImageSource, Loader} from "excalibur";
+import {FontSource, Sound, ImageSource, Loader} from "excalibur";
 
 // ******************************* Images ***************************************************
 
@@ -6,7 +6,6 @@ export const Resources = {
     StreetBG: new ImageSource("./images/Street_Background.png"),
     StreetFG: new ImageSource("./images/Street_Foreground.png"),
     StreetFountain: new ImageSource("./images/Street_fountain.png"),
-    Preview: new ImageSource("./images/Preview.jpg"),
     Desk: new ImageSource("./images/Desk.jpg"),
     IDCard: new ImageSource("./images/IDCard.png"),
     Attestation: new ImageSource("./images/Attestation.png"),
@@ -34,6 +33,16 @@ export const Resources = {
     Doc: new ImageSource("./images/Doc.png"),
     MiniNPCID: new ImageSource("./images/People/People_ID.png"),
     EmptyWarning: new ImageSource("./images/Warning.png"),
+    AmbianceLoop: new Sound("./sounds/VPSVP_Ambiance_Loop.ogg"),
+    PeopleStop: new Sound("./sounds/VPSVP_PeopleStop.ogg"),
+    Ammende: new Sound("./sounds/VPSVP_Ammende.ogg"),
+    Wrong1: new Sound("./sounds/VPSVP_Wrong_1.ogg"),
+    Wrong2: new Sound("./sounds/VPSVP_Wrong_2.ogg"),
+    Wrong3: new Sound("./sounds/VPSVP_Wrong_3.ogg"),
+    Party: new Sound("./sounds/VPSVP_Musique_Loop.mp3"),
+    TramSound1: new Sound("./sounds/VPSVP_Tram_Bell_1.ogg"),
+    TramSound2: new Sound("./sounds/VPSVP_Tram_Bell_2.ogg"),
+
 } as const;
 
 export const loader = new Loader();

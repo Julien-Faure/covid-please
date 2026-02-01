@@ -36,6 +36,10 @@ export class Tram extends Actor {
 
         this.on('exitviewport', () => this.kill());
     }
+
+    public getLine() : TramLine {
+        return this.line;
+    }
 }
 
 export enum TramLine {

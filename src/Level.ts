@@ -7,7 +7,8 @@ import {ContextMasterDisruptor} from "./services/ContextMasterDisruptor";
 import {Life} from "./actors/Life";
 import {FinalContext} from "./data/FinalContext";
 import {GameOver} from "./actors/GameOver";
-
+import {Resources} from "./resources";
+import {randomInt} from "./utils/Random";
 
 
 export class Level extends Scene {
@@ -27,6 +28,12 @@ export class Level extends Scene {
 
 
     override onInitialize(engine: Engine): void {
+        Resources.AmbianceLoop.loop = true;
+        Resources.AmbianceLoop.play();
+        new Promise(async (resolve) => {
+            setTimeout(resolve, randomInt(5000,45000));
+        }).then(() => Resources.Party.play());
+
         const ctxGenerator = new ContextGeneratorBasicImpl();
 
         const life = new Life(vec(60, 25));
@@ -37,6 +44,7 @@ export class Level extends Scene {
         streetView.init();
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc) && new Date().getTime() - this.lastDateOfControl.getTime() > 500) {
+                Resources.PeopleStop.play();
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
                     if(this.lastFinalContext!.punishable.length > 0){
@@ -83,6 +91,7 @@ export class Level extends Scene {
                     })
                     life.lostOneLife();
                 }else {
+                    Resources.Ammende.play();
                     streetView.incrementCounter();
                 }
                 this.lastMiniNPC = null;
@@ -104,6 +113,10 @@ export class Level extends Scene {
             deskView.clearWarnings();
             streetView.clearStreet();
             streetView.resetCounter();
+            Resources.AmbianceLoop.play();
+            new Promise(async (resolve) => {
+                setTimeout(resolve, randomInt(5000,45000));
+            }).then(() => Resources.Party.play(0.3));
         });
     }
 
@@ -114,6 +127,8 @@ export class Level extends Scene {
 
     private showGameOver() {
         console.log("GAME OVER")
+        Resources.AmbianceLoop.pause();
+        Resources.Party.pause();
         this.gameOver.setScore(this.streetView.getCount());
         this.gameOver.show();
     }

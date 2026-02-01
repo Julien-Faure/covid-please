@@ -62,13 +62,14 @@ export class DeskView implements View {
     }
 
     public popWarning(error: DisruptionDescription){
-        const x = POSITION_X + 500 + randomInt(-500,100);
-        const y = POSITION_Y + 20 + randomInt(-70,70);
+        const x = POSITION_X;
+        const y = POSITION_Y;
 
         const warning = new Warning(vec(x, y), {
             error
         });
 
+        this.setRandomPosition(warning);
         this.level.add(warning);
         this.enableDraggable(warning);
         this.clearableWarnings.push(warning);
