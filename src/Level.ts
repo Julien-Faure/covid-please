@@ -32,6 +32,10 @@ export class Level extends Scene {
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
                     if(this.lastFinalContext!.punishable.length > 0){
+                        this.lastFinalContext!.punishable.forEach((d)=> {
+                            deskView.popWarning(d);
+                        });
+
                         life.lostOneLife();
                     }
                     this.lastMiniNPC.color = Color.fromHex('#42ff78');
@@ -85,6 +89,7 @@ export class Level extends Scene {
             this.lastMiniNPC = null;
             this.lastFinalContext = null;
             deskView.clearDesk();
+            deskView.clearWarnings();
             streetView.clearStreet();
         });
     }

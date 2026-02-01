@@ -30,22 +30,16 @@ export class Warning extends Actor {
             members: [
                 background,
                 {
-                    graphic: this.aTitle("AVERTISSEMENT !"), offset: vec(10, 10)
+                    graphic: this.aTitle(" -- AVERTISSEMENT -- "), offset: vec(77, 10)
+                },
+                {
+                    graphic: this.aName("Source : " +removeAccents(this.warningDto.error.name)), offset: vec(10, 70)
+                },
+                {
+                    graphic: this.aDescription("Description : " + removeAccents(this.warningDto.error.description)), offset: vec(10, 100)
                 }
             ]
         });
-        for (let i = 0; i < this.warningDto.errors.length; i++) {
-            const error = this.warningDto.errors[i];
-            const yBase = 50 * (i+1);
-            group.members.push(...[
-                {
-                    graphic: this.aName("- " + removeAccents(error.name)), offset: vec(10, yBase)
-                },
-                {
-                    graphic: this.aDescription(removeAccents(error.description)), offset: vec(30, yBase + 20)
-                }
-            ]);
-        }
 
         this.graphics.use(group);
     }
@@ -55,7 +49,7 @@ export class Warning extends Actor {
     }
 
     private aName(text: string) : Text {
-        return getColoredText(text, "ARCADEPI", 14, Color.fromHex('#ffffff'));
+        return getColoredText(text, "ARCADEPI", 16, Color.fromHex('#ffffff'));
     }
 
     private aDescription(text: string) : Text {
