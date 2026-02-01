@@ -5,7 +5,7 @@ import {Resources} from "../resources";
 export class Life extends Actor {
 
     private readonly totalLives = 3;
-    private lives = 1;
+    private lives = 3;
     private gameOverCallback : () => void;
 
     constructor(pos: Vector) {
