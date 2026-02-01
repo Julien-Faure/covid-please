@@ -57,7 +57,7 @@ export class IDCard extends Actor {
                 {graphic: this.aLittleText(this.dto.height), offset: vec(107, 87)},
 
                 {graphic: this.aLabel("Signature : "), offset: vec(73, 100)},
-                {graphic: this.aSignature(this.dto.signature,this.dto.signatureFontId), offset: vec(140, 90)},
+                {graphic: this.aSignature(this.dto.signature,this.dto.signatureFontId), offset: vec(120, 95)},
 
                 {graphic: this.aBottomLabel(`IDFRA${this.dto.name} <<<<<<<<<<<<<<<<<<<<<<`), offset: vec(10, 115)},
                 {graphic: this.aBottomLabel(`${this.dto.number1}${this.dto.surname}<<<<<<<${this.dto.number2}`), offset: vec(10, 130)},
@@ -93,7 +93,7 @@ export class IDCard extends Actor {
     }
 
     private aSignature(text : string, font : number) : Text {
-        return getText(text, FontMapper.getFont(font), 20);
+        return getText(text, FontMapper.getFont(font), 15);
     }
 }
 
