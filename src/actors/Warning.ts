@@ -33,7 +33,7 @@ export class Warning extends Actor {
                     graphic: this.aTitle(" -- AVERTISSEMENT -- "), offset: vec(77, 10)
                 },
                 {
-                    graphic: this.aName("Source : " +removeAccents(this.warningDto.error.name)), offset: vec(10, 70)
+                    graphic: this.aName("Source : " +removeAccents(this.warningDto.error.origin)), offset: vec(10, 70)
                 },
                 {
                     graphic: this.aDescription("Description : " + removeAccents(this.warningDto.error.description)), offset: vec(10, 100)

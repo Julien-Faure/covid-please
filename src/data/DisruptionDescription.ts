@@ -1,7 +1,7 @@
 
 
 export interface DisruptionDescription {
-    name: string,
+    origin: string,
     description: string,
     punishable: boolean
 }

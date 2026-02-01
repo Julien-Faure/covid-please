@@ -53,7 +53,7 @@ export class IdCardDisruptor implements ContextDisruptor {
             }
 
             return [{
-                name: "Carte d'indentité",
+                origin: "Carte d'indentité",
                 description: "La date de naissance !",
                 punishable: true
             }];
