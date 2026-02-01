@@ -18,6 +18,7 @@ import {Sport} from "../actors/Sport";
 import {Doc} from "../actors/Doc";
 import {Warning} from "../actors/Warning";
 import {DisruptionDescription} from "../data/DisruptionDescription";
+import {randomInt} from "../utils/Random";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -61,7 +62,10 @@ export class DeskView implements View {
     }
 
     public popWarning(error: DisruptionDescription){
-        const warning = new Warning(vec(POSITION_X + 500, POSITION_Y + 20), {
+        const x = POSITION_X + 500 + randomInt(-500,100);
+        const y = POSITION_Y + 20 + randomInt(-70,70);
+
+        const warning = new Warning(vec(x, y), {
             error
         });
 
