@@ -28,7 +28,7 @@ export class ContextMasterDisruptor {
         this.disruptors.push(new ConvocationDisruptor(0.06, 0.1, 0.05));
         this.disruptors.push(new TicketDisruptor(0.05, 0.05));
         this.disruptors.push(new HealthDocDisruptor(0.05, 0.05));
-        this.disruptors.push(new StudentDisruptor(1, 0.05, 0.05));
+        this.disruptors.push(new StudentDisruptor(0.05, 0.02, 0.05));
     }
 
     disturb(context: Context): FinalContext {
