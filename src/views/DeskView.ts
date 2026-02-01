@@ -47,13 +47,6 @@ export class DeskView implements View {
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
 
-        const sport = new Sport(vec(POSITION_X + 10, POSITION_Y + 10), {
-            duration: "30 min",
-            distance: "200 m"
-        });
-
-        this.level.add(sport);
-        this.enableDraggable(sport);
     }
 
     private enableDraggable(actor: Actor) {
@@ -87,6 +80,7 @@ export class DeskView implements View {
         const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), ctx.convocation);
         const ticket = new Ticket(vec(POSITION_X + 300, POSITION_Y + 52), ctx.ticket);
         const studentCard = new StudentCard(vec(POSITION_X + 200, POSITION_Y + 50), ctx.student);
+        const sport = new Sport(vec(POSITION_X + 10, POSITION_Y + 10), ctx.sport);
 
         this.level.add(attestation)
         this.enableDraggable(attestation);
@@ -116,6 +110,12 @@ export class DeskView implements View {
             this.level.add(studentCard);
             this.enableDraggable(studentCard);
             this.clearableActors.push(studentCard);
+        }
+
+        if (ctx.attestation.reasons.includes(AttestationReason.SPORT)) {
+            this.level.add(sport);
+            this.enableDraggable(sport);
+            this.clearableActors.push(sport);
         }
 
         this.clearableActors.push(emptyIDCard);

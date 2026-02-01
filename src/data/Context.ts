@@ -4,6 +4,7 @@ import {WorkCertDto} from "../dto/WorkCertDto";
 import {ConvocationDto} from "../dto/ConvocationDto";
 import {TicketDto} from "../dto/TicketDto";
 import {StudentDto} from "../dto/StudentDto";
+import {SportDto} from "../dto/SportDto";
 
 
 export interface Context {
@@ -13,5 +14,6 @@ export interface Context {
     workCert: WorkCertDto,
     convocation: ConvocationDto,
     ticket: TicketDto,
-    student: StudentDto
+    student: StudentDto,
+    sport: SportDto
 }
