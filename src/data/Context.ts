@@ -2,6 +2,7 @@ import IDCardDto from "../dto/IDCardDto";
 import AttestationDto from "../dto/AttestationDto";
 import {WorkCertDto} from "../dto/WorkCertDto";
 import {ConvocationDto} from "../dto/ConvocationDto";
+import {TicketDto} from "../dto/TicketDto";
 
 
 export interface Context {
@@ -9,5 +10,6 @@ export interface Context {
     idCard: IDCardDto,
     attestation: AttestationDto,
     workCert: WorkCertDto,
-    convocation: ConvocationDto
+    convocation: ConvocationDto,
+    ticket: TicketDto
 }

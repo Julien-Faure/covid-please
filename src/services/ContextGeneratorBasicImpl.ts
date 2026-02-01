@@ -74,7 +74,11 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 surname: surname,
                 date: classicFormatter.format(actualDate),
                 location: "Montpellier, France"
-           }
+           },
+            ticket: {
+                date: classicFormatter.format(actualDate),
+                location: "Montpellier"
+            }
         };
 
 

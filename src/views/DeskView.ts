@@ -44,13 +44,6 @@ export class DeskView implements View {
         const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
-
-        const t = new Ticket(vec(POSITION_X + 10, POSITION_Y + 10), {
-            date: "01/02/2026",
-            location: "Montpellier"
-        });
-        this.level.add(t);
-        this.enableDraggable(t);
     }
 
     private enableDraggable(actor: Actor) {
@@ -82,6 +75,7 @@ export class DeskView implements View {
         const attestation = new Attestation(new ex.Vector(POSITION_X + (300), POSITION_Y + (50)), ctx.attestation);
         const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), ctx.workCert);
         const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), ctx.convocation);
+        const ticket = new Ticket(vec(POSITION_X + 300, POSITION_Y + 52), ctx.ticket);
 
         this.level.add(attestation)
         this.enableDraggable(attestation);
@@ -99,6 +93,12 @@ export class DeskView implements View {
             this.level.add(convocation);
             this.enableDraggable(convocation);
             this.clearableActors.push(convocation);
+        }
+
+        if(ctx.attestation.reasons.includes(AttestationReason.MARKET)){
+            this.level.add(ticket);
+            this.enableDraggable(ticket);
+            this.clearableActors.push(ticket);
         }
 
         this.clearableActors.push(emptyIDCard);
