@@ -24,6 +24,8 @@ export class Life extends Actor {
     }
 
     private drawHearts() {
+        this.graphics.hide();
+
         const fullHeart = Resources.HeartFull.toSprite();
         fullHeart.destSize = {
             width: 30, height: 30

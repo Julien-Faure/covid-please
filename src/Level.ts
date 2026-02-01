@@ -16,6 +16,12 @@ export class Level extends Scene {
     private lastFinalContext : FinalContext | null = null;
     private gameOver: GameOver = new GameOver(vec(0, 0));
     private lastDateOfControl : Date = new Date();
+    private readonly streetView : StreetView;
+
+    constructor() {
+        super();
+        this.streetView = new StreetView(this);
+    }
 
 
     override onInitialize(engine: Engine): void {
@@ -25,13 +31,17 @@ export class Level extends Scene {
         life.onGameOver(() => this.showGameOver());
         this.add(life);
 
-        const streetView = new StreetView(this);
+        const streetView = this.streetView;
         streetView.init();
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc) && new Date().getTime() - this.lastDateOfControl.getTime() > 500) {
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
-                    if(this.lastFinalContext?.punishable){
+                    if(this.lastFinalContext!.punishable.length > 0){
+                        this.lastFinalContext!.punishable.forEach((d)=> {
+                            deskView.popWarning(d);
+                        });
+
                         life.lostOneLife();
                     }
                     this.lastMiniNPC.color = Color.fromHex('#42ff78');
@@ -66,8 +76,10 @@ export class Level extends Scene {
                 this.lastMiniNPC.graphics.opacity = 0.5;
                 this.lastMiniNPC.walk();
                 deskView.clearDesk();
-                if(!this.lastFinalContext?.punishable){
+                if(this.lastFinalContext!.punishable.length === 0){
                     life.lostOneLife();
+                }else {
+                    streetView.incrementCounter();
                 }
                 this.lastMiniNPC = null;
             }
@@ -85,7 +97,9 @@ export class Level extends Scene {
             this.lastMiniNPC = null;
             this.lastFinalContext = null;
             deskView.clearDesk();
+            deskView.clearWarnings();
             streetView.clearStreet();
+            streetView.resetCounter();
         });
     }
 
@@ -96,6 +110,7 @@ export class Level extends Scene {
 
     private showGameOver() {
         console.log("GAME OVER")
+        this.gameOver.setScore(this.streetView.getCount());
         this.gameOver.show();
     }
 }

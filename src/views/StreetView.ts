@@ -4,11 +4,12 @@ import {StreetBackground} from "../background/StreetBackground";
 import {MiniNPCFactory} from "../actors/MiniNPCFactory";
 import {SCREEN_SIZE} from "../config/Settings";
 import {MiniNPC} from "../actors/MiniNPC";
-import {Timer, Vector} from "excalibur";
+import {Timer, vec, Vector} from "excalibur";
 import {StreetForeground} from "../background/StreetForeground";
 import {StreetFountain} from "../background/StreetFountain";
 import {TramFactory} from "../actors/TramFactory";
 import {StreetOverlay} from "../background/StreetOverlay";
+import {Counter} from "../actors/Counter";
 
 const NPC_SPAWN_INTERVAL_MS = 5000;
 const TRAM_SPAWN_INTERVAL_MS = 20000;
@@ -27,6 +28,7 @@ export class StreetView implements View {
 
 
     private onNPCClickedCallback : (npc : MiniNPC) => void = () => {};
+    private readonly counter: Counter;
 
     constructor(level : Level) {
         this.npcTimer = new Timer({
@@ -54,6 +56,8 @@ export class StreetView implements View {
             y: VIEW_HEIGHT - 80,
         }, [50, 40, 10]);
 
+        this.counter = new Counter(vec(VIEW_WIDTH - 100, 7));
+
         this.level = level;
     }
 
@@ -67,6 +71,7 @@ export class StreetView implements View {
         level.add(new StreetOverlay(new Vector(0,0)));
         level.add(this.npcTimer);
         level.add(this.tramTimer);
+        this.level.add(this.counter);
 
         this.npcTimer.start();
         this.tramTimer.start();
@@ -123,4 +128,17 @@ export class StreetView implements View {
         this.actors.forEach(a => this.level.remove(a));
         this.actors = [];
     }
+
+    public resetCounter() {
+        this.counter.reset();
+    }
+
+    public incrementCounter() {
+        this.counter.increase();
+    }
+
+    public getCount(): number{
+        return this.counter.getCount();
+    }
+
 }
