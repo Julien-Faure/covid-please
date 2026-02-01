@@ -7,7 +7,7 @@ export class StreetForeground extends ex.Actor {
         super({
             pos,
             anchor: ex.vec(0, 0),
-            z: 2
+            z: 3
         });
 
     }
