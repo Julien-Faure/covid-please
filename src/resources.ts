@@ -41,6 +41,7 @@ export const Resources = {
     Wrong3: new Sound("./sounds/VPSVP_Wrong_3.wav"),
     TramSound1: new Sound("./sounds/VPSVP_Tram_Bell_1.wav"),
     TramSound2: new Sound("./sounds/VPSVP_Tram_Bell_2.wav"),
+    Party: new Sound("./sounds/VPSVP_Musique_Loop.mp3"),
 
 } as const;
 
