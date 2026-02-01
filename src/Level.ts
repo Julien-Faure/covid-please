@@ -103,6 +103,7 @@ export class Level extends Scene {
             deskView.clearWarnings();
             streetView.clearStreet();
             streetView.resetCounter();
+            Resources.AmbianceLoop.play();
         });
     }
 
@@ -113,6 +114,7 @@ export class Level extends Scene {
 
     private showGameOver() {
         console.log("GAME OVER")
+        Resources.AmbianceLoop.pause();
         this.gameOver.setScore(this.streetView.getCount());
         this.gameOver.show();
     }
