@@ -13,6 +13,7 @@ import {PunishButton} from "../actors/PunishButton";
 import {SCREEN_SIZE} from "../config/Settings";
 import {Convocation} from "../actors/Convocation";
 import {Ticket} from "../actors/Ticket";
+import {StudentCard} from "../actors/StudentCard";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -44,6 +45,17 @@ export class DeskView implements View {
         const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
+
+        const studentCard = new StudentCard(vec(POSITION_X + 200, POSITION_Y + 50), {
+            deliveryDate: "01/02/2026",
+            validityDate: "01/02/2026",
+            name: "BECLE",
+            surname: "Denis",
+            dateOfBirth: "14/02/2026",
+        });
+
+        this.level.add(studentCard);
+        this.enableDraggable(studentCard);
     }
 
     private enableDraggable(actor: Actor) {
