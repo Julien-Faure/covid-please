@@ -4,6 +4,7 @@ import {Context} from "../data/Context";
 import {FinalContext} from "../data/FinalContext";
 import ContextDisruptor from "./ContextDisruptor";
 import {IdCardDisruptor} from "./distrubtors/IdCardDisruptor";
+import {AttestationDisruptor} from "./distrubtors/AttestationDisruptor";
 
 
 export class ContextMasterDisruptor {
@@ -12,8 +13,9 @@ export class ContextMasterDisruptor {
     constructor() {
         this.disruptors = [];
 
-        this.disruptors.push(new FakeSignatureDisruptor(0.1));
-        this.disruptors.push(new IdCardDisruptor(0.1, 0.1));
+        this.disruptors.push(new FakeSignatureDisruptor(0.02));
+        this.disruptors.push(new IdCardDisruptor(0.05, 0.05));
+        this.disruptors.push(new AttestationDisruptor(0.1, 0.07));
     }
 
     disturb(context: Context): FinalContext {
