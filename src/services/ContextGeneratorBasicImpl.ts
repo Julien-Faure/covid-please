@@ -41,7 +41,7 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
         let birthPlace = removeAccents(faker.location.city());
 
         let signatureFontId = randomInt(0, FontMapper.getFontCount() - 1);
-        const ctx : Context = {
+        const ctx: Context = {
             punishable: Math.random() < this.config.punishableRatio,
             idCard: {
                 number1: faker.string.alphanumeric(8).toUpperCase(),
@@ -55,7 +55,7 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 signatureFontId: signatureFontId,
                 signature: name.toUpperCase()
             },
-            attestation : {
+            attestation: {
                 name: name,
                 surname: surname,
                 dateOfBirth: classicFormatter.format(dateOfBirth),
@@ -74,10 +74,16 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 surname: surname,
                 date: classicFormatter.format(actualDate),
                 location: "Montpellier, France"
-           },
+            },
             ticket: {
                 date: classicFormatter.format(actualDate),
                 location: "Montpellier"
+            },
+            student: {
+                deliveryDate: classicFormatter.format(new Date(actualDate.getTime() - (randomInt(365, 365*4) * 24 * 60 * 60 * 1000))),
+                validityDate: classicFormatter.format(new Date(actualDate.getTime() + (randomInt(365, 365*4) * 24 * 60 * 60 * 1000))),
+                name: name,
+                surname: surname
             }
         };
 

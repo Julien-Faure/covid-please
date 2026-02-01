@@ -3,6 +3,7 @@ import AttestationDto from "../dto/AttestationDto";
 import {WorkCertDto} from "../dto/WorkCertDto";
 import {ConvocationDto} from "../dto/ConvocationDto";
 import {TicketDto} from "../dto/TicketDto";
+import {StudentDto} from "../dto/StudentDto";
 
 
 export interface Context {
@@ -11,5 +12,6 @@ export interface Context {
     attestation: AttestationDto,
     workCert: WorkCertDto,
     convocation: ConvocationDto,
-    ticket: TicketDto
+    ticket: TicketDto,
+    student: StudentDto
 }
