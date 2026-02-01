@@ -104,37 +104,39 @@ export class DeskView implements View {
         this.level.add(emptyIDCard)
         this.enableDraggable(emptyIDCard);
 
-        if (ctx.attestation.reasons.includes(AttestationReason.WORK)) {
+        const reason = [ctx.realReason];
+
+        if (reason.includes(AttestationReason.WORK)) {
             this.level.add(workCert);
             this.enableDraggable(workCert);
             this.clearableActors.push(workCert);
         }
 
-        if (ctx.attestation.reasons.includes(AttestationReason.JUSTICE)) {
+        if (reason.includes(AttestationReason.JUSTICE)) {
             this.level.add(convocation);
             this.enableDraggable(convocation);
             this.clearableActors.push(convocation);
         }
 
-        if (ctx.attestation.reasons.includes(AttestationReason.MARKET)) {
+        if (reason.includes(AttestationReason.MARKET)) {
             this.level.add(ticket);
             this.enableDraggable(ticket);
             this.clearableActors.push(ticket);
         }
 
-        if (ctx.attestation.reasons.includes(AttestationReason.STUDY)) {
+        if (reason.includes(AttestationReason.STUDY)) {
             this.level.add(studentCard);
             this.enableDraggable(studentCard);
             this.clearableActors.push(studentCard);
         }
 
-        if (ctx.attestation.reasons.includes(AttestationReason.SPORT)) {
+        if (reason.includes(AttestationReason.SPORT)) {
             this.level.add(sport);
             this.enableDraggable(sport);
             this.clearableActors.push(sport);
         }
 
-        if (ctx.attestation.reasons.includes(AttestationReason.HEALTH)) {
+        if (reason.includes(AttestationReason.HEALTH)) {
             this.level.add(doc);
             this.enableDraggable(doc);
             this.clearableActors.push(doc);

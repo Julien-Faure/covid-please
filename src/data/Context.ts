@@ -1,5 +1,5 @@
 import IDCardDto from "../dto/IDCardDto";
-import AttestationDto from "../dto/AttestationDto";
+import AttestationDto, {AttestationReason} from "../dto/AttestationDto";
 import {WorkCertDto} from "../dto/WorkCertDto";
 import {ConvocationDto} from "../dto/ConvocationDto";
 import {TicketDto} from "../dto/TicketDto";
@@ -10,6 +10,7 @@ import {DocDto} from "../dto/DocDto";
 
 export interface Context {
     punishable: boolean,
+    realReason : AttestationReason
     idCard: IDCardDto,
     attestation: AttestationDto,
     workCert: WorkCertDto,

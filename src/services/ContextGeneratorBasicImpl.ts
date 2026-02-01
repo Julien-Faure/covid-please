@@ -29,8 +29,11 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
         const birthPlace = removeAccents(faker.location.city());
 
         const signatureFontId = randomInt(0, FontMapper.getFontCount() - 1);
+        const reasonId = randomInt(0, 5);
+        const companyName = removeAccents(faker.company.name());
         const ctx: Context = {
             punishable: Math.random() < this.config.punishableRatio,
+            realReason: reasonId,
             idCard: {
                 number1: faker.string.alphanumeric(8).toUpperCase(),
                 number2: faker.string.alphanumeric(4).toUpperCase(),
@@ -48,14 +51,15 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 surname: surname,
                 dateOfBirth: formatToFrDate(dateOfBirth),
                 date: formatToFrDate(new Date()),
-                reasons: [randomInt(0, 5)],
+                reasons: [reasonId],
                 fontId: signatureFontId
             },
             workCert: {
                 name: name,
-                company: removeAccents(faker.company.name()),
+                company: companyName,
                 position: removeAccents(faker.person.jobTitle()),
-                signatureFontId: signatureFontId
+                signatureFontId: signatureFontId,
+                signature: companyName
             },
             convocation: {
                 name: name,
