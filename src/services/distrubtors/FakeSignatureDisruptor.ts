@@ -17,7 +17,7 @@ export class FakeSignatureDisruptor implements ContextDisruptor {
         if (willBeDisrupted) {
             context.idCard.signature = this.getFakeSignature(context);
             return [{
-                origin: "Carte d'identité",
+                origin: "Attestation",
                 description: "La signature est fausse.",
                 punishable: true
             }];
