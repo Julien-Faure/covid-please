@@ -50,7 +50,7 @@ export class StreetView implements View {
         this.tramFactory = new TramFactory({
             xMax: VIEW_WIDTH,
             xMin: 0,
-            y: VIEW_HEIGHT - 75,
+            y: VIEW_HEIGHT - 80,
         }, [50, 40, 10]);
 
         this.level = level;

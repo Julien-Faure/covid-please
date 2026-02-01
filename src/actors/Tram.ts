@@ -27,8 +27,8 @@ export class Tram extends Actor {
                     return Resources.Tram1.toSprite();
                 case TramLine.Line2 :
                     return Resources.Tram2.toSprite();
-                case TramLine.Line4 :
-                    return Resources.Tram4.toSprite();
+                case TramLine.Black :
+                    return Resources.TramBlack.toSprite();
             }
         };
 
@@ -41,5 +41,5 @@ export class Tram extends Actor {
 export enum TramLine {
     Line1,
     Line2,
-    Line4
+    Black
 }

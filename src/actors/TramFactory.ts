@@ -39,7 +39,7 @@ export class TramFactory {
         } else if (random < this.chance[0] + this.chance[1]) {
             return new Tram(pos, direction, TramLine.Line2);
         } else {
-            return new Tram(pos, direction, TramLine.Line4);
+            return new Tram(pos, direction, TramLine.Black);
         }
     }
 
