@@ -7,7 +7,7 @@ export class StreetFountain extends ex.Actor {
         super({
             pos,
             anchor: ex.vec(0, 0),
-            z: 4
+            z: 5
         });
 
     }

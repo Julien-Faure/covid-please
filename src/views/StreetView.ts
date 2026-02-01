@@ -8,26 +8,36 @@ import {MiniNPC} from "../actors/MiniNPC";
 import {Timer, Vector} from "excalibur";
 import {StreetForeground} from "../background/StreetForeground";
 import {StreetFountain} from "../background/StreetFountain";
+import {TramFactory} from "../actors/TramFactory";
 
-const SPAWN_INTERVAL_MS = 5000;
+const NPC_SPAWN_INTERVAL_MS = 5000;
+const TRAM_SPAWN_INTERVAL_MS = 20000;
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 233;
 const LIMITE_TO_BE_FOREGROUND = 220;
 
 
 export class StreetView implements View {
-    private readonly timer: Timer;
+    private readonly npcTimer: Timer;
+    private readonly tramTimer: Timer;
     private readonly miniNPCFactory: MiniNPCFactory;
+    private readonly tramFactory: TramFactory;
     private readonly level: Level;
     private actors: MiniNPC[] = [];
 
     private onNPCClickedCallback : (npc : MiniNPC) => void = () => {};
 
     constructor(level : Level) {
-        this.timer = new Timer({
-            interval: SPAWN_INTERVAL_MS,
+        this.npcTimer = new Timer({
+            interval: NPC_SPAWN_INTERVAL_MS,
             repeats: true,
-            action: () => this.spawnOne()
+            action: () => this.spawnOneNPC()
+        });
+
+        this.tramTimer = new Timer({
+            interval: TRAM_SPAWN_INTERVAL_MS,
+            repeats: true,
+            action: () => this.spawnOneTram()
         });
 
         this.miniNPCFactory = new MiniNPCFactory({
@@ -35,6 +45,12 @@ export class StreetView implements View {
             xMin: 0,
             yMax: VIEW_HEIGHT - 55,
             yMin: 2 * (VIEW_HEIGHT / 3)
+        });
+
+        this.tramFactory = new TramFactory({
+            xMax: VIEW_WIDTH,
+            xMin: 0,
+            y: VIEW_HEIGHT - 75,
         });
 
         this.level = level;
@@ -47,14 +63,18 @@ export class StreetView implements View {
         level.add(new StreetBackground(new Vector(0,0)));
         level.add(new StreetForeground(new Vector(0,0)));
         level.add(new StreetFountain(new Vector(0,0)));
-        level.add(this.timer);
+        level.add(this.npcTimer);
+        level.add(this.tramTimer);
 
-        this.timer.start();
-        this.spawnOne();
+        this.npcTimer.start();
+        this.tramTimer.start();
+        this.spawnOneNPC();
+        this.spawnOneTram();
     }
 
     public dispose(): void {
-        this.timer.stop();
+        this.npcTimer.stop();
+        this.tramTimer.stop();
     }
 
     getDimensions(): { width: number; height: number } {
@@ -69,14 +89,14 @@ export class StreetView implements View {
 
     // -----------------------------------------------------------------------------------------------------------------
 
-    private spawnOne(): void {
+    private spawnOneNPC(): void {
         const nb = randomInt(1,5);
         for (let i = 0; i <nb; i++) {
             const actor = this.miniNPCFactory.create();
             if (actor.pos.y > LIMITE_TO_BE_FOREGROUND - 55) {
-                actor.z = 5;
+                actor.z = 6;
             } else {
-                actor.z = 3;
+                actor.z = 4;
             }
             this.level.add(actor);
             actor.on("pointerdown", () => this.callOnNPCClicked(actor));
@@ -85,6 +105,11 @@ export class StreetView implements View {
                 this.actors = this.actors.filter(a => a !== actor);
             };
         }
+    }
+
+    private spawnOneTram(): void {
+        const tram = this.tramFactory.create();
+        this.level.add(tram);
     }
 
     private callOnNPCClicked(npc : MiniNPC) {
