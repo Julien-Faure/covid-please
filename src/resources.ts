@@ -34,6 +34,7 @@ export const Resources = {
     MiniNPCID: new ImageSource("./images/People/People_ID.png"),
     EmptyWarning: new ImageSource("./images/Warning.png"),
     AmbianceLoop: new Sound("./sounds/VPSVP_Ambiance_Loop.wav"),
+    PeopleStop: new Sound("./sounds/VPSVP_PeopleStop.wav"),
 } as const;
 
 export const loader = new Loader();
