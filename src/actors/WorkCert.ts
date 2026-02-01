@@ -35,7 +35,7 @@ export class WorkCert extends Actor {
                 {graphic: this.aText(this.dto.name), offset: vec(220, 26)},
                 {graphic: this.aText(this.dto.company), offset: vec(115, 43)},
                 {graphic: this.aText(this.dto.position), offset: vec(60, 62)},
-                {graphic: this.aSignature(this.dto.company, this.dto.signatureFontId), offset: vec(180, 80)},
+                {graphic: this.aSignature(this.dto.company, this.dto.signatureFontId), offset: vec(150, 80)},
             ]
         });
 
