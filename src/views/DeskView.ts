@@ -18,6 +18,7 @@ import {Sport} from "../actors/Sport";
 import {Doc} from "../actors/Doc";
 import {Warning} from "../actors/Warning";
 import {DisruptionDescription} from "../data/DisruptionDescription";
+import {randomInt} from "../utils/Random";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -61,7 +62,10 @@ export class DeskView implements View {
     }
 
     public popWarning(error: DisruptionDescription){
-        const warning = new Warning(vec(POSITION_X + 500, POSITION_Y + 20), {
+        const x = POSITION_X + 500 + randomInt(-500,100);
+        const y = POSITION_Y + 20 + randomInt(-70,70);
+
+        const warning = new Warning(vec(x, y), {
             error
         });
 
@@ -87,9 +91,17 @@ export class DeskView implements View {
         return new Vector(POSITION_X, POSITION_Y);
     }
 
+    private setRandomPosition(actor: Actor) {
+        actor.pos.x = POSITION_X + randomInt(0, VIEW_WIDTH - actor.width);
+        actor.pos.y = POSITION_Y + randomInt(0, VIEW_HEIGHT - actor.height);
+    }
+
     public setContext(ctx: Context): void {
         this.clearDesk();
-        let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
+
+        const randomGive = randomInt(0, 100);
+
+        const idCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
         const attestation = new Attestation(new ex.Vector(POSITION_X + (300), POSITION_Y + (50)), ctx.attestation);
         const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), ctx.workCert);
         const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), ctx.convocation);
@@ -98,51 +110,60 @@ export class DeskView implements View {
         const sport = new Sport(vec(POSITION_X + 10, POSITION_Y + 10), ctx.sport);
         const doc = new Doc(vec(POSITION_X + 450, POSITION_Y + 25), ctx.doc);
 
+        this.setRandomPosition(idCard);
+        this.setRandomPosition(attestation);
+        this.setRandomPosition(workCert);
+        this.setRandomPosition(convocation);
+        this.setRandomPosition(ticket);
+        this.setRandomPosition(studentCard);
+        this.setRandomPosition(sport);
+        this.setRandomPosition(doc);
+
         this.level.add(attestation)
         this.enableDraggable(attestation);
 
-        this.level.add(emptyIDCard)
-        this.enableDraggable(emptyIDCard);
+        this.level.add(idCard)
+        this.enableDraggable(idCard);
 
         const reason = [ctx.realReason];
 
-        if (reason.includes(AttestationReason.WORK)) {
+        if (reason.includes(AttestationReason.WORK) || randomInt(0, 100) == randomGive) {
             this.level.add(workCert);
             this.enableDraggable(workCert);
             this.clearableActors.push(workCert);
         }
 
-        if (reason.includes(AttestationReason.JUSTICE)) {
+        if (reason.includes(AttestationReason.JUSTICE) || randomInt(0, 100) == randomGive) {
             this.level.add(convocation);
             this.enableDraggable(convocation);
             this.clearableActors.push(convocation);
         }
 
-        if (reason.includes(AttestationReason.MARKET)) {
+        if (reason.includes(AttestationReason.MARKET) || randomInt(0, 100) == randomGive) {
             this.level.add(ticket);
             this.enableDraggable(ticket);
             this.clearableActors.push(ticket);
         }
 
-        if (reason.includes(AttestationReason.STUDY)) {
+        if (reason.includes(AttestationReason.STUDY) || randomInt(0, 100) == randomGive) {
             this.level.add(studentCard);
             this.enableDraggable(studentCard);
             this.clearableActors.push(studentCard);
         }
 
-        if (reason.includes(AttestationReason.SPORT)) {
+        if (reason.includes(AttestationReason.SPORT) || randomInt(0, 100) == randomGive) {
             this.level.add(sport);
             this.enableDraggable(sport);
             this.clearableActors.push(sport);
         }
 
-        if (reason.includes(AttestationReason.HEALTH)) {
+        if (reason.includes(AttestationReason.HEALTH) || randomInt(0, 100) == randomGive) {
             this.level.add(doc);
             this.enableDraggable(doc);
             this.clearableActors.push(doc);
         }
 
-        this.clearableActors.push(emptyIDCard);
+        this.clearableActors.push(idCard);
         this.clearableActors.push(attestation);
     }
 
