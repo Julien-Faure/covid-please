@@ -13,6 +13,9 @@ export const Resources = {
     WorkCert: new ImageSource("./images/Work.png"),
     HeartFull: new ImageSource("./images/heart_full.png"),
     HeartEmpty: new ImageSource("./images/heart_empty.png"),
+    Tram1: new ImageSource("./images/Tram_L1.png"),
+    Tram2: new ImageSource("./images/Tram_L2.png"),
+    TramBlack: new ImageSource("./images/Tram_Black.png"),
 } as const;
 
 export const loader = new Loader();
