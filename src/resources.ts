@@ -38,7 +38,10 @@ export const Resources = {
     Ammende: new Sound("./sounds/VPSVP_Ammende.wav"),
     Wrong1: new Sound("./sounds/VPSVP_Wrong_1.wav"),
     Wrong2: new Sound("./sounds/VPSVP_Wrong_2.wav"),
-    Wrong3: new Sound("./sounds/VPSVP_Wrong_3.wav")
+    Wrong3: new Sound("./sounds/VPSVP_Wrong_3.wav"),
+    TramSound1: new Sound("./sounds/Tram_Bell_1.wav"),
+    TramSound2: new Sound("./sounds/Tram_Bell_2.wav"),
+
 } as const;
 
 export const loader = new Loader();
