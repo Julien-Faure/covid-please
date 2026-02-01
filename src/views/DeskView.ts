@@ -11,6 +11,7 @@ import {WorkCert} from "../actors/WorkCert";
 import {AttestationReason} from "../dto/AttestationDto";
 import {PunishButton} from "../actors/PunishButton";
 import {SCREEN_SIZE} from "../config/Settings";
+import {Convocation} from "../actors/Convocation";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -41,7 +42,17 @@ export class DeskView implements View {
 
         const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
         this.level.add(punishButton)
-        punishButton.on('pointerdown', this.punishCallback)
+        punishButton.on('pointerdown', this.punishCallback);
+
+        const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), {
+            name: "BECLE",
+            surname: "Denis",
+            date: "31/01/2026",
+            location: "Montpellier, France",
+        });
+
+        this.level.add(convocation);
+        this.enableDraggable(convocation);
     }
 
     private enableDraggable(actor: Actor) {
