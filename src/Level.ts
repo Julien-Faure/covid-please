@@ -15,6 +15,7 @@ export class Level extends Scene {
     private npcControlled : MiniNPC[] = [];
     private lastFinalContext : FinalContext | null = null;
     private gameOver: GameOver = new GameOver(vec(0, 0));
+    private lastDateOfControl : Date = new Date();
 
 
     override onInitialize(engine: Engine): void {
@@ -27,7 +28,7 @@ export class Level extends Scene {
         const streetView = new StreetView(this);
         streetView.init();
         streetView.onNPCClicked(npc => {
-            if (!this.wasControlled(npc)) {
+            if (!this.wasControlled(npc) && new Date().getTime() - this.lastDateOfControl.getTime() > 500) {
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
                     if(this.lastFinalContext?.punishable){
@@ -35,8 +36,10 @@ export class Level extends Scene {
                     }
                     this.lastMiniNPC.color = Color.fromHex('#42ff78');
                     this.lastMiniNPC.walk();
+                    this.lastMiniNPC.graphics.opacity = 0.5;
                 }
 
+                this.lastDateOfControl = new Date();
                 this.lastMiniNPC = npc;
                 const context = ctxGenerator.generate();
 
@@ -60,7 +63,7 @@ export class Level extends Scene {
             if (this.lastMiniNPC !== null) {
                 // PUNISHING
 
-                this.lastMiniNPC.color = Color.fromHex('#ff0000');
+                this.lastMiniNPC.graphics.opacity = 0.5;
                 this.lastMiniNPC.walk();
                 deskView.clearDesk();
                 if(!this.lastFinalContext?.punishable){

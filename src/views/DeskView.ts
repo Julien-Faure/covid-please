@@ -14,6 +14,8 @@ import {SCREEN_SIZE} from "../config/Settings";
 import {Convocation} from "../actors/Convocation";
 import {Ticket} from "../actors/Ticket";
 import {StudentCard} from "../actors/StudentCard";
+import {Sport} from "../actors/Sport";
+import {Doc} from "../actors/Doc";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -42,7 +44,7 @@ export class DeskView implements View {
             document.body.style.cursor = "default";
         });
 
-        const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
+        const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 60, POSITION_Y + VIEW_HEIGHT - 60));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
     }
@@ -78,6 +80,8 @@ export class DeskView implements View {
         const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), ctx.convocation);
         const ticket = new Ticket(vec(POSITION_X + 300, POSITION_Y + 52), ctx.ticket);
         const studentCard = new StudentCard(vec(POSITION_X + 200, POSITION_Y + 50), ctx.student);
+        const sport = new Sport(vec(POSITION_X + 10, POSITION_Y + 10), ctx.sport);
+        const doc = new Doc(vec(POSITION_X + 450, POSITION_Y + 25), ctx.doc);
 
         this.level.add(attestation)
         this.enableDraggable(attestation);
@@ -107,6 +111,18 @@ export class DeskView implements View {
             this.level.add(studentCard);
             this.enableDraggable(studentCard);
             this.clearableActors.push(studentCard);
+        }
+
+        if (ctx.attestation.reasons.includes(AttestationReason.SPORT)) {
+            this.level.add(sport);
+            this.enableDraggable(sport);
+            this.clearableActors.push(sport);
+        }
+
+        if(ctx.attestation.reasons.includes(AttestationReason.HEALTH)) {
+            this.level.add(doc);
+            this.enableDraggable(doc);
+            this.clearableActors.push(doc);
         }
 
         this.clearableActors.push(emptyIDCard);
