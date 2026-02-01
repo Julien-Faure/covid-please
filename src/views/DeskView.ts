@@ -12,6 +12,7 @@ import {AttestationReason} from "../dto/AttestationDto";
 import {PunishButton} from "../actors/PunishButton";
 import {SCREEN_SIZE} from "../config/Settings";
 import {Convocation} from "../actors/Convocation";
+import {Ticket} from "../actors/Ticket";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -43,6 +44,13 @@ export class DeskView implements View {
         const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
+
+        const t = new Ticket(vec(POSITION_X + 10, POSITION_Y + 10), {
+            date: "01/02/2026",
+            location: "Montpellier"
+        });
+        this.level.add(t);
+        this.enableDraggable(t);
     }
 
     private enableDraggable(actor: Actor) {

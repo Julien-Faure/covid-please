@@ -16,7 +16,8 @@ export const Resources = {
     Tram1: new ImageSource("./images/Tram_L1.png"),
     Tram2: new ImageSource("./images/Tram_L2.png"),
     TramBlack: new ImageSource("./images/Tram_Black.png"),
-    EmptyConvocation: new ImageSource("./images/Convocation.png")
+    EmptyConvocation: new ImageSource("./images/Convocation.png"),
+    EmptyTicket: new ImageSource("./images/Ticket.png")
 } as const;
 
 export const loader = new Loader();
