@@ -98,6 +98,9 @@ export class DeskView implements View {
 
     public setContext(ctx: Context): void {
         this.clearDesk();
+
+        const randomGive = randomInt(0, 100);
+
         const idCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
         const attestation = new Attestation(new ex.Vector(POSITION_X + (300), POSITION_Y + (50)), ctx.attestation);
         const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), ctx.workCert);
@@ -124,37 +127,37 @@ export class DeskView implements View {
 
         const reason = [ctx.realReason];
 
-        if (reason.includes(AttestationReason.WORK)) {
+        if (reason.includes(AttestationReason.WORK) || randomInt(0, 100) == randomGive) {
             this.level.add(workCert);
             this.enableDraggable(workCert);
             this.clearableActors.push(workCert);
         }
 
-        if (reason.includes(AttestationReason.JUSTICE)) {
+        if (reason.includes(AttestationReason.JUSTICE) || randomInt(0, 100) == randomGive) {
             this.level.add(convocation);
             this.enableDraggable(convocation);
             this.clearableActors.push(convocation);
         }
 
-        if (reason.includes(AttestationReason.MARKET)) {
+        if (reason.includes(AttestationReason.MARKET) || randomInt(0, 100) == randomGive) {
             this.level.add(ticket);
             this.enableDraggable(ticket);
             this.clearableActors.push(ticket);
         }
 
-        if (reason.includes(AttestationReason.STUDY)) {
+        if (reason.includes(AttestationReason.STUDY) || randomInt(0, 100) == randomGive) {
             this.level.add(studentCard);
             this.enableDraggable(studentCard);
             this.clearableActors.push(studentCard);
         }
 
-        if (reason.includes(AttestationReason.SPORT)) {
+        if (reason.includes(AttestationReason.SPORT) || randomInt(0, 100) == randomGive) {
             this.level.add(sport);
             this.enableDraggable(sport);
             this.clearableActors.push(sport);
         }
 
-        if (reason.includes(AttestationReason.HEALTH)) {
+        if (reason.includes(AttestationReason.HEALTH) || randomInt(0, 100) == randomGive) {
             this.level.add(doc);
             this.enableDraggable(doc);
             this.clearableActors.push(doc);
