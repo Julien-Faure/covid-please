@@ -16,6 +16,7 @@ import {Ticket} from "../actors/Ticket";
 import {StudentCard} from "../actors/StudentCard";
 import {Sport} from "../actors/Sport";
 import {Doc} from "../actors/Doc";
+import {Warning} from "../actors/Warning";
 
 const VIEW_WIDTH = SCREEN_SIZE.width;
 const VIEW_HEIGHT = 487;
@@ -47,6 +48,29 @@ export class DeskView implements View {
         const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 60, POSITION_Y + VIEW_HEIGHT - 60));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
+
+        const warning =  new Warning(vec(POSITION_X + 10, POSITION_Y + 10), {
+            errors : [
+                {
+                    punishable: true,
+                    description: "Ma parole t'es trooooop nul",
+                    name: "Carte d'identité"
+                },
+                {
+                    punishable: true,
+                    description: "Ma parole t'es trooooop nul (encore)",
+                    name: "Carte d'identité (encore)"
+                },
+                {
+                    punishable: true,
+                    description: "Ma parole t'es trooooop nul (encore) (encore)",
+                    name: "Carte d'identité  (encore) (encore)"
+                }
+            ]
+        });
+
+        this.level.add(warning);
+        this.enableDraggable(warning);
     }
 
     private enableDraggable(actor: Actor) {

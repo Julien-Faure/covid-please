@@ -33,6 +33,7 @@ export const Resources = {
     Strava: new ImageSource("./images/Strava.png"),
     Doc: new ImageSource("./images/Doc.png"),
     MiniNPCID: new ImageSource("./images/People/People_ID.png"),
+    EmptyWarning: new ImageSource("./images/Warning.png"),
 } as const;
 
 export const loader = new Loader();
