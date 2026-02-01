@@ -19,6 +19,16 @@ export const Resources = {
     EmptyConvocation: new ImageSource("./images/Convocation.png"),
     EmptyTicket: new ImageSource("./images/Ticket.png"),
     EmptyStudentCard: new ImageSource("./images/StudentCard.png"),
+    MiniNPCIdle0: new ImageSource("./images/People/People_Idle_0.png"),
+    MiniNPCIdle1: new ImageSource("./images/People/People_Idle_1.png"),
+    MiniNPCWalk0: new ImageSource("./images/People/People_Walk_0.png"),
+    MiniNPCWalk1: new ImageSource("./images/People/People_Walk_1.png"),
+    MiniNPCWalk2: new ImageSource("./images/People/People_Walk_2.png"),
+    MiniNPCWalk3: new ImageSource("./images/People/People_Walk_3.png"),
+    MiniNPCWalk4: new ImageSource("./images/People/People_Walk_4.png"),
+    MiniNPCWalk5: new ImageSource("./images/People/People_Walk_5.png"),
+    MiniNPCWalk6: new ImageSource("./images/People/People_Walk_6.png"),
+    MiniNPCWalk7: new ImageSource("./images/People/People_Walk_7.png"),
 } as const;
 
 export const loader = new Loader();
