@@ -25,13 +25,14 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
             year: "numeric",
         });
 
-        const attestationFormatter = new Intl.DateTimeFormat("fr-FR", {
+        const classicFormatter = new Intl.DateTimeFormat("fr-FR", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
         });
 
         const dateOfBirth = faker.date.birthdate({min: 18, max: 65, mode: 'age'});
+        const actualDate = new Date();
 
         const isFemale = randomBoolean();
 
@@ -40,7 +41,7 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
         let birthPlace = removeAccents(faker.location.city());
 
         let signatureFontId = randomInt(0, FontMapper.getFontCount() - 1);
-        const ctx : Context = {
+        const ctx: Context = {
             punishable: Math.random() < this.config.punishableRatio,
             idCard: {
                 number1: faker.string.alphanumeric(8).toUpperCase(),
@@ -54,11 +55,11 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 signatureFontId: signatureFontId,
                 signature: name.toUpperCase()
             },
-            attestation : {
+            attestation: {
                 name: name,
                 surname: surname,
-                dateOfBirth: attestationFormatter.format(dateOfBirth),
-                date: attestationFormatter.format(new Date()),
+                dateOfBirth: classicFormatter.format(dateOfBirth),
+                date: classicFormatter.format(new Date()),
                 reasons: [randomInt(0, 5)],
                 fontId: signatureFontId
             },
@@ -67,6 +68,22 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 company: removeAccents(faker.company.name()),
                 position: removeAccents(faker.person.jobTitle()),
                 signatureFontId: signatureFontId
+            },
+            convocation: {
+                name: name,
+                surname: surname,
+                date: classicFormatter.format(actualDate),
+                location: "Montpellier, France"
+            },
+            ticket: {
+                date: classicFormatter.format(actualDate),
+                location: "Montpellier"
+            },
+            student: {
+                deliveryDate: classicFormatter.format(new Date(actualDate.getTime() - (randomInt(365, 365*4) * 24 * 60 * 60 * 1000))),
+                validityDate: classicFormatter.format(new Date(actualDate.getTime() + (randomInt(365, 365*4) * 24 * 60 * 60 * 1000))),
+                name: name,
+                surname: surname
             }
         };
 
