@@ -8,6 +8,7 @@ import {Timer, Vector} from "excalibur";
 import {StreetForeground} from "../background/StreetForeground";
 import {StreetFountain} from "../background/StreetFountain";
 import {TramFactory} from "../actors/TramFactory";
+import {StreetOverlay} from "../background/StreetOverlay";
 
 const NPC_SPAWN_INTERVAL_MS = 5000;
 const TRAM_SPAWN_INTERVAL_MS = 20000;
@@ -44,7 +45,7 @@ export class StreetView implements View {
             xMax: VIEW_WIDTH,
             xMin: 0,
             yMax: VIEW_HEIGHT - 70,
-            yMin: 2 * (VIEW_HEIGHT / 3)
+            yMin: 2 * (VIEW_HEIGHT / 3) - 15
         });
 
         this.tramFactory = new TramFactory({
@@ -63,6 +64,7 @@ export class StreetView implements View {
         level.add(new StreetBackground(new Vector(0,0)));
         level.add(new StreetForeground(new Vector(0,0)));
         level.add(new StreetFountain(new Vector(0,0)));
+        level.add(new StreetOverlay(new Vector(0,0)));
         level.add(this.npcTimer);
         level.add(this.tramTimer);
 
@@ -91,10 +93,10 @@ export class StreetView implements View {
 
     private spawnOneNPC(): void {
         const actor = this.miniNPCFactory.create();
-        if (actor.pos.y > LIMITE_TO_BE_FOREGROUND - 55) {
-            actor.z = 6;
+        if (actor.pos.y > LIMITE_TO_BE_FOREGROUND - 65) {
+            actor.z = 7;
         } else {
-            actor.z = 4;
+            actor.z = 5;
         }
         this.level.add(actor);
         actor.on("pointerdown", () => this.callOnNPCClicked(actor));

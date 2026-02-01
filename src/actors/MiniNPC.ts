@@ -1,5 +1,6 @@
 import {Actor, Color, Engine, vec, Vector, Animation} from "excalibur";
 import {Resources} from "../resources";
+import * as ex from "excalibur";
 
 export class MiniNPC extends Actor {
 
@@ -32,7 +33,8 @@ export class MiniNPC extends Actor {
     private prepareWalkAnimation(direction : boolean,speed : number) {
         const walkStep = 150 - speed;
         const spriteOptions = {
-            flipHorizontal : direction
+            flipHorizontal : direction,
+            tint: ex.Color.fromHex('#ffffff'),
         };
         this.walkAnimation = new Animation({
             frames: [
