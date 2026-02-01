@@ -17,10 +17,12 @@ export class Level extends Scene {
     private gameOver: GameOver = new GameOver(vec(0, 0));
     private lastDateOfControl : Date = new Date();
     private readonly streetView : StreetView;
+    private readonly deskView : DeskView;
 
     constructor() {
         super();
         this.streetView = new StreetView(this);
+        this.deskView = new DeskView(this);
     }
 
 
@@ -64,10 +66,7 @@ export class Level extends Scene {
             }
         });
 
-
-
-
-        const deskView = new DeskView(this);
+        const deskView = this.deskView;
 
         deskView.onPunishClicked(() => {
             if (this.lastMiniNPC !== null) {
@@ -77,6 +76,11 @@ export class Level extends Scene {
                 this.lastMiniNPC.walk();
                 deskView.clearDesk();
                 if(this.lastFinalContext!.punishable.length === 0){
+                    this.deskView.popWarning({
+                        origin: "Amende",
+                        description: "Vous avez mis une amende à quelqu'un en règle.",
+                        punishable: true
+                    })
                     life.lostOneLife();
                 }else {
                     streetView.incrementCounter();
