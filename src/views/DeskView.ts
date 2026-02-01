@@ -42,7 +42,7 @@ export class DeskView implements View {
             document.body.style.cursor = "default";
         });
 
-        const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
+        const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 60, POSITION_Y + VIEW_HEIGHT - 60));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
     }
