@@ -91,9 +91,14 @@ export class DeskView implements View {
         return new Vector(POSITION_X, POSITION_Y);
     }
 
+    private setRandomPosition(actor: Actor) {
+        actor.pos.x = POSITION_X + randomInt(0, VIEW_WIDTH - actor.width);
+        actor.pos.y = POSITION_Y + randomInt(0, VIEW_HEIGHT - actor.height);
+    }
+
     public setContext(ctx: Context): void {
         this.clearDesk();
-        let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
+        const idCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
         const attestation = new Attestation(new ex.Vector(POSITION_X + (300), POSITION_Y + (50)), ctx.attestation);
         const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), ctx.workCert);
         const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), ctx.convocation);
@@ -102,11 +107,20 @@ export class DeskView implements View {
         const sport = new Sport(vec(POSITION_X + 10, POSITION_Y + 10), ctx.sport);
         const doc = new Doc(vec(POSITION_X + 450, POSITION_Y + 25), ctx.doc);
 
+        this.setRandomPosition(idCard);
+        this.setRandomPosition(attestation);
+        this.setRandomPosition(workCert);
+        this.setRandomPosition(convocation);
+        this.setRandomPosition(ticket);
+        this.setRandomPosition(studentCard);
+        this.setRandomPosition(sport);
+        this.setRandomPosition(doc);
+
         this.level.add(attestation)
         this.enableDraggable(attestation);
 
-        this.level.add(emptyIDCard)
-        this.enableDraggable(emptyIDCard);
+        this.level.add(idCard)
+        this.enableDraggable(idCard);
 
         const reason = [ctx.realReason];
 
@@ -146,7 +160,7 @@ export class DeskView implements View {
             this.clearableActors.push(doc);
         }
 
-        this.clearableActors.push(emptyIDCard);
+        this.clearableActors.push(idCard);
         this.clearableActors.push(attestation);
     }
 
