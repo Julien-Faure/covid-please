@@ -4,6 +4,6 @@ import {DisruptionDescription} from "./DisruptionDescription";
 
 export interface FinalContext  {
     context: Context,
-    punishable: boolean,
+    punishable: DisruptionDescription[],
     disruptionsDone: DisruptionDescription[]
 }

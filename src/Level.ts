@@ -31,7 +31,7 @@ export class Level extends Scene {
             if (!this.wasControlled(npc) && new Date().getTime() - this.lastDateOfControl.getTime() > 500) {
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
-                    if(this.lastFinalContext?.punishable){
+                    if(this.lastFinalContext!.punishable.length > 0){
                         life.lostOneLife();
                     }
                     this.lastMiniNPC.color = Color.fromHex('#42ff78');
@@ -66,7 +66,7 @@ export class Level extends Scene {
                 this.lastMiniNPC.graphics.opacity = 0.5;
                 this.lastMiniNPC.walk();
                 deskView.clearDesk();
-                if(!this.lastFinalContext?.punishable){
+                if(this.lastFinalContext!.punishable.length === 0){
                     life.lostOneLife();
                 }
                 this.lastMiniNPC = null;

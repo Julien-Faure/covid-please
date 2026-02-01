@@ -11,17 +11,18 @@ export class FakeSignatureDisruptor implements ContextDisruptor {
         this.rate = rate;
     }
 
-    disturb(context: Context): DisruptionDescription | undefined {
+    disturb(context: Context): DisruptionDescription[] {
         const willBeDisrupted = Math.random() < this.rate;
 
         if (willBeDisrupted) {
             context.idCard.signature = this.getFakeSignature(context);
-            return {
+            return [{
                 name: "Fausse signature",
-                description: "La signature de la carte d'identité est remplacée par une signature fausse."
-            };
+                description: "La signature de la carte d'identité est remplacée par une signature fausse.",
+                punishable: true
+            }];
         }else {
-            return undefined;
+            return [];
         }
     }
 
