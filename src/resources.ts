@@ -35,6 +35,10 @@ export const Resources = {
     EmptyWarning: new ImageSource("./images/Warning.png"),
     AmbianceLoop: new Sound("./sounds/VPSVP_Ambiance_Loop.wav"),
     PeopleStop: new Sound("./sounds/VPSVP_PeopleStop.wav"),
+    Ammende: new Sound("./sounds/VPSVP_Ammende.wav"),
+    Wrong1: new Sound("./sounds/VPSVP_Wrong_1.wav"),
+    Wrong2: new Sound("./sounds/VPSVP_Wrong_2.wav"),
+    Wrong3: new Sound("./sounds/VPSVP_Wrong_3.wav")
 } as const;
 
 export const loader = new Loader();

@@ -53,6 +53,18 @@ export class Life extends Actor {
     }
 
     lostOneLife() {
+        switch (this.lives)
+        {
+            case 3:
+                Resources.Wrong1.play();
+                break;
+            case 2:
+                Resources.Wrong2.play();
+                break;
+            case 1:
+                Resources.Wrong3.play();
+                break;
+        }
         this.lives--;
         this.drawHearts();
         if (this.lives < 1) {

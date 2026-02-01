@@ -83,6 +83,7 @@ export class Level extends Scene {
                 if(this.lastFinalContext!.punishable.length === 0){
                     life.lostOneLife();
                 }else {
+                    Resources.Ammende.play();
                     streetView.incrementCounter();
                 }
                 this.lastMiniNPC = null;
