@@ -25,13 +25,14 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
             year: "numeric",
         });
 
-        const attestationFormatter = new Intl.DateTimeFormat("fr-FR", {
+        const classicFormatter = new Intl.DateTimeFormat("fr-FR", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric",
         });
 
         const dateOfBirth = faker.date.birthdate({min: 18, max: 65, mode: 'age'});
+        const actualDate = new Date();
 
         const isFemale = randomBoolean();
 
@@ -57,8 +58,8 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
             attestation : {
                 name: name,
                 surname: surname,
-                dateOfBirth: attestationFormatter.format(dateOfBirth),
-                date: attestationFormatter.format(new Date()),
+                dateOfBirth: classicFormatter.format(dateOfBirth),
+                date: classicFormatter.format(new Date()),
                 reasons: [randomInt(0, 5)],
                 fontId: signatureFontId
             },
@@ -67,7 +68,13 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
                 company: removeAccents(faker.company.name()),
                 position: removeAccents(faker.person.jobTitle()),
                 signatureFontId: signatureFontId
-            }
+            },
+            convocation: {
+                name: name,
+                surname: surname,
+                date: classicFormatter.format(actualDate),
+                location: "Montpellier, France"
+           }
         };
 
 

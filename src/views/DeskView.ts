@@ -43,16 +43,6 @@ export class DeskView implements View {
         const punishButton = new PunishButton(vec(POSITION_X + VIEW_WIDTH - 50, POSITION_Y + VIEW_HEIGHT - 50));
         this.level.add(punishButton)
         punishButton.on('pointerdown', this.punishCallback);
-
-        const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), {
-            name: "BECLE",
-            surname: "Denis",
-            date: "31/01/2026",
-            location: "Montpellier, France",
-        });
-
-        this.level.add(convocation);
-        this.enableDraggable(convocation);
     }
 
     private enableDraggable(actor: Actor) {
@@ -83,6 +73,7 @@ export class DeskView implements View {
         let emptyIDCard = new IDCard(new ex.Vector(POSITION_X + 12, POSITION_Y + 12), ctx.idCard);
         const attestation = new Attestation(new ex.Vector(POSITION_X + (300), POSITION_Y + (50)), ctx.attestation);
         const workCert = new WorkCert(vec(POSITION_X + 200, POSITION_Y + 10), ctx.workCert);
+        const convocation = new Convocation(vec(POSITION_X + 150, POSITION_Y + 20), ctx.convocation);
 
         this.level.add(attestation)
         this.enableDraggable(attestation);
@@ -93,11 +84,17 @@ export class DeskView implements View {
         if(ctx.attestation.reasons.includes(AttestationReason.WORK)){
             this.level.add(workCert);
             this.enableDraggable(workCert);
+            this.clearableActors.push(workCert);
+        }
+
+        if(ctx.attestation.reasons.includes(AttestationReason.JUSTICE)) {
+            this.level.add(convocation);
+            this.enableDraggable(convocation);
+            this.clearableActors.push(convocation);
         }
 
         this.clearableActors.push(emptyIDCard);
         this.clearableActors.push(attestation);
-        this.clearableActors.push(workCert);
     }
 
     public clearDesk() {

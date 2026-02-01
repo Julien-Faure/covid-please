@@ -3,6 +3,7 @@ import {ZIndex} from "../views/ZIndex";
 import {ConvocationDto} from "../dto/ConvocationDto";
 import {getText} from "../utils/Graphics";
 import {Resources} from "../resources";
+import {FontMapper} from "../mappers/FontMapper";
 
 export class Convocation extends Actor {
     private readonly convocationDto : ConvocationDto;
@@ -38,6 +39,10 @@ export class Convocation extends Actor {
                 {
                     graphic: this.aText(`a ${this.convocationDto.location}`),
                     offset: vec(60, 230)
+                },
+                {
+                    graphic: this.aSignature("LA FRONCE", 0),
+                    offset: vec(180, 400)
                 }
             ]
         });
@@ -47,6 +52,10 @@ export class Convocation extends Actor {
 
     private aText(text : string) : Text {
         return getText(text, "ARCADEPI", 12);
+    }
+
+    private aSignature(text: string, fontId: number) : Text {
+        return getText(text, FontMapper.getFont(fontId), 20);
     }
 
 }
