@@ -51,7 +51,7 @@ export class StreetView implements View {
             xMax: VIEW_WIDTH,
             xMin: 0,
             y: VIEW_HEIGHT - 75,
-        });
+        }, [50, 40, 10]);
 
         this.level = level;
     }

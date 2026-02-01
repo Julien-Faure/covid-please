@@ -15,6 +15,7 @@ export const Resources = {
     HeartEmpty: new ImageSource("./images/heart_empty.png"),
     Tram1: new ImageSource("./images/Tram_L1.png"),
     Tram2: new ImageSource("./images/Tram_L2.png"),
+    Tram4: new ImageSource("./images/Tram_L4.png"),
 } as const;
 
 export const loader = new Loader();

@@ -3,7 +3,8 @@ import {Resources} from "../resources";
 
 
 export class Tram extends Actor {
-    constructor(pos: Vector, direction: boolean) {
+    private readonly line : TramLine;
+    constructor(pos: Vector, direction: boolean, line : TramLine) {
         const directionFactor = direction ? -1 : 1;
         super({
             pos,
@@ -13,13 +14,32 @@ export class Tram extends Actor {
             vel: vec(directionFactor * 45, 0),
             z: 2
         });
+
+        this.line = line;
     }
 
     onInitialize(engine: Engine) {
         super.onInitialize(engine);
 
-        this.graphics.use(Resources.Tram1.toSprite());
+        const sprite = ()=> {
+            switch (this.line) {
+                case TramLine.Line1 :
+                    return Resources.Tram1.toSprite();
+                case TramLine.Line2 :
+                    return Resources.Tram2.toSprite();
+                case TramLine.Line4 :
+                    return Resources.Tram4.toSprite();
+            }
+        };
+
+        this.graphics.use(sprite());
 
         this.on('exitviewport', () => this.kill());
     }
+}
+
+export enum TramLine {
+    Line1,
+    Line2,
+    Line4
 }
