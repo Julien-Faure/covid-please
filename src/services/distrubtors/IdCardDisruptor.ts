@@ -31,7 +31,7 @@ export class IdCardDisruptor implements ContextDisruptor {
         if (willBeDisrupted) {
             context.idCard.height = randomInt(5, 7) + "m" + randomInt(10, 90);
             return [{
-                name: "Carte d'indentité",
+                origin: "Carte d'indentité",
                 description: "Taille abusé !",
                 punishable: true
             }];
@@ -53,7 +53,7 @@ export class IdCardDisruptor implements ContextDisruptor {
             }
 
             return [{
-                origin: "Carte d'indentité",
+                origin: "Carte d'identité",
                 description: "La date de naissance !",
                 punishable: true
             }];
