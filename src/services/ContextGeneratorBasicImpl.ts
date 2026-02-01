@@ -88,6 +88,10 @@ export class ContextGeneratorBasicImpl implements ContextGenerator {
             sport: {
                 duration: randomInt(5, 30) + " min",
                 distance: randomInt(100, 1000) + " m"
+            },
+            doc: {
+                date: classicFormatter.format(actualDate),
+                name: name
             }
         };
 
