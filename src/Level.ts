@@ -9,6 +9,7 @@ import {FinalContext} from "./data/FinalContext";
 import {GameOver} from "./actors/GameOver";
 import {Resources} from "./resources";
 import {randomInt} from "./utils/Random";
+import {playSound2D} from "./sound/SoundPlayer"
 
 
 export class Level extends Scene {
@@ -44,7 +45,7 @@ export class Level extends Scene {
         streetView.init();
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc) && new Date().getTime() - this.lastDateOfControl.getTime() > 500) {
-                Resources.PeopleStop.play();
+                playSound2D(Resources.PeopleStop,0.8,0.2,0.2);
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
                     if(this.lastFinalContext!.punishable.length > 0){
@@ -91,7 +92,7 @@ export class Level extends Scene {
                     })
                     life.lostOneLife();
                 }else {
-                    Resources.Ammende.play();
+                    playSound2D(Resources.Ammende);
                     streetView.incrementCounter();
                 }
                 this.lastMiniNPC = null;
