@@ -2,7 +2,11 @@ import {Sound} from "excalibur"
 import {Resources} from "../resources"
 import {randomInt, randomRangedFloat} from "../utils/Random";
 import {SCREEN_SIZE} from "../config/Settings";
-
+import {Actor} from "excalibur";
+import {Doc} from "../actors/Doc";
+import {Sport} from "../actors/Sport";
+import {IDCard} from "../actors/IDCard";
+import {StudentCard} from "../actors/StudentCard";
 
 export function startSounds():void
 {
@@ -10,7 +14,7 @@ export function startSounds():void
     Resources.AmbianceLoop.play();
     new Promise(async (resolve) => {
         setTimeout(resolve, randomInt(5000,45000));
-    }).then(() => Resources.Party.play());
+    }).then(() => Resources.Party.play(0.6));
 }
 
 export function gameOverSounds():void
@@ -24,15 +28,12 @@ export function restartSounds(): void
     Resources.AmbianceLoop.play();
     new Promise(async (resolve) => {
         setTimeout(resolve, randomInt(5000,45000));
-    }).then(() => Resources.Party.play(0.3));
+    }).then(() => Resources.Party.play(0.6));
 }
 
 export function playSoundPeopleStop(xPos:number):void
 {
-    let vol: number = 0.8;
-    let volRange: number = 0.2;
-    let pitchRange: number = 0.2;
-    playSound3D(Resources.PeopleStopL,Resources.PeopleStopR,xPos,vol,volRange, pitchRange);
+    playSound3D(Resources.PeopleStopL,Resources.PeopleStopR,xPos,0.8,0.3);
 }
 
 export function playSoundAmmende():void
@@ -45,13 +46,13 @@ export function playSoundLostLife(lives: number):void
     switch (lives)
     {
         case 3:
-            Resources.Wrong1.play(0.7);
+            Resources.Wrong1.play(0.6);
             break;
         case 2:
-            Resources.Wrong2.play(0.7);
+            Resources.Wrong2.play(0.6);
             break;
         case 1:
-            Resources.Wrong3.play(0.7);
+            Resources.Wrong3.play(0.6);
             break;
     }
 }
@@ -60,17 +61,29 @@ export function playSoundTramBell(xPos:number, doubleBell:boolean = false): void
 {
     if (doubleBell)
     {
-        playSound3D(Resources.TramBell2L, Resources.TramBell2R, xPos, 1);
+        playSound3D(Resources.TramBell2L, Resources.TramBell2R, xPos, 0.8,0.4);
     }
     else
     {
-        playSound3D(Resources.TramBell1L, Resources.TramBell1R, xPos, 1);
+        playSound3D(Resources.TramBell1L, Resources.TramBell1R, xPos, 0.8,0.4);
     }
 }
 
-export function playSoundDocDown()
+export function playSoundDocDown(actor:Actor)
 {
-    playSound2D(Resources.CardDown,0.5,0.2,0.3);
+    console.log(actor);
+    if (actor instanceof Doc || actor instanceof Sport)
+    {
+        playSound2D(Resources.PhoneDown,0.3,0.3,0.2)
+    }
+    else if (actor instanceof IDCard || actor instanceof StudentCard)
+    {
+        playSound2D(Resources.CardDown,0.85,0.3,0.3);
+    }
+    else
+    {
+        playSound2D(Resources.SheetDown,0.8,0.4,0.4);
+    }
 }
 
 function playSound2D(sound: Sound, volume: number = 1, volumeRandomRange: number = 0,pitchRandomRange: number = 0) : void

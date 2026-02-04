@@ -99,7 +99,7 @@ export class Draggable {
 
     private onPointerUp = () => {
        this.stopDragging();
-       playSoundDocDown();
+       playSoundDocDown(this.actor);
     };
 
     private onPointerEnter = () => {
