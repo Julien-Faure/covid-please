@@ -68,6 +68,11 @@ export function playSoundTramBell(xPos:number, doubleBell:boolean = false): void
     }
 }
 
+export function playSoundDocDown()
+{
+    playSound2D(Resources.CardDown,0.5,0.2,0.3);
+}
+
 function playSound2D(sound: Sound, volume: number = 1, volumeRandomRange: number = 0,pitchRandomRange: number = 0) : void
 {
     let vol = randomRangedFloat(volume,volumeRandomRange);

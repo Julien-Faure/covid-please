@@ -2,6 +2,7 @@
 import * as ex from "excalibur";
 import {View} from "../views/View";
 import {Vector} from "excalibur";
+import {playSoundDocDown} from "../sound/SoundPlayer";
 
 type DragOptions = {
     bringToFront?: boolean;
@@ -98,6 +99,7 @@ export class Draggable {
 
     private onPointerUp = () => {
        this.stopDragging();
+       playSoundDocDown();
     };
 
     private onPointerEnter = () => {
