@@ -7,9 +7,7 @@ import {ContextMasterDisruptor} from "./services/ContextMasterDisruptor";
 import {Life} from "./actors/Life";
 import {FinalContext} from "./data/FinalContext";
 import {GameOver} from "./actors/GameOver";
-import {Resources} from "./resources";
-import {randomInt} from "./utils/Random";
-import {playSound2D} from "./sound/SoundPlayer"
+import {playSoundPeopleStop,playSoundAmmende,startSounds,restartSounds,gameOverSounds} from "./sound/SoundPlayer"
 
 
 export class Level extends Scene {
@@ -29,12 +27,7 @@ export class Level extends Scene {
 
 
     override onInitialize(engine: Engine): void {
-        Resources.AmbianceLoop.loop = true;
-        Resources.AmbianceLoop.play();
-        new Promise(async (resolve) => {
-            setTimeout(resolve, randomInt(5000,45000));
-        }).then(() => Resources.Party.play());
-
+        startSounds();
         const ctxGenerator = new ContextGeneratorBasicImpl();
 
         const life = new Life(vec(60, 25));
@@ -45,7 +38,7 @@ export class Level extends Scene {
         streetView.init();
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc) && new Date().getTime() - this.lastDateOfControl.getTime() > 500) {
-                playSound2D(Resources.PeopleStop,0.8,0.2,0.2);
+                playSoundPeopleStop();
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
                     if(this.lastFinalContext!.punishable.length > 0){
@@ -92,7 +85,7 @@ export class Level extends Scene {
                     })
                     life.lostOneLife();
                 }else {
-                    playSound2D(Resources.Ammende);
+                    playSoundAmmende();
                     streetView.incrementCounter();
                 }
                 this.lastMiniNPC = null;
@@ -114,10 +107,7 @@ export class Level extends Scene {
             deskView.clearWarnings();
             streetView.clearStreet();
             streetView.resetCounter();
-            Resources.AmbianceLoop.play();
-            new Promise(async (resolve) => {
-                setTimeout(resolve, randomInt(5000,45000));
-            }).then(() => Resources.Party.play(0.3));
+            restartSounds();
         });
     }
 
@@ -128,8 +118,7 @@ export class Level extends Scene {
 
     private showGameOver() {
         console.log("GAME OVER")
-        Resources.AmbianceLoop.pause();
-        Resources.Party.pause();
+        gameOverSounds();
         this.gameOver.setScore(this.streetView.getCount());
         this.gameOver.show();
     }
