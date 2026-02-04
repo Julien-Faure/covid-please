@@ -38,7 +38,7 @@ export class Level extends Scene {
         streetView.init();
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc) && new Date().getTime() - this.lastDateOfControl.getTime() > 500) {
-                playSoundPeopleStop();
+                playSoundPeopleStop(npc.pos.x);
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
                     if(this.lastFinalContext!.punishable.length > 0){

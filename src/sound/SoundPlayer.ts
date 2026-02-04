@@ -27,9 +27,12 @@ export function restartSounds(): void
     }).then(() => Resources.Party.play(0.3));
 }
 
-export function playSoundPeopleStop():void
+export function playSoundPeopleStop(xPos:number):void
 {
-    playSound2D(Resources.PeopleStop,0.8,0.2,0.2);
+    let vol: number = 0.8;
+    let volRange: number = 0.2;
+    let pitchRange: number = 0.2;
+    playSound3D(Resources.PeopleStopL,Resources.PeopleStopR,xPos,vol,volRange, pitchRange);
 }
 
 export function playSoundAmmende():void
