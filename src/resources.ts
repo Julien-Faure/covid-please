@@ -45,6 +45,8 @@ export const Resources = {
     TramBell1R: new Sound("./sounds/VPSVP_Tram_Bell_1_R.mp3"),
     TramBell2L: new Sound("./sounds/VPSVP_Tram_Bell_2_L.mp3"),
     TramBell2R: new Sound("./sounds/VPSVP_Tram_Bell_2_R.mp3"),
+    SheetDown: new Sound("./sounds/VPSVP_Sheet_Down.mp3"),
+    CardDown: new Sound("./sounds/VPSVP_Card_Down.mp3"),
 
 } as const;
 
