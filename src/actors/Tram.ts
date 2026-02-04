@@ -1,6 +1,7 @@
 import {Actor, Engine, vec, Vector} from "excalibur";
 import {Resources} from "../resources";
-
+import {randomInt} from "../utils/Random";
+import {playSoundTramBell} from "../sound/SoundPlayer";
 
 export class Tram extends Actor {
     private readonly line : TramLine;
@@ -32,13 +33,25 @@ export class Tram extends Actor {
             }
         };
 
+        let minTimeBell = 2000;
+        if (this.vel.x <0) { minTimeBell = 6000 }
+        new Promise(async (resolve) => {
+            setTimeout(resolve, randomInt(minTimeBell,10000));
+        }).then(() => this.bellSound());
+
         this.graphics.use(sprite());
 
         this.on('exitviewport', () => this.kill());
     }
 
-    public getLine() : TramLine {
-        return this.line;
+    bellSound(): void
+    {
+        let xFront = this.pos.x;
+        if (this.vel.x > 0)
+        {
+            xFront += this.width;
+        }
+        playSoundTramBell(xFront, this.line === TramLine.Black);
     }
 }
 

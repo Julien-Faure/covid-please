@@ -1,6 +1,7 @@
 import {Sound} from "excalibur"
 import {Resources} from "../resources"
 import {randomInt, randomRangedFloat} from "../utils/Random";
+import {SCREEN_SIZE} from "../config/Settings";
 
 
 export function startSounds():void
@@ -52,9 +53,16 @@ export function playSoundLostLife(lives: number):void
     }
 }
 
-export function playSoundTramBell(doubleBell:boolean = false): void
+export function playSoundTramBell(xPos:number, doubleBell:boolean = false): void
 {
-
+    if (doubleBell)
+    {
+        playSound3D(Resources.TramBell2L, Resources.TramBell2R, xPos, 1);
+    }
+    else
+    {
+        playSound3D(Resources.TramBell1L, Resources.TramBell1R, xPos, 1);
+    }
 }
 
 function playSound2D(sound: Sound, volume: number = 1, volumeRandomRange: number = 0,pitchRandomRange: number = 0) : void
@@ -69,8 +77,9 @@ function playSound2D(sound: Sound, volume: number = 1, volumeRandomRange: number
     sound.play(vol);
 }
 
-/*
-function playSound3D(left: Sound, right: Sound, x:number,y:number, volume:number = 1)
-{
 
-}*/
+function playSound3D(left: Sound, right: Sound, x:number, volume: number = 1, volumeRandomRange: number = 0,pitchRandomRange: number = 0)
+{
+    playSound2D(left,(1 - x/SCREEN_SIZE.width) * volume * volume,volumeRandomRange,pitchRandomRange);
+    playSound2D(right,(x/SCREEN_SIZE.width) * volume * volume,volumeRandomRange,pitchRandomRange);
+}
