@@ -1,6 +1,6 @@
 import {Sound} from "excalibur"
 import {Resources} from "../resources"
-import {randomInt, randomRangedFloat} from "../utils/Random";
+import {randomRangedFloat} from "../utils/Random";
 import {SCREEN_SIZE} from "../config/Settings";
 import {Actor} from "excalibur";
 import {Doc} from "../actors/Doc";
@@ -12,23 +12,16 @@ export function startSounds():void
 {
     Resources.AmbianceLoop.loop = true;
     Resources.AmbianceLoop.play();
-    new Promise(async (resolve) => {
-        setTimeout(resolve, randomInt(5000,45000));
-    }).then(() => Resources.Party.play(0.6));
 }
 
 export function gameOverSounds():void
 {
     Resources.AmbianceLoop.pause();
-    Resources.Party.stop();
 }
 
 export function restartSounds(): void
 {
     Resources.AmbianceLoop.play();
-    new Promise(async (resolve) => {
-        setTimeout(resolve, randomInt(5000,45000));
-    }).then(() => Resources.Party.play(0.6));
 }
 
 export function playSoundPeopleStop(xPos:number):void
@@ -71,7 +64,6 @@ export function playSoundTramBell(xPos:number, doubleBell:boolean = false): void
 
 export function playSoundDocDown(actor:Actor)
 {
-    console.log(actor);
     if (actor instanceof Doc || actor instanceof Sport)
     {
         playSound2D(Resources.PhoneDown,0.2,0.3,0.2)

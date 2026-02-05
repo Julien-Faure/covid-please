@@ -8,6 +8,7 @@ import {Life} from "./actors/Life";
 import {FinalContext} from "./data/FinalContext";
 import {GameOver} from "./actors/GameOver";
 import {playSoundPeopleStop,playSoundAmmende,startSounds,restartSounds,gameOverSounds} from "./sound/SoundPlayer"
+import {PartyManager} from "./actors/PartyManager";
 
 
 export class Level extends Scene {
@@ -18,11 +19,13 @@ export class Level extends Scene {
     private lastDateOfControl : Date = new Date();
     private readonly streetView : StreetView;
     private readonly deskView : DeskView;
+    private partyManager: PartyManager;
 
     constructor() {
         super();
         this.streetView = new StreetView(this);
         this.deskView = new DeskView(this);
+        this.partyManager = new PartyManager();
     }
 
 
@@ -33,6 +36,7 @@ export class Level extends Scene {
         const life = new Life(vec(60, 25));
         life.onGameOver(() => this.showGameOver());
         this.add(life);
+        this.add(this.partyManager);
 
         const streetView = this.streetView;
         streetView.init();
@@ -108,6 +112,7 @@ export class Level extends Scene {
             streetView.clearStreet();
             streetView.resetCounter();
             restartSounds();
+            this.partyManager.start();
         });
     }
 
@@ -119,6 +124,7 @@ export class Level extends Scene {
     private showGameOver() {
         console.log("GAME OVER")
         gameOverSounds();
+        this.partyManager.stop();
         this.gameOver.setScore(this.streetView.getCount());
         this.gameOver.show();
     }
