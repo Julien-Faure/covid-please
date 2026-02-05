@@ -1,6 +1,7 @@
 import * as ex from "excalibur";
 import {Engine} from "excalibur";
 import {randomInt, randomNewInt} from "../utils/Random";
+import {playSoundParty,stopSoundParty} from "../sound/SoundPlayer";
 
 
 export class PartyManager extends ex.Actor {
@@ -78,6 +79,7 @@ export class PartyManager extends ex.Actor {
         this.color = ex.Color.fromHex(this.colors[randomInt(0,this.colors.length -1)]);
         this.animationTimer = this.animationTime;
         this.pos.x = this.partyXPositions[randomInt(0,this.partyXPositions.length-1)];
+        playSoundParty(this.pos.x + (this.width/2));
     }
 
     private partyStop(): void
@@ -85,6 +87,7 @@ export class PartyManager extends ex.Actor {
         this.partyOn = false;
         this.timetoNextParty = randomInt(this.timeBetweenPartyMin, this.timeBetweenPartyMax);
         this.pos.x = 0;
+        stopSoundParty();
     }
 
 }

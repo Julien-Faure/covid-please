@@ -14,6 +14,20 @@ export function startSounds():void
     Resources.AmbianceLoop.play();
 }
 
+export function playSoundParty(xPosition:number):void
+{
+    Resources.PartyL.loop = true;
+    Resources.PartyR.loop = true;
+
+    playSound3D(Resources.PartyL,Resources.PartyR,xPosition,0.8);
+}
+
+export function stopSoundParty():void
+{
+    Resources.PartyL.stop();
+    Resources.PartyR.stop();
+}
+
 export function gameOverSounds():void
 {
     Resources.AmbianceLoop.pause();
