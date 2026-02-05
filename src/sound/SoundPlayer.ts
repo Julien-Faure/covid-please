@@ -61,11 +61,11 @@ export function playSoundTramBell(xPos:number, doubleBell:boolean = false): void
 {
     if (doubleBell)
     {
-        playSound3D(Resources.TramBell2L, Resources.TramBell2R, xPos, 0.8,0.4);
+        playSound3D(Resources.TramBell2L, Resources.TramBell2R, xPos, 0.9,0.2);
     }
     else
     {
-        playSound3D(Resources.TramBell1L, Resources.TramBell1R, xPos, 0.8,0.4);
+        playSound3D(Resources.TramBell1L, Resources.TramBell1R, xPos, 0.9,0.2);
     }
 }
 
@@ -74,7 +74,7 @@ export function playSoundDocDown(actor:Actor)
     console.log(actor);
     if (actor instanceof Doc || actor instanceof Sport)
     {
-        playSound2D(Resources.PhoneDown,0.3,0.3,0.2)
+        playSound2D(Resources.PhoneDown,0.2,0.3,0.2)
     }
     else if (actor instanceof IDCard || actor instanceof StudentCard)
     {
