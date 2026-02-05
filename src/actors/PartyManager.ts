@@ -1,6 +1,6 @@
 import * as ex from "excalibur";
 import {Engine} from "excalibur";
-import {randomInt, randomNewInt} from "../utils/Random";
+import {randomInt} from "../utils/Random";
 import {playSoundParty,stopSoundParty} from "../sound/SoundPlayer";
 
 
@@ -9,18 +9,18 @@ export class PartyManager extends ex.Actor {
 
     private readonly partyXPositions: number[] = [150,250,370,530,1030];
 
-    private readonly colors: string[] = ["ff2222","22ff22","2222ff"];
+    private readonly colors: string[] = ["B00096","FF0000","005223","007FBA"];
     private currentColor = 0;
-    private readonly animationTime: number = 500;
-    private animationTimer: number = 500;
+    private readonly animationTime: number = 902;
+    private animationTimer: number = 902;
 
     private partyOn: boolean = false;
-    private readonly timeBetweenPartyMin: number = 5000;
-    private readonly timeBetweenPartyMax: number = 15000;
+    private readonly timeBetweenPartyMin: number = 20000;
+    private readonly timeBetweenPartyMax: number = 50000;
     private timetoNextParty: number = 10000;
 
-    private readonly partyMinTime: number = 10000;
-    private readonly partyMaxTime: number = 30000;
+    private readonly partyMinTime: number = 20000;
+    private readonly partyMaxTime: number = 75000;
     private partyTimer: number = 0;
 
     constructor() {
@@ -56,12 +56,17 @@ export class PartyManager extends ex.Actor {
             if (this.partyOn) {
                 this.animationTimer -= elapsed;
                 this.partyTimer -= elapsed;
-                if (this.partyTimer < 0) {
-                    this.partyStop();
-                } else if (this.animationTimer < 0) {
-                    this.animationTimer = this.animationTime;
-                    this.currentColor = randomNewInt(0, this.colors.length - 1,this.currentColor);
-                    this.color = ex.Color.fromHex(this.colors[this.currentColor]);
+                if (this.animationTimer < 0) {
+                    if (this.partyTimer < 0 )
+                    {
+                        this.partyStop();
+                    }
+                    else
+                    {
+                        this.animationTimer = this.animationTime;
+                        this.currentColor = (this.currentColor + 1) % this.colors.length;
+                        this.color = ex.Color.fromHex(this.colors[this.currentColor]);
+                    }
                 }
             } else {
                 this.timetoNextParty -= elapsed;
@@ -76,7 +81,8 @@ export class PartyManager extends ex.Actor {
     {
         this.partyOn = true;
         this.partyTimer = randomInt(this.partyMinTime,this.partyMaxTime);
-        this.color = ex.Color.fromHex(this.colors[randomInt(0,this.colors.length -1)]);
+        this.color = ex.Color.fromHex(this.colors[0]);
+        this.currentColor = 0;
         this.animationTimer = this.animationTime;
         this.pos.x = this.partyXPositions[randomInt(0,this.partyXPositions.length-1)];
         playSoundParty(this.pos.x + (this.width/2));
