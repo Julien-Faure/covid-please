@@ -4,6 +4,7 @@ import {FontSource, Sound, ImageSource, Loader} from "excalibur";
 
 export const Resources = {
     StreetBG: new ImageSource("./images/Street_Background.png"),
+    StreetBG2: new ImageSource("./images/Street_Background_2.png"),
     StreetFG: new ImageSource("./images/Street_Foreground.png"),
     StreetFountain: new ImageSource("./images/Street_fountain.png"),
     Desk: new ImageSource("./images/Desk.jpg"),

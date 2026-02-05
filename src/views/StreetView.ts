@@ -1,6 +1,7 @@
 import {View} from "./View";
 import {Level} from "../Level";
 import {StreetBackground} from "../background/StreetBackground";
+import {StreetBackground2} from "../background/StreetBackground2";
 import {MiniNPCFactory} from "../actors/MiniNPCFactory";
 import {SCREEN_SIZE} from "../config/Settings";
 import {MiniNPC} from "../actors/MiniNPC";
@@ -65,6 +66,7 @@ export class StreetView implements View {
 
     public init(): void {
         const level = this.level;
+        level.add(new StreetBackground2(new Vector(0,0)));
         level.add(new StreetBackground(new Vector(0,0)));
         level.add(new StreetForeground(new Vector(0,0)));
         level.add(new StreetFountain(new Vector(0,0)));
