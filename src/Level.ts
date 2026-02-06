@@ -107,8 +107,8 @@ export class Level extends Scene {
             this.npcControlled = [];
             this.lastMiniNPC = null;
             this.lastFinalContext = null;
-            deskView.clearDesk();
             deskView.clearWarnings();
+            deskView.clearDesk();
             streetView.clearStreet();
             streetView.resetCounter();
             restartSounds();
@@ -116,6 +116,9 @@ export class Level extends Scene {
         });
     }
 
+    onPostUpdate(engine: Engine, elapsed: number) {
+        this.deskView.update(engine.input.pointers.primary.lastScreenPos);
+    }
 
     private wasControlled(npc : MiniNPC) : boolean {
         return this.npcControlled.includes(npc);

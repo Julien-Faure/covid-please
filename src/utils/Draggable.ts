@@ -38,7 +38,6 @@ export class Draggable {
 
     private init() {
         this.actor.on("pointerdown", this.onPointerDown);
-        this.actor.on("pointermove", this.onPointerMove);
         this.actor.on("pointerup", this.onPointerUp);
         this.actor.on("pointerenter", this.onPointerEnter);
         this.actor.on("pointerleave", this.onPointerLeave);
@@ -46,7 +45,6 @@ export class Draggable {
 
     public detach() {
         this.actor.off("pointerdown", this.onPointerDown);
-        this.actor.off("pointermove", this.onPointerMove);
         this.actor.off("pointerup", this.onPointerUp);
         this.actor.off("pointerenter", this.onPointerEnter);
         this.actor.off("pointerleave", this.onPointerLeave);
@@ -64,6 +62,28 @@ export class Draggable {
         }
     }
 
+    public updatePosition(mouseScreenPosition: ex.Vector)
+    {
+        if (this.dragging)
+        {
+
+            const pointerWorld = this.screenToRelativeToView(mouseScreenPosition);
+            this.actor.pos = pointerWorld.add(this.pointerOffset);
+
+            if (this.clampToScreen) {
+                const topLeft = this.screenToRelativeToView(ex.vec(0, 0));
+                const bottomRight = this.screenToRelativeToView(
+                    ex.vec(this.scene.getDimensions().width, this.scene.getDimensions().height)
+                );
+
+                this.actor.pos = ex.vec(
+                    ex.clamp(this.actor.pos.x, topLeft.x, bottomRight.x),
+                    ex.clamp(this.actor.pos.y, topLeft.y, bottomRight.y)
+                );
+            }
+        }
+    }
+
     private onPointerDown = (evt: ex.PointerEvent) => {
         if (this.isOnTheTop(evt.screenPos)){
             this.dragging = true;
@@ -77,26 +97,6 @@ export class Draggable {
         }
     };
 
-    private onPointerMove = (evt: ex.PointerEvent) => {
-        if (!this.dragging) return;
-
-        const pointerWorld = this.screenToRelativeToView(evt.screenPos);
-        const newPos = pointerWorld.add(this.pointerOffset);
-
-        this.actor.pos = newPos;
-
-        if (this.clampToScreen) {
-            const topLeft = this.screenToRelativeToView(ex.vec(0, 0));
-            const bottomRight = this.screenToRelativeToView(
-                ex.vec(this.scene.getDimensions().width, this.scene.getDimensions().height)
-            );
-
-            this.actor.pos = ex.vec(
-                ex.clamp(this.actor.pos.x, topLeft.x, bottomRight.x),
-                ex.clamp(this.actor.pos.y, topLeft.y, bottomRight.y)
-            );
-        }
-    };
 
     private onPointerUp = () => {
        this.stopDragging();
