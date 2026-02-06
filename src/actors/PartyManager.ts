@@ -11,8 +11,8 @@ export class PartyManager extends ex.Actor {
 
     private readonly colors: string[] = ["B00096","FF0000","005223","007FBA"];
     private currentColor = 0;
-    private readonly animationTime: number = 902;
-    private animationTimer: number = 902;
+    private readonly animationTime: number = 451;
+    private animationTimer: number = 451;
 
     private partyOn: boolean = false;
     private readonly timeBetweenPartyMin: number = 20000;
@@ -63,7 +63,7 @@ export class PartyManager extends ex.Actor {
                     }
                     else
                     {
-                        this.animationTimer = this.animationTime;
+                        this.animationTimer += this.animationTime;
                         this.currentColor = (this.currentColor + 1) % this.colors.length;
                         this.color = ex.Color.fromHex(this.colors[this.currentColor]);
                     }
