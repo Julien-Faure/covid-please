@@ -54,6 +54,7 @@ export class Draggable {
 
     public stopDragging() {
         if (this.dragging) {
+            playSoundDocDown(this.actor);
             this.dragging = false;
 
             if (this.bringToFront) {
@@ -99,7 +100,6 @@ export class Draggable {
 
     private onPointerUp = () => {
        this.stopDragging();
-       playSoundDocDown(this.actor);
     };
 
     private onPointerEnter = () => {
