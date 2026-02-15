@@ -75,6 +75,14 @@ export class DeskView implements View {
         this.clearableWarnings.push(warning);
     }
 
+    public update(mouseScreenPosition: Vector)
+    {
+        for(let i:number = 0; i < this.draggables.length;i++ )
+        {
+            this.draggables[i].updatePosition(mouseScreenPosition);
+        }
+    }
+
     dispose(): void {
         this.draggables.forEach(d => d.detach());
         this.draggables = [];
@@ -171,6 +179,10 @@ export class DeskView implements View {
     public clearDesk() {
         this.draggables.forEach(d => d.stopDragging());
         this.draggables = [];
+        for(let i: number = 0; i < this.clearableWarnings.length; i++)
+        {
+            this.enableDraggable(this.clearableWarnings[i]);
+        }
         this.clearableActors.forEach(a => this.level.remove(a));
         this.clearableActors = [];
     }

@@ -1,6 +1,7 @@
 import {View} from "./View";
 import {Level} from "../Level";
 import {StreetBackground} from "../background/StreetBackground";
+import {StreetBackground2} from "../background/StreetBackground2";
 import {MiniNPCFactory} from "../actors/MiniNPCFactory";
 import {SCREEN_SIZE} from "../config/Settings";
 import {MiniNPC} from "../actors/MiniNPC";
@@ -10,9 +11,6 @@ import {StreetFountain} from "../background/StreetFountain";
 import {TramFactory} from "../actors/TramFactory";
 import {StreetOverlay} from "../background/StreetOverlay";
 import {Counter} from "../actors/Counter";
-import {TramLine} from "../actors/Tram";
-import {Resources} from "../resources";
-import {randomInt} from "../utils/Random";
 
 const NPC_SPAWN_INTERVAL_MS = 5000;
 const TRAM_SPAWN_INTERVAL_MS = 20000;
@@ -68,6 +66,7 @@ export class StreetView implements View {
 
     public init(): void {
         const level = this.level;
+        level.add(new StreetBackground2(new Vector(0,0)));
         level.add(new StreetBackground(new Vector(0,0)));
         level.add(new StreetForeground(new Vector(0,0)));
         level.add(new StreetFountain(new Vector(0,0)));
@@ -116,18 +115,6 @@ export class StreetView implements View {
 
     private spawnOneTram(): void {
         const tram = this.tramFactory.create();
-        if (tram.getLine() === TramLine.Black)
-        {
-            new Promise(async (resolve) => {
-                setTimeout(resolve, randomInt(5000,10000));
-            }).then(() => Resources.TramSound2.play());
-        }
-        else
-        {
-            new Promise(async (resolve) => {
-                setTimeout(resolve, randomInt(5000,10000));
-            }).then(() => Resources.TramSound1.play());
-        }
         this.level.add(tram);
     }
 

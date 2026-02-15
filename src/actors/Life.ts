@@ -1,6 +1,6 @@
 import {Actor, Engine, GraphicsGroup, vec, Vector} from "excalibur";
 import {Resources} from "../resources";
-
+import {playSoundLostLife} from "../sound/SoundPlayer";
 
 export class Life extends Actor {
 
@@ -53,18 +53,7 @@ export class Life extends Actor {
     }
 
     lostOneLife() {
-        switch (this.lives)
-        {
-            case 3:
-                Resources.Wrong1.play(0.7);
-                break;
-            case 2:
-                Resources.Wrong2.play(0.7);
-                break;
-            case 1:
-                Resources.Wrong3.play(0.7);
-                break;
-        }
+        playSoundLostLife(this.lives);
         this.lives--;
         this.drawHearts();
         if (this.lives < 1) {

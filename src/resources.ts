@@ -4,6 +4,7 @@ import {FontSource, Sound, ImageSource, Loader} from "excalibur";
 
 export const Resources = {
     StreetBG: new ImageSource("./images/Street_Background.png"),
+    StreetBG2: new ImageSource("./images/Street_Background_2.png"),
     StreetFG: new ImageSource("./images/Street_Foreground.png"),
     StreetFountain: new ImageSource("./images/Street_fountain.png"),
     Desk: new ImageSource("./images/Desk.jpg"),
@@ -34,14 +35,21 @@ export const Resources = {
     MiniNPCID: new ImageSource("./images/People/People_ID.png"),
     EmptyWarning: new ImageSource("./images/Warning.png"),
     AmbianceLoop: new Sound("./sounds/VPSVP_Ambiance_Loop.ogg"),
-    PeopleStop: new Sound("./sounds/VPSVP_PeopleStop.ogg"),
+    PeopleStopL: new Sound("./sounds/VPSVP_PeopleStop_L.mp3"),
+    PeopleStopR: new Sound("./sounds/VPSVP_PeopleStop_R.mp3"),
     Ammende: new Sound("./sounds/VPSVP_Ammende.ogg"),
     Wrong1: new Sound("./sounds/VPSVP_Wrong_1.ogg"),
     Wrong2: new Sound("./sounds/VPSVP_Wrong_2.ogg"),
     Wrong3: new Sound("./sounds/VPSVP_Wrong_3.ogg"),
-    Party: new Sound("./sounds/VPSVP_Musique_Loop.mp3"),
-    TramSound1: new Sound("./sounds/VPSVP_Tram_Bell_1.ogg"),
-    TramSound2: new Sound("./sounds/VPSVP_Tram_Bell_2.ogg"),
+    PartyL: new Sound("./sounds/VPSVP_Party_L.mp3"),
+    PartyR: new Sound("./sounds/VPSVP_Party_R.mp3"),
+    TramBell1L: new Sound("./sounds/VPSVP_Tram_Bell_1_L.mp3"),
+    TramBell1R: new Sound("./sounds/VPSVP_Tram_Bell_1_R.mp3"),
+    TramBell2L: new Sound("./sounds/VPSVP_Tram_Bell_2_L.mp3"),
+    TramBell2R: new Sound("./sounds/VPSVP_Tram_Bell_2_R.mp3"),
+    SheetDown: new Sound("./sounds/VPSVP_Sheet_Down.mp3"),
+    CardDown: new Sound("./sounds/VPSVP_Card_Down.mp3"),
+    PhoneDown: new Sound("./sounds/VPSVP_Phone_Down.mp3"),
 
 } as const;
 

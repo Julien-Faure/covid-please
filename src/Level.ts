@@ -7,8 +7,8 @@ import {ContextMasterDisruptor} from "./services/ContextMasterDisruptor";
 import {Life} from "./actors/Life";
 import {FinalContext} from "./data/FinalContext";
 import {GameOver} from "./actors/GameOver";
-import {Resources} from "./resources";
-import {randomInt} from "./utils/Random";
+import {playSoundPeopleStop,playSoundAmmende,startSounds,restartSounds,gameOverSounds} from "./sound/SoundPlayer"
+import {PartyManager} from "./actors/PartyManager";
 
 
 export class Level extends Scene {
@@ -19,32 +19,30 @@ export class Level extends Scene {
     private lastDateOfControl : Date = new Date();
     private readonly streetView : StreetView;
     private readonly deskView : DeskView;
+    private partyManager: PartyManager;
 
     constructor() {
         super();
         this.streetView = new StreetView(this);
         this.deskView = new DeskView(this);
+        this.partyManager = new PartyManager();
     }
 
 
     override onInitialize(engine: Engine): void {
-        Resources.AmbianceLoop.loop = true;
-        Resources.AmbianceLoop.play();
-        new Promise(async (resolve) => {
-            setTimeout(resolve, randomInt(5000,45000));
-        }).then(() => Resources.Party.play());
-
+        startSounds();
         const ctxGenerator = new ContextGeneratorBasicImpl();
 
         const life = new Life(vec(60, 25));
         life.onGameOver(() => this.showGameOver());
         this.add(life);
+        this.add(this.partyManager);
 
         const streetView = this.streetView;
         streetView.init();
         streetView.onNPCClicked(npc => {
             if (!this.wasControlled(npc) && new Date().getTime() - this.lastDateOfControl.getTime() > 500) {
-                Resources.PeopleStop.play();
+                playSoundPeopleStop(npc.pos.x);
                 if (this.lastMiniNPC !== null) {
                     // RELEASE
                     if(this.lastFinalContext!.punishable.length > 0){
@@ -91,7 +89,7 @@ export class Level extends Scene {
                     })
                     life.lostOneLife();
                 }else {
-                    Resources.Ammende.play();
+                    playSoundAmmende();
                     streetView.incrementCounter();
                 }
                 this.lastMiniNPC = null;
@@ -109,17 +107,18 @@ export class Level extends Scene {
             this.npcControlled = [];
             this.lastMiniNPC = null;
             this.lastFinalContext = null;
-            deskView.clearDesk();
             deskView.clearWarnings();
+            deskView.clearDesk();
             streetView.clearStreet();
             streetView.resetCounter();
-            Resources.AmbianceLoop.play();
-            new Promise(async (resolve) => {
-                setTimeout(resolve, randomInt(5000,45000));
-            }).then(() => Resources.Party.play(0.3));
+            restartSounds();
+            this.partyManager.start();
         });
     }
 
+    onPostUpdate(engine: Engine, elapsed: number) {
+        this.deskView.update(engine.input.pointers.primary.lastScreenPos);
+    }
 
     private wasControlled(npc : MiniNPC) : boolean {
         return this.npcControlled.includes(npc);
@@ -127,8 +126,8 @@ export class Level extends Scene {
 
     private showGameOver() {
         console.log("GAME OVER")
-        Resources.AmbianceLoop.pause();
-        Resources.Party.pause();
+        gameOverSounds();
+        this.partyManager.stop();
         this.gameOver.setScore(this.streetView.getCount());
         this.gameOver.show();
     }
